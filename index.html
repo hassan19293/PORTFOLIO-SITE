@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad Hassan — AI / ML Engineer</title>
+<meta name="description" content="Muhammad Hassan — AI / ML Engineer. Machine Learning, Deep Learning, Computer Vision, NLP & LLMs." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Ambient grid backdrop -->
+<div class="grid-backdrop" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark">⌁</span>buildifo
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-primary nav-cta">Hire Me</a>
+    <button class="burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <p class="eyebrow reveal">Hi, I'm Hassan</p>
+    <h1 class="hero-title reveal">
+      <span class="line">Muhammad Hassan</span>
+      <span class="line accent-line">AI / ML Engineer<span class="cursor">_</span></span>
+    </h1>
+    <p class="hero-desc reveal">
+      Building intelligent systems with Machine Learning, Deep Learning &amp; Computer Vision.
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#contact" class="btn btn-primary">Hire Me</a>
+      <a href="#portfolio" class="btn btn-ghost">View Work</a>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><span class="stat-num" data-count="5">0</span><span class="stat-plus">+</span><span class="stat-label">Experience (yrs)</span></div>
+      <div class="stat"><span class="stat-num" data-count="20">0</span><span class="stat-plus">+</span><span class="stat-label">Projects Done</span></div>
+      <div class="stat"><span class="stat-num" data-count="80">0</span><span class="stat-plus">+</span><span class="stat-label">Happy Clients</span></div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="orbit-ring ring-1"></div>
+    <div class="orbit-ring ring-2"></div>
+    <div class="node-field" id="nodeField"></div>
+    <div class="core-glow"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-head">
+    <p class="eyebrow">What I Do</p>
+    <h2>Services</h2>
+  </div>
+
+  <div class="service-grid">
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Machine Learning</h3>
+      <p>Building and training ML models for classification, regression, clustering and prediction tasks.</p>
+    </article>
+
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <h3>Computer Vision</h3>
+      <p>Object detection, image segmentation, face recognition and real-time video analysis.</p>
+    </article>
+
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" stroke="currentColor" stroke-width="1.6"/><path d="M7.7 7.2 10.3 10.3M16.3 7.2 13.7 10.3M7.7 16.8 10.3 13.7M16.3 16.8 13.7 13.7" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+      <h3>Deep Learning</h3>
+      <p>Designing CNN, RNN, Transformer architectures for complex AI problems.</p>
+    </article>
+
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <h3>NLP &amp; LLMs</h3>
+      <p>Text classification, sentiment analysis, chatbots and large language model integration.</p>
+    </article>
+
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M11 20V4M18 20v-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 20h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Data Analysis</h3>
+      <p>Exploratory data analysis, visualization and extracting insights from complex datasets.</p>
+    </article>
+
+    <article class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>Model Deployment</h3>
+      <p>Deploying ML models as APIs and web apps using Flask, FastAPI or cloud platforms.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual" aria-hidden="true">
+      <div class="about-frame">
+        <div class="about-glow"></div>
+        <svg viewBox="0 0 200 240" class="about-figure">
+          <rect x="0" y="0" width="200" height="240" fill="url(#g1)"/>
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="200" y2="240" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1a1a1a"/>
+              <stop offset="1" stop-color="#0d0d0d"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="90" r="42" fill="none" stroke="#FF5E1A" stroke-width="1.4" opacity="0.6"/>
+          <circle cx="100" cy="90" r="30" fill="none" stroke="#FF5E1A" stroke-width="1" opacity="0.35"/>
+          <path d="M60 200c8-38 32-56 40-56s32 18 40 56" fill="none" stroke="#FF5E1A" stroke-width="1.4" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="badge-float">
+        <span class="badge-num">5+</span>
+        <span class="badge-txt">Years building ML systems</span>
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <p class="eyebrow">About Me</p>
+      <h2>Who I Am</h2>
+      <p class="about-lead">
+        I'm Muhammad Hassan, an AI/ML Engineer who turns messy data into models that make real decisions —
+        from a first exploratory notebook to a model serving live predictions in production.
+      </p>
+      <p class="about-body">
+        My work spans the full lifecycle: framing the problem, cleaning and exploring data, training and
+        evaluating models, and shipping them as APIs or applications people actually use. I care about
+        systems that hold up outside the notebook — reliable, explainable, and fast enough to matter.
+      </p>
+      <div class="about-facts">
+        <div class="fact"><span class="fact-dot"></span>Based in Punjab, Pakistan — working with teams worldwide</div>
+        <div class="fact"><span class="fact-dot"></span>Focused on Computer Vision, NLP &amp; deployed ML systems</div>
+        <div class="fact"><span class="fact-dot"></span>Comfortable across the stack: Python, PyTorch, Flask/FastAPI, cloud</div>
+      </div>
+      <a href="#contact" class="btn btn-primary">Let's Talk</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-head">
+    <p class="eyebrow">Toolkit</p>
+    <h2>Skills</h2>
+  </div>
+  <div class="skill-grid">
+    <div class="skill-ring" data-pct="95">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">Py</span>
+      <span class="ring-pct">95%</span>
+      <span class="ring-name">Python</span>
+    </div>
+    <div class="skill-ring" data-pct="90">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">TF</span>
+      <span class="ring-pct">90%</span>
+      <span class="ring-name">TensorFlow</span>
+    </div>
+    <div class="skill-ring" data-pct="85">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">Pt</span>
+      <span class="ring-pct">85%</span>
+      <span class="ring-name">PyTorch</span>
+    </div>
+    <div class="skill-ring" data-pct="88">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">CV</span>
+      <span class="ring-pct">88%</span>
+      <span class="ring-name">Computer Vision</span>
+    </div>
+    <div class="skill-ring" data-pct="80">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">NLP</span>
+      <span class="ring-pct">80%</span>
+      <span class="ring-name">NLP / LLMs</span>
+    </div>
+    <div class="skill-ring" data-pct="78">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle cx="60" cy="60" r="52" class="ring-track"/>
+        <circle cx="60" cy="60" r="52" class="ring-fill"/>
+      </svg>
+      <span class="ring-label">Api</span>
+      <span class="ring-pct">78%</span>
+      <span class="ring-name">Deployment</span>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="section-head">
+    <p class="eyebrow">Selected Work</p>
+    <h2>Portfolio</h2>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="cv">Computer Vision</button>
+    <button class="filter-btn" data-filter="nlp">NLP</button>
+    <button class="filter-btn" data-filter="ml">ML</button>
+  </div>
+  <div class="portfolio-grid">
+    <article class="portfolio-card" data-cat="cv">
+      <div class="portfolio-thumb thumb-1"></div>
+      <div class="portfolio-meta">
+        <h3>Real-Time Face Recognition</h3>
+        <span>Computer Vision</span>
+      </div>
+    </article>
+    <article class="portfolio-card" data-cat="nlp">
+      <div class="portfolio-thumb thumb-2"></div>
+      <div class="portfolio-meta">
+        <h3>Customer Support Chatbot (LLM)</h3>
+        <span>NLP &amp; LLMs</span>
+      </div>
+    </article>
+    <article class="portfolio-card" data-cat="ml">
+      <div class="portfolio-thumb thumb-3"></div>
+      <div class="portfolio-meta">
+        <h3>Churn Prediction Pipeline</h3>
+        <span>Machine Learning</span>
+      </div>
+    </article>
+    <article class="portfolio-card" data-cat="cv">
+      <div class="portfolio-thumb thumb-4"></div>
+      <div class="portfolio-meta">
+        <h3>Defect Detection on Production Lines</h3>
+        <span>Computer Vision</span>
+      </div>
+    </article>
+    <article class="portfolio-card" data-cat="ml">
+      <div class="portfolio-thumb thumb-5"></div>
+      <div class="portfolio-meta">
+        <h3>Demand Forecasting Model</h3>
+        <span>Machine Learning</span>
+      </div>
+    </article>
+    <article class="portfolio-card" data-cat="nlp">
+      <div class="portfolio-thumb thumb-6"></div>
+      <div class="portfolio-meta">
+        <h3>Sentiment Analysis Dashboard</h3>
+        <span>NLP</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <p class="eyebrow center">Get In Touch</p>
+    <h2 class="center">Contact Me</h2>
+    <p class="contact-sub center">Cultivating connections: reach out and connect with me.</p>
+
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+92 3XX XXXXXXX">
+        </div>
+        <div class="field">
+          <label for="service">Service of Interest</label>
+          <select id="service" name="service">
+            <option value="">Select a service</option>
+            <option>Machine Learning</option>
+            <option>Computer Vision</option>
+            <option>Deep Learning</option>
+            <option>NLP &amp; LLMs</option>
+            <option>Data Analysis</option>
+            <option>Model Deployment</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="details">Project Details</label>
+        <textarea id="details" name="details" rows="5" placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary submit-btn">Send Message</button>
+      <p class="form-status" id="formStatus" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="#home" class="logo footer-logo"><span class="logo-mark">⌁</span>buildifo</a>
+    <nav class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram">◎</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="Dribbble">●</a>
+      <a href="#" aria-label="Behance">Bē</a>
+    </div>
+    <div class="footer-contact">
+      <a href="mailto:hassan@buildifo.dev">hassan@buildifo.dev</a>
+      <span class="footer-divider">·</span>
+      <a href="tel:+923000000000">+92 300 000 0000</a>
+    </div>
+    <p class="footer-note">© 2026 Muhammad Hassan. Built by buildifo.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
