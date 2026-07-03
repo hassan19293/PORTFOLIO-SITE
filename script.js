@@ -1,68 +1,145 @@
-// ===== Nav burger =====
-const burger = document.getElementById('burger');
-const navLinks = document.getElementById('navLinks');
-burger.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-// ===== Hero terminal — signature element =====
-// Simulates a model inference log, tying directly to the ML subject matter.
-(function(){
-  const body = document.getElementById('terminalBody');
-  if (!body) return;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const lines = [
-    { text: '$ python inference.py --model churn_v3', cls: '' },
-    { text: 'Loading model weights...', cls: 't-dim' },
-    { text: 'Model loaded (auc=0.91)', cls: 't-accent' },
-    { text: 'Running batch prediction...', cls: 't-dim' },
-    { text: 'customer_04821 → churn_risk: 0.83', cls: '' },
-    { text: 'customer_04822 → churn_risk: 0.12', cls: '' },
-    { text: 'customer_04823 → churn_risk: 0.67', cls: '' },
-    { text: 'Batch complete: 2,000 records', cls: 't-accent' },
-    { text: 'p95 latency: 340ms', cls: 't-dim' },
-  ];
-
-  function render(){
-    body.innerHTML = '';
-    lines.forEach((line, i) => {
-      const div = document.createElement('div');
-      div.className = 't-line ' + line.cls;
-      div.style.animationDelay = `${i * 0.35}s`;
-      div.textContent = line.text;
-      body.appendChild(div);
-    });
-    const cursor = document.createElement('span');
-    cursor.className = 'terminal-cursor';
-    body.appendChild(cursor);
-  }
-
-  if (reduceMotion) {
-    lines.forEach(l => { l.text = l.text; });
-    render();
-  } else {
-    render();
-  }
-})();
-
-// ===== Skill bar reveal =====
-const skillFills = document.querySelectorAll('.skill-fill');
-const skillObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      el.style.width = el.dataset.pct + '%';
-      skillObserver.unobserve(el);
-    }
+// ---- Theme: locked to dark by default (bold aesthetic); manual toggle still available ----
+  const root = document.documentElement;
+  root.setAttribute('data-theme', 'dark');
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
   });
-}, { threshold: 0.4 });
-skillFills.forEach(el => skillObserver.observe(el));
 
-// ===== Contact form (static site — no backend) =====
-const form = document.getElementById('contactForm');
-const status = document.getElementById('formStatus');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  status.textContent = "Thanks — I'll get back to you soon.";
-  form.reset();
-});
+  // ---- Resume dummy button ----
+  document.getElementById('resumeBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Add your resume PDF link here.');
+  });
+
+  // =====================================================================
+  // ---- LIFT SCROLL: hand-written, zero dependencies -----------------
+  // No CDN, no library. This intercepts mouse-wheel input and moves the
+  // page toward a target position with heavy lag + a strong ease-out,
+  // like an elevator car catching up to the floor you pressed.
+  // =====================================================================
+  (function initLiftScroll(){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return; // respect accessibility setting, skip custom scroll entirely
+
+    let current = window.scrollY;
+    let target = window.scrollY;
+    let raf = null;
+    const DAMPING = 0.065; // lower = heavier / slower lift feel, higher = snappier
+
+    function maxScroll(){
+      return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    }
+
+    function loop(){
+      current += (target - current) * DAMPING;
+      if (Math.abs(target - current) < 0.4){
+        current = target;
+        window.scrollTo(0, current);
+        raf = null;
+        return;
+      }
+      window.scrollTo(0, current);
+      raf = requestAnimationFrame(loop);
+    }
+
+    function kick(){
+      if (!raf) raf = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      target = Math.min(maxScroll(), Math.max(0, target + e.deltaY));
+      kick();
+    }, { passive: false });
+
+    // keep target in sync if the user drags the scrollbar or the OS scrolls directly
+    window.addEventListener('scroll', () => {
+      if (!raf){ current = window.scrollY; target = window.scrollY; }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      target = Math.min(target, maxScroll());
+    });
+
+    // smooth, eased anchor-link scrolling using the same lift feel
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if (id.length > 1){
+          e.preventDefault();
+          const el = document.querySelector(id);
+          if (!el) return;
+          const dest = Math.min(maxScroll(), Math.max(0, el.getBoundingClientRect().top + window.scrollY - 90));
+          const startY = current;
+          const startTime = performance.now();
+          const duration = 1300;
+          function step(now){
+            const t = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - t, 4); // strong deceleration, elevator-style stop
+            current = startY + (dest - startY) * eased;
+            target = current;
+            window.scrollTo(0, current);
+            if (t < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+      });
+    });
+  })();
+
+  // =====================================================================
+  // ---- Everything below is decorative (GSAP) and optional -----------
+  // If the CDN scripts didn't load, this block is skipped entirely and
+  // the CSS-only reveal/float/glow animations still run on their own.
+  // =====================================================================
+  const libsLoaded = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
+
+  if (!libsLoaded){
+    console.warn('GSAP did not load from the CDN (offline, blocked, or opened via file:// — try a local server instead). Lift scroll still works; using CSS-only reveals.');
+    document.querySelectorAll('.reveal, .proj-row').forEach(el=>{
+      el.style.opacity = 1; el.style.transform = 'none';
+    });
+  } else {
+    try {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ---- Hero entrance timeline ----
+      const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+      tl.from('.hero-title', { y:50, opacity:0, duration:1 })
+        .from('.hero-desc', { y:24, opacity:0, duration:.8 }, '-=.6')
+        .from('.tag-row .tag', { y:16, opacity:0, stagger:.05, duration:.6 }, '-=.5')
+        .from('.hero-cta > *', { y:16, opacity:0, stagger:.08, duration:.6 }, '-=.5')
+        .from('.eyebrow', { opacity:0, x:-16, duration:.6 }, 0)
+        .from('#detectFrame img', { scale:1.15, opacity:0, duration:1.2, ease:'power2.out' }, .2)
+        .from('.hero-stats div', { opacity:0, y:10, stagger:.08, duration:.5 }, .8);
+
+      // ---- Scroll reveals ----
+      gsap.utils.toArray('.reveal').forEach((el)=>{
+        gsap.to(el, {
+          opacity:1, y:0, duration:1, ease:'power3.out',
+          scrollTrigger:{ trigger: el, start:'top 85%' }
+        });
+      });
+
+      gsap.utils.toArray('.proj-row').forEach((el, i)=>{
+        gsap.to(el, {
+          opacity:1, y:0, duration:.9, ease:'power3.out', delay: i*0.05,
+          scrollTrigger:{ trigger: el, start:'top 90%' }
+        });
+      });
+
+      // ---- Nav background on scroll ----
+      ScrollTrigger.create({
+        trigger: 'body', start: 'top -60',
+        onUpdate: (self)=>{
+          document.querySelector('.nav-inner').style.boxShadow = self.progress ? 'var(--shadow)' : 'none';
+        }
+      });
+    } catch (err){
+      console.error('GSAP animation setup failed:', err);
+      document.querySelectorAll('.reveal, .proj-row').forEach(el=>{
+        el.style.opacity = 1; el.style.transform = 'none';
+      });
+    }
+  }
