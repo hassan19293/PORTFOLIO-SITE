@@ -277,6 +277,7 @@
 
   /* ---------- PROJECTS ---------- */
   .proj-list{ display:flex; flex-direction:column; }
+  a.proj-row{ text-decoration:none; color:inherit; cursor:pointer; }
   .proj-row{
     display:grid; grid-template-columns: 90px 1.3fr 1fr; gap:30px; align-items:center;
     padding:36px 10px; border-top:1px solid var(--border); position:relative; overflow:hidden;
