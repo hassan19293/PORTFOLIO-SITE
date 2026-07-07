@@ -131,14 +131,20 @@
   }
 
   /* ---------- HERO ---------- */
-  /* NOTE: was `position:sticky; top:0;` — that pinned the hero in place
-     while later sections scrolled over it, which is what caused the
-     photo to "glimpse" through behind the next section, especially
-     visible on fast mobile scrolling. Changed to `relative` so the hero
-     scrolls away naturally like every other section. */
+  /* Base: relative, so touch/mobile devices scroll it away normally —
+     sticky elements on touch browsers repaint late, which is what
+     caused the photo to flicker/glimpse through the next section on
+     fast mobile scrolling.
+     On desktop (mouse/trackpad, fine pointer) we restore `sticky` below:
+     that's what produces the "floating pages" lift effect — the hero
+     stays pinned while About/Projects/Contact (opaque, rising z-index)
+     scroll up and stack over it like floors passing a fixed camera. */
   section.hero{
     position:relative; min-height:100svh; display:flex; align-items:center;
     padding-top:120px; padding-bottom:60px; z-index:1; background:var(--bg);
+  }
+  @media (hover:hover) and (pointer:fine){
+    section.hero{ position:sticky; top:0; }
   }
   .hero-grid{
     display:grid; grid-template-columns: 1.1fr .9fr; gap:40px; align-items:center;
