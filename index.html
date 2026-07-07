@@ -107,7 +107,8 @@
 
     <div class="about-grid">
       <div class="about-photo reveal">
-        <img src="hassana.png" alt="Muhammad Hassan portrait">
+        <img src="hassana.png" alt="Muhammad Hassan portrait" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-fallback" style="display:none;">hassana.png<br>not found in this folder</div>
       </div>
       <div class="about-body reveal">
         <p>I'm <strong>Muhammad Hassan</strong>, an AI developer focused on turning research-grade models into things people can actually use — a chatbot that answers correctly, a vision model that runs in production, an API that doesn't fall over under load.</p>
@@ -193,6 +194,19 @@
         </div>
         <div class="proj-stack">
           <span>Gemini API</span><span>Conversational AI</span><span>Structured Extraction</span><span>Gradio</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+        <div class="proj-thumb-preview">try_live.app</div>
+      </a>
+
+      <a class="proj-row reveal" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener">
+        <span class="pnum">05</span>
+        <div>
+          <h3>Live Vision Agent <span class="proj-metric">Live Demo</span></h3>
+          <p>Turn on your webcam and ask what it sees — a chat assistant answers in real time, grounded strictly in live YOLOv8 detections instead of guessing at the scene.</p>
+        </div>
+        <div class="proj-stack">
+          <span>YOLOv8</span><span>Gemini API</span><span>Real-Time CV</span><span>Gradio</span>
         </div>
         <span class="proj-arrow">↗</span>
         <div class="proj-thumb-preview">try_live.app</div>
