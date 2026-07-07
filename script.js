@@ -137,8 +137,7 @@
       // ---- Hero entrance timeline ----
       const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
       tl.from('.hero-title', { y:50, opacity:0, duration:1 })
-        .from('.hero-desc', { y:24, opacity:0, duration:.8 }, '-=.6')
-        .from('.tag-row .tag', { y:16, opacity:0, stagger:.05, duration:.6 }, '-=.5')
+        .from('.tag-row .tag', { y:16, opacity:0, stagger:.05, duration:.6 }, '-=.6')
         .from('.hero-cta > *', { y:16, opacity:0, stagger:.08, duration:.6 }, '-=.5')
         .from('.eyebrow', { opacity:0, x:-16, duration:.6 }, 0)
         .from('#detectFrame img', { scale:1.15, opacity:0, duration:1.2, ease:'power2.out' }, .2)
