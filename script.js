@@ -13,6 +13,36 @@
   });
 
   // =====================================================================
+  // ---- DETECTION OVERLAY: confidence-score tick-up --------------------
+  // Purely cosmetic counter that ticks 0.00 -> 0.98 in sync with the CSS
+  // corner-bracket / scan-line animation on the hero photo (see style.css
+  // ".detect-*" rules). Skipped entirely if reduced motion is requested.
+  // =====================================================================
+  (function initConfidenceCounter(){
+    const el = document.getElementById('confScore');
+    if (!el) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion){ el.textContent = '0.98'; return; }
+
+    const target = 0.98;
+    const startDelay = 1300;   // sync with .detect-tag-bottom's animation-delay
+    const duration = 650;
+
+    setTimeout(() => {
+      const start = performance.now();
+      function tick(now){
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (eased * target).toFixed(2);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(2);
+      }
+      requestAnimationFrame(tick);
+    }, startDelay);
+  })();
+
+  // =====================================================================
   // ---- LIFT SCROLL: hand-written, zero dependencies -----------------
   // No CDN, no library. This intercepts mouse-wheel input and moves the
   // page toward a target position with heavy lag + a strong ease-out,
