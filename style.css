@@ -131,8 +131,13 @@
   }
 
   /* ---------- HERO ---------- */
+  /* NOTE: was `position:sticky; top:0;` — that pinned the hero in place
+     while later sections scrolled over it, which is what caused the
+     photo to "glimpse" through behind the next section, especially
+     visible on fast mobile scrolling. Changed to `relative` so the hero
+     scrolls away naturally like every other section. */
   section.hero{
-    position:sticky; top:0; min-height:100svh; display:flex; align-items:center;
+    position:relative; min-height:100svh; display:flex; align-items:center;
     padding-top:120px; padding-bottom:60px; z-index:1; background:var(--bg);
   }
   .hero-grid{
@@ -211,9 +216,73 @@
     0%,100%{ opacity:.6; transform: scale(1); }
     50%{ opacity:1; transform: scale(1.08); }
   }
+
+  /* ---------- SIGNATURE ANIMATION: object-detection scan ----------
+     A CV-flavored treatment for the hero photo: four corner brackets
+     draw themselves in on load (like a bounding box locking on),
+     a scan-line sweeps down once, and a small "PERSON / conf 0.98"
+     readout ticks up — a nod to the YOLO detection work below,
+     applied to the person doing the detecting. Idle state is quiet:
+     brackets stay, tag glows softly, scan re-sweeps rarely. */
+  .detect-corners{
+    position:absolute; inset:0; width:100%; height:100%; z-index:3;
+    pointer-events:none; overflow:visible;
+  }
+  .detect-corners .corner{
+    fill:none; stroke:var(--accent); stroke-width:1.6;
+    stroke-linecap:round; stroke-linejoin:round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 26; stroke-dashoffset: 26;
+    filter: drop-shadow(0 0 4px var(--accent-soft));
+    animation: cornerDraw .7s var(--ease) forwards;
+  }
+  .corner-tl{ animation-delay: .55s; }
+  .corner-tr{ animation-delay: .68s; }
+  .corner-bl{ animation-delay: .81s; }
+  .corner-br{ animation-delay: .94s; }
+  @keyframes cornerDraw{ to{ stroke-dashoffset:0; } }
+
+  .detect-scanline{
+    position:absolute; left:6%; right:6%; height:2px; top:0; z-index:3;
+    background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+    box-shadow: 0 0 12px 2px var(--accent-soft);
+    opacity:0; border-radius:2px;
+    animation: scanSweep 3.6s cubic-bezier(.65,0,.35,1) 1.1s infinite;
+  }
+  @keyframes scanSweep{
+    0%{ top:6%; opacity:0; }
+    4%{ opacity:1; }
+    46%{ top:94%; opacity:1; }
+    52%{ opacity:0; }
+    100%{ top:94%; opacity:0; }
+  }
+
+  .detect-tag{
+    position:absolute; z-index:4;
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:.05em;
+    color:var(--accent); background: color-mix(in srgb, var(--bg) 72%, transparent);
+    border:1px solid var(--border-strong); border-radius:5px;
+    padding:4px 9px; display:flex; align-items:center; gap:6px;
+    backdrop-filter: blur(6px);
+    opacity:0; transform:translateY(-4px);
+    animation: tagIn .5s var(--ease) forwards;
+  }
+  .detect-tag-top{ top:14px; left:14px; animation-delay:1.15s; }
+  .detect-tag-bottom{ bottom:14px; right:14px; animation-delay:1.3s; }
+  @keyframes tagIn{ to{ opacity:1; transform:translateY(0); } }
+
+  .dot-live{
+    width:5px; height:5px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 0 2px var(--accent-soft);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .photo-frame{ animation:none; }
     .photo-frame::before{ animation:none; }
+    .detect-corners .corner{ animation:none; stroke-dashoffset:0; }
+    .detect-scanline{ animation:none; opacity:0; }
+    .detect-tag{ animation:none; opacity:1; transform:none; }
   }
 
   .hero-stats{
@@ -236,14 +305,16 @@
   @keyframes drip{ 0%{ top:-20px; } 100%{ top:34px; } }
 
   /* ---------- SECTION LABELS ---------- */
-  /* Sections are NOT sticky/pinned — they just need an opaque background
-     and a higher stacking order than the hero so they slide up and cover
-     it naturally as you scroll. Only the hero itself stays pinned (see
-     section.hero above). This lets sections with more content than one
-     screen (like Projects) scroll through freely instead of getting stuck. */
+  /* NOTE: previously min-height:100svh + align-items:center, which forced
+     every section to occupy a full screen and vertically center its
+     content. When a section's actual content (e.g. the contact panel)
+     was shorter than the viewport, that created dead space below it —
+     and pushed the top of the content above the fold once scrolled to
+     the bottom, so the message form looked cut off. Sections now size
+     to their own content; padding alone controls the rhythm. */
   .section{
-    position:relative; min-height:100svh; display:flex; align-items:center;
-    padding:140px 0; background:var(--bg);
+    position:relative;
+    padding:120px 0; background:var(--bg);
   }
   #about{ z-index:2; }
   #projects{ z-index:3; }
