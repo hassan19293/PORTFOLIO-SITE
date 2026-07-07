@@ -37,20 +37,16 @@
 <section class="hero" id="work">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span class="line"></span> AI / ML Engineer — CV · NLP · LLMs</div>
+      <div class="eyebrow"><span class="dot-live"></span> Available for select projects</div>
       <h1 class="hero-title">
         MUHAMMAD<br>HASSAN
-        <span class="rule">I ship AI systems that work in production — not just in demos.</span>
+        <span class="rule">AI systems that work in production, not just in demos.</span>
       </h1>
-      <p class="hero-desc">AI developer working across machine learning, deep learning, computer vision, NLP and LLMs — designing models and shipping them as real, usable APIs and products.</p>
       <div class="tag-row">
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Deep Learning</span>
         <span class="tag">Computer Vision</span>
         <span class="tag">NLP</span>
         <span class="tag">LLMs</span>
-        <span class="tag">Chatbots</span>
-        <span class="tag">APIs</span>
+        <span class="tag">Deep Learning</span>
       </div>
       <div class="hero-cta">
         <a href="#projects" class="btn-primary">View Projects →</a>
@@ -60,10 +56,32 @@
 
     <div class="hero-photo-wrap">
       <div>
+        <!-- DETECTION FRAME: signature animation.
+             A live-CV-style scan runs over the photo on load — corner
+             brackets draw in, a scan-line sweeps once, then it settles
+             into an idle "tracked" state with a ticking confidence score.
+             Ties directly to the object-detection work below. -->
         <div class="photo-frame" id="detectFrame">
           <img src="hassana.png" alt="Muhammad Hassan" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="img-fallback" style="display:none;">hassana.png<br>not found in this folder</div>
+
+          <svg class="detect-corners" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="corner corner-tl" d="M4,16 L4,4 L16,4" />
+            <path class="corner corner-tr" d="M84,4 L96,4 L96,16" />
+            <path class="corner corner-bl" d="M4,84 L4,96 L16,96" />
+            <path class="corner corner-br" d="M96,84 L96,96 L84,96" />
+          </svg>
+
+          <div class="detect-scanline" aria-hidden="true"></div>
+
+          <div class="detect-tag detect-tag-top" aria-hidden="true">
+            <span class="dot-live"></span>PERSON
+          </div>
+          <div class="detect-tag detect-tag-bottom" aria-hidden="true">
+            conf&nbsp;<span id="confScore">0.00</span>
+          </div>
         </div>
+
         <div class="hero-stats">
           <div><b>ML/DL</b><span>Core Focus</span></div>
           <div><b>CV·NLP</b><span>Specialty</span></div>
