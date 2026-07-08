@@ -127,7 +127,7 @@
 
   if (!libsLoaded){
     console.warn('GSAP did not load from the CDN (offline, blocked, or opened via file:// — try a local server instead). Lift scroll still works; using CSS-only reveals.');
-    document.querySelectorAll('.reveal, .proj-row').forEach(el=>{
+    document.querySelectorAll('.reveal, .proj-card').forEach(el=>{
       el.style.opacity = 1; el.style.transform = 'none';
     });
   } else {
@@ -151,7 +151,7 @@
         });
       });
 
-      gsap.utils.toArray('.proj-row').forEach((el, i)=>{
+      gsap.utils.toArray('.proj-card').forEach((el, i)=>{
         gsap.to(el, {
           opacity:1, y:0, duration:.9, ease:'power3.out', delay: i*0.05,
           scrollTrigger:{ trigger: el, start:'top 90%' }
@@ -167,7 +167,7 @@
       });
     } catch (err){
       console.error('GSAP animation setup failed:', err);
-      document.querySelectorAll('.reveal, .proj-row').forEach(el=>{
+      document.querySelectorAll('.reveal, .proj-card').forEach(el=>{
         el.style.opacity = 1; el.style.transform = 'none';
       });
     }
