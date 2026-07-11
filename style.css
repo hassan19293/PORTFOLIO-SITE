@@ -473,9 +473,19 @@
   .proj-card:hover .extract-arrow{ transform:translateX(3px); }
   .proj-card:hover .booking-check{ transform:scale(1.18); }
 
+  /* Front Desk AI icon: sound waves ripple outward and the calendar
+     checkmark badge pops slightly, echoing the "call answered + booked"
+     story of the project, on hover only — matches the calm-until-engaged
+     motion language used by the other project icons. */
+  .icon-frontdesk .fd-wave{ transition: transform .45s var(--ease), opacity .45s var(--ease); transform-origin:left center; }
+  .proj-card:hover .icon-frontdesk .fd-wave{ transform: scaleX(1.15); opacity:1; }
+  .icon-frontdesk .fd-badge{ transition: transform .45s var(--ease); transform-origin:center; }
+  .proj-card:hover .icon-frontdesk .fd-badge{ transform: scale(1.15); }
+
   @media (prefers-reduced-motion: reduce){
     .icon-shelf .shelf-missing, .icon-vision .vision-scan, .icon-vision .vision-dot{ animation:none; }
     .proj-card, .proj-icon, .proj-sweep, .proj-cta, .proj-cta-arrow, .rag-lens, .extract-arrow, .booking-check{ transition:none; }
+    .icon-frontdesk .fd-wave, .icon-frontdesk .fd-badge{ transition:none; }
   }
 
   /* ---------- CONTACT ---------- */
