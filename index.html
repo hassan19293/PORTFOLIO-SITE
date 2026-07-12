@@ -1,352 +1,703 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buildifo | AI Product Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildifo — Better systems. Stronger businesses.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B;
+    --panel:#161410;
+    --panel-2:#1D1A15;
+    --paper:#F3EFE6;
+    --paper-2:#E9E2D0;
+    --brass:#C79553;
+    --brass-2:#E3B877;
+    --bone:#F5F2EA;
+    --stone:#9A9384;
+    --stone-dark:#514D42;
+    --line:#2B2820;
+    --line-light:#DED5BC;
+    --display:'Archivo',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    background:var(--ink);
+    color:var(--bone);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 40px;}
+  @media(max-width:640px){.wrap{padding:0 22px;}}
+  @media(max-width:900px){body{cursor:auto;} .cursor,.cursor-ring{display:none;}}
 
-  <meta name="description"
-    content="Buildifo builds intelligent AI products, automation systems and modern digital experiences.">
+  ::selection{background:var(--brass);color:var(--ink);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  /* custom cursor */
+  .cursor{position:fixed;width:6px;height:6px;background:var(--brass);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .2s;}
+  .cursor-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(199,149,83,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,opacity .2s;}
+  .cursor-ring.big{width:64px;height:64px;border-color:var(--brass);}
 
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);
+    display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--brass);}
+  .light .eyebrow{color:#A6742F;}
+  .light .eyebrow::before{background:#A6742F;}
 
-  <link rel="stylesheet" href="style.css">
+  h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.015em;}
+
+  .line-reveal{overflow:hidden;display:block;}
+  .line-reveal span{display:inline-block;transform:translateY(110%);transition:transform .9s cubic-bezier(.22,1,.36,1);}
+  .line-reveal.in span{transform:translateY(0);}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:100;background:rgba(14,13,11,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;max-width:1240px;margin:0 auto;}
+  .logo{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;}
+  .logo .mark{width:9px;height:9px;background:var(--brass);}
+  .nav-links{display:flex;gap:38px;font-size:13.5px;color:var(--stone);font-weight:500;}
+  .nav-links a{position:relative;padding-bottom:3px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .25s;}
+  .nav-links a:hover{color:var(--bone);}
+  .nav-links a:hover::after{width:100%;}
+  .cta-btn{
+    font-family:var(--body);font-weight:600;font-size:13px;
+    background:var(--brass);color:var(--ink);
+    padding:12px 22px;border-radius:2px;
+    display:inline-flex;align-items:center;gap:9px;
+    border:1px solid var(--brass);
+    transition:background .2s,color .2s,transform .2s;
+    position:relative;
+  }
+  .cta-btn:hover{background:transparent;color:var(--bone);}
+  .cta-btn.ghost{background:transparent;color:var(--bone);border:1px solid var(--line-light);}
+  .cta-btn.ghost:hover{border-color:var(--brass);color:var(--brass);}
+  .cta-btn.on-paper{border-color:#00000022;}
+  @media(max-width:920px){.nav-links{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:150px 0 0;border-bottom:1px solid var(--line);position:relative;}
+  .hero-inner{max-width:920px;}
+  .hero h1{font-size:clamp(42px,6.6vw,86px);line-height:1.0;margin-bottom:30px;}
+  .hero h1 .accent{color:var(--brass);}
+  .hero p.lede{font-size:18px;line-height:1.6;color:#C7C2B4;max-width:520px;margin-bottom:40px;}
+  .hero-ctas{display:flex;gap:16px;margin-bottom:0;flex-wrap:wrap;align-items:center;}
+  .hero-ctas .note{font-family:var(--mono);font-size:11.5px;color:var(--stone-dark);}
+
+  /* marquee */
+  .marquee-wrap{margin-top:90px;border-top:1px solid var(--line);padding:26px 0;overflow:hidden;position:relative;}
+  .marquee-wrap::before{content:'TRUSTED BY';font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--stone-dark);position:absolute;left:40px;top:50%;transform:translateY(-50%);background:var(--ink);padding-right:16px;z-index:2;}
+  .marquee{display:flex;gap:90px;white-space:nowrap;animation:scroll-x 28s linear infinite;padding-left:180px;}
+  .marquee span{font-family:var(--display);font-weight:700;font-size:20px;color:var(--stone-dark);letter-spacing:.02em;}
+  @keyframes scroll-x{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- SECTION shells ---------- */
+  section{padding:130px 0;}
+  @media(max-width:768px){section{padding:86px 0;}}
+  .dark{background:var(--ink);}
+  .light{background:var(--paper);color:var(--ink);}
+  .panelbg{background:var(--panel);}
+
+  .split{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center;}
+  @media(max-width:900px){.split{grid-template-columns:1fr;gap:44px;}}
+  .split.rev{grid-template-columns:1.15fr .85fr;}
+  @media(max-width:900px){.split.rev{grid-template-columns:1fr;}}
+
+  h2{font-size:clamp(28px,3.6vw,46px);line-height:1.1;margin-bottom:22px;}
+  .light h2{color:var(--ink);}
+  p.body-text{font-size:15.5px;line-height:1.75;color:var(--stone);max-width:480px;}
+  .light p.body-text{color:#5C5849;}
+
+  /* photographic panel (CSS-crafted duotone, no stock lookup needed) */
+  .photo-panel{
+    position:relative;border-radius:2px;overflow:hidden;aspect-ratio:4/5;
+    background:
+      radial-gradient(120% 90% at 20% 0%, #2B2620 0%, #16140F 60%),
+      repeating-linear-gradient(100deg, rgba(199,149,83,.05) 0 2px, transparent 2px 5px);
+    border:1px solid var(--line);
+  }
+  .photo-panel .blueprint{position:absolute;inset:0;opacity:.9;}
+  .photo-panel .frame-label{position:absolute;top:16px;left:16px;font-family:var(--mono);font-size:10px;color:var(--stone-dark);letter-spacing:.08em;}
+  .photo-panel .frame-tag{position:absolute;bottom:16px;left:16px;right:16px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--stone-dark);letter-spacing:.06em;}
+
+  .link-arrow{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--brass);}
+  .light .link-arrow{color:#A6742F;}
+  .link-arrow svg{width:13px;height:13px;transition:transform .25s;}
+  .link-arrow:hover svg{transform:translate(3px,-3px);}
+
+  /* ---------- STORY FACTS ---------- */
+  .facts{display:flex;gap:36px;margin-top:34px;flex-wrap:wrap;}
+  .fact{border-left:2px solid var(--brass);padding-left:14px;}
+  .fact .n{font-family:var(--display);font-size:15px;font-weight:700;}
+  .fact .l{font-family:var(--mono);font-size:10.5px;color:var(--stone);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+
+  /* ---------- STORY PULL QUOTE ---------- */
+  .pull-quote{margin:36px 0 0;padding-left:20px;border-left:2px solid var(--line);}
+  .pull-quote p{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.45;color:var(--bone);}
+  .pull-quote span{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);letter-spacing:.04em;}
+
+  /* ---------- BUILD LEDGER (signature element) ---------- */
+  .ledger{
+    position:relative;border-radius:2px;overflow:hidden;
+    background:linear-gradient(180deg,#17140F 0%,#100F0B 100%);
+    border:1px solid var(--line);
+  }
+  .ledger-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);}
+  .ledger-top .dots{display:flex;gap:6px;}
+  .ledger-top .dots span{width:7px;height:7px;border-radius:50%;background:var(--line-light);opacity:.25;}
+  .ledger-top .path{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);letter-spacing:.02em;}
+  .ledger-body{padding:22px 20px 24px;}
+  .ledger-row{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line);}
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row .t{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);}
+  .ledger-row .msg{font-size:13.5px;color:#D6D1C2;}
+  .ledger-row .msg b{color:var(--bone);font-weight:600;}
+  .ledger-row .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap;}
+  .ledger-row .tag.ai{color:var(--brass-2);border:1px solid rgba(199,149,83,.4);}
+  .ledger-row .tag.human{color:var(--stone);border:1px solid var(--line-light);}
+  .ledger-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid var(--line);background:rgba(199,149,83,.04);}
+  .ledger-foot .n{font-family:var(--display);font-size:22px;font-weight:800;color:var(--brass);}
+  .ledger-foot .l{font-family:var(--mono);font-size:10px;color:var(--stone);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* ---------- COMPARE STRIP ---------- */
+  .compare-strip{margin-top:80px;border:1px solid var(--line);border-radius:2px;overflow:hidden;}
+  .compare-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:var(--panel);}
+  .compare-head div{padding:16px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-dark);}
+  .compare-head div.us{color:var(--brass);}
+  .compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:1px solid var(--line);}
+  @media(max-width:700px){.compare-head,.compare-row{grid-template-columns:1.2fr 1fr 1fr;} }
+  .compare-row div{padding:18px 22px;font-size:13.5px;color:var(--stone);display:flex;align-items:center;gap:8px;}
+  .compare-row div:first-child{color:var(--bone);}
+  .compare-row div.yes{color:var(--brass-2);}
+  .compare-row div.yes::before{content:'✓';font-family:var(--mono);}
+  .compare-row div.no::before{content:'—';color:var(--stone-dark);font-family:var(--mono);}
+  @media(max-width:520px){.compare-head{display:none;}}
+
+  /* ---------- PROCESS (Octacord-style stacked rows) ---------- */
+  .process-row{display:grid;grid-template-columns:.5fr 1.5fr 1fr;gap:40px;align-items:center;padding:44px 0;border-top:1px solid var(--line);}
+  .process-row:last-child{border-bottom:1px solid var(--line);}
+  @media(max-width:860px){.process-row{grid-template-columns:1fr;gap:18px;}}
+  .process-row .step-num{font-family:var(--display);font-size:44px;font-weight:800;color:var(--stone-dark);}
+  .process-row .step-text h3{font-size:22px;margin-bottom:10px;}
+  .process-row .step-text p{font-size:14.5px;color:var(--stone);line-height:1.65;max-width:420px;}
+  .step-visual{height:120px;border-radius:2px;border:1px solid var(--line);background:var(--panel);position:relative;overflow:hidden;}
+  .step-visual svg{width:100%;height:100%;}
+  .deliverable{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.02em;}
+
+  /* ---------- WHY / DIFFERENTIATORS ---------- */
+  .diff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:860px){.diff-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.diff-grid{grid-template-columns:1fr;}}
+  .diff-card{background:var(--ink);padding:32px 26px;}
+  .diff-num{font-family:var(--mono);font-size:11px;color:var(--brass);display:block;margin-bottom:28px;}
+  .diff-card h3{font-size:16px;margin-bottom:10px;}
+  .diff-card p{font-size:13px;color:var(--stone);line-height:1.6;}
+
+  /* ---------- PRODUCTS ---------- */
+  .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px;}
+  @media(max-width:900px){.prod-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.prod-grid{grid-template-columns:1fr;}}
+  .prod-card{background:var(--ink);padding:30px 26px;transition:background .2s;}
+  .prod-card:hover{background:var(--panel);}
+  .prod-card .idx{font-family:var(--mono);font-size:11px;color:var(--stone-dark);margin-bottom:34px;display:block;}
+  .prod-card h3{font-size:16px;margin-bottom:9px;}
+  .prod-card p{font-size:13px;color:var(--stone);line-height:1.6;margin-bottom:16px;}
+
+  /* ---------- WORK ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:56px;}
+  @media(max-width:760px){.work-grid{grid-template-columns:1fr;}}
+  .work-card{position:relative;aspect-ratio:5/4;overflow:hidden;background:var(--panel);border:1px solid var(--line);}
+  .work-card .plate{position:absolute;inset:0;background:
+      radial-gradient(140% 100% at 100% 0%, #241F16 0%, #0E0D0B 65%);
+  }
+  .work-card .grain{position:absolute;inset:0;opacity:.35;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 3px);}
+  .work-card .content{position:absolute;left:0;right:0;bottom:0;padding:30px;transform:translateY(14px);transition:transform .3s;}
+  .work-card:hover .content{transform:translateY(0);}
+  .work-card .sector{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+  .work-card h3{font-size:21px;margin-bottom:10px;}
+  .work-card p{font-size:13.5px;color:#B9B3A1;line-height:1.55;margin-bottom:16px;max-width:340px;}
+  .work-card .year{position:absolute;top:26px;right:28px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);}
+
+  /* ---------- STATS ---------- */
+  .stats-bar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+  @media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr;}}
+  .stat{padding:48px 34px;border-left:1px solid var(--line);}
+  .stat:first-child{border-left:none;}
+  @media(max-width:700px){.stat:nth-child(3){border-left:none;}}
+  .stat .n{font-family:var(--display);font-size:42px;font-weight:800;color:var(--brass);}
+  .stat .l{font-family:var(--mono);font-size:11px;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;margin-top:8px;}
+
+  /* ---------- TESTIMONIAL MARQUEE ---------- */
+  .testi-track{display:flex;gap:2px;overflow:hidden;margin-top:56px;}
+  .testi-scroll{display:flex;gap:2px;animation:scroll-x2 42s linear infinite;}
+  .testi-scroll:hover{animation-play-state:paused;}
+  @keyframes scroll-x2{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .testi-card{background:var(--panel);border:1px solid var(--line);padding:34px;width:380px;flex-shrink:0;}
+  .testi-card p{font-size:14.5px;line-height:1.7;color:#D6D1C2;margin-bottom:22px;min-height:96px;}
+  .testi-card .who{display:flex;align-items:center;gap:12px;}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--brass),#7A5424);flex-shrink:0;}
+  .testi-card .name{font-size:13.5px;font-weight:600;}
+  .testi-card .role{font-size:12px;color:var(--stone);}
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto{padding:150px 0;text-align:center;}
+  .manifesto .wrap{max-width:800px;}
+  .manifesto .eyebrow{justify-content:center;}
+  .manifesto h2{font-size:clamp(30px,4.6vw,54px);}
+  .manifesto p{font-size:16.5px;color:var(--stone);line-height:1.75;max-width:580px;margin:0 auto;}
+
+  /* ---------- CTA ---------- */
+  .cta-section{background:var(--paper);color:var(--ink);border-top:1px solid var(--line-light);text-align:center;padding:150px 0;}
+  .cta-section .eyebrow{justify-content:center;}
+  .cta-section h2{font-size:clamp(34px,5.4vw,70px);max-width:820px;margin:0 auto 34px;color:var(--ink);}
+  .cta-section p{font-size:15.5px;color:#5C5849;max-width:440px;margin:0 auto 40px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:60px 0 34px;}
+  .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;margin-bottom:60px;}
+  .footer-cols{display:flex;gap:70px;flex-wrap:wrap;}
+  .footer-col h4{font-family:var(--mono);font-size:11px;color:var(--stone-dark);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--stone);margin-bottom:11px;}
+  .footer-col a:hover{color:var(--brass);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;border-top:1px solid var(--line);padding-top:24px;}
+  .footer-bottom .copy{font-size:12px;color:var(--stone-dark);}
+  .socials{display:flex;gap:12px;}
+  .socials a{width:32px;height:32px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--stone);font-size:11px;font-family:var(--mono);}
+  .socials a:hover{border-color:var(--brass);color:var(--brass);}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion: reduce){
+    .reveal,.line-reveal span{opacity:1!important;transform:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+    .marquee,.testi-scroll{animation:none;}
+  }
+</style>
 </head>
-
 <body>
 
-<div class="noise"></div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
 
-<header class="header">
-<div class="container">
-
-<a href="#" class="logo">BUILDIFO</a>
-
-<nav>
-<ul>
-<li><a href="#story">Story</a></li>
-<li><a href="#services">Services</a></li>
-<li><a href="#products">Products</a></li>
-<li><a href="#work">Work</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
-
-<a href="#contact" class="nav-btn">Start a Project</a>
-
-</div>
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="mark"></span>BUILDIFO</div>
+    <div class="nav-links">
+      <a href="#story">Story</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why Us</a>
+      <a href="#products">Products</a>
+      <a href="#work">Work</a>
+      <a href="#">About</a>
+    </div>
+    <a class="cta-btn" href="#cta" data-magnetic>Build With Us →</a>
+  </nav>
 </header>
 
-<section class="hero">
-
-<div class="hero-background">
-<div class="circle circle-one"></div>
-<div class="circle circle-two"></div>
-<div class="grid"></div>
-</div>
-
-<div class="container hero-grid">
-
-<div class="hero-left">
-
-<span class="eyebrow">AI PRODUCT STUDIO</span>
-
-<h1>
-Building Digital Experiences That Think Ahead.
-</h1>
-
-<p>
-Your vision deserves more than software.
-We design AI systems, automation platforms and modern digital products that help ambitious companies move faster.
-</p>
-
-<div class="hero-buttons">
-<a href="#contact" class="primary">Share Your Vision</a>
-<a href="#story" class="secondary">Explore Buildifo</a>
-</div>
-
-<div class="stats">
-<div><h2>20+</h2><p>AI Solutions</p></div>
-<div><h2>100%</h2><p>Custom Built</p></div>
-<div><h2>24/7</h2><p>Automation</p></div>
-</div>
-
-</div>
-
-<div class="hero-right">
-
-<div class="glass-card large">
-<span>Vision Agent</span>
-<h3>Observe. Understand. Automate.</h3>
-<p>A next-generation AI system that continuously monitors operations and transforms data into intelligent decisions.</p>
-</div>
-
-<div class="glass-card small">
-<h4>Digital Extractor</h4>
-<p>Turn complex files into structured intelligence.</p>
-</div>
-
-</div>
-
-</div>
-
+<section class="hero dark">
+  <div class="wrap hero-inner">
+    <div class="eyebrow reveal">Systems &amp; product studio — est. 2021</div>
+    <h1>
+      <span class="line-reveal"><span>Better systems.</span></span>
+      <span class="line-reveal"><span>Stronger <span class="accent">businesses.</span></span></span>
+    </h1>
+    <p class="lede reveal">We design and build intelligent products, automation, and digital experiences for companies who'd rather solve the real problem than chase the trend.</p>
+    <div class="hero-ctas reveal">
+      <a class="cta-btn" href="#cta" data-magnetic>Tell Us What You're Building →</a>
+      <a class="cta-btn ghost" href="#work" data-magnetic>Explore Our Work</a>
+    </div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span>LYNX</span><span>NOVA</span><span>VERTEX</span><span>PROFOLIO</span><span>FRAMES</span><span>ARKON</span>
+      <span>LYNX</span><span>NOVA</span><span>VERTEX</span><span>PROFOLIO</span><span>FRAMES</span><span>ARKON</span>
+    </div>
+  </div>
 </section>
 
-<section id="story" class="story">
+<section class="dark" id="story">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="eyebrow">Our story</div>
+      <h2>We believe systems should remove complexity, not create it.</h2>
+      <p class="body-text">Buildifo started as two engineers fixing the same problem for every client: agencies that hand-build everything from scratch, slowly, at agency prices. We build differently — senior engineers directing AI tooling to move at the pace of a much bigger team, without handing quality to a machine.</p>
+      <div class="facts">
+        <div class="fact"><div class="n">2021</div><div class="l">Founded</div></div>
+        <div class="fact"><div class="n">Remote-first</div><div class="l">Team of 14</div></div>
+        <div class="fact"><div class="n">12+</div><div class="l">Industries</div></div>
+      </div>
+      <div class="pull-quote">
+        <p>"Even this page you're reading was built this way — AI drafted the first pass, our engineers rewrote and shipped it."</p>
+        <span>— FROM OUR BUILD LOG, BELOW</span>
+      </div>
+    </div>
+    <div class="ledger reveal">
+      <div class="ledger-top">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="path">buildifo.com — build log</div>
+      </div>
+      <div class="ledger-body">
+        <div class="ledger-row">
+          <div class="t">DAY 01</div>
+          <div class="msg">Scoped structure + copy direction from client brief</div>
+          <div class="tag human">Human</div>
+        </div>
+        <div class="ledger-row">
+          <div class="t">DAY 01</div>
+          <div class="msg">Drafted <b>first layout pass</b> across all sections</div>
+          <div class="tag ai">AI-assisted</div>
+        </div>
+        <div class="ledger-row">
+          <div class="t">DAY 02</div>
+          <div class="msg">Rebuilt typography system, fixed spacing + hierarchy</div>
+          <div class="tag human">Human</div>
+        </div>
+        <div class="ledger-row">
+          <div class="t">DAY 02</div>
+          <div class="msg">Generated <b>interaction states</b> — hover, scroll reveal</div>
+          <div class="tag ai">AI-assisted</div>
+        </div>
+        <div class="ledger-row">
+          <div class="t">DAY 03</div>
+          <div class="msg">QA pass: accessibility, responsive, real content swap</div>
+          <div class="tag human">Human</div>
+        </div>
+        <div class="ledger-row">
+          <div class="t">DAY 03</div>
+          <div class="msg">Shipped to production</div>
+          <div class="tag human">Human</div>
+        </div>
+      </div>
+      <div class="ledger-foot">
+        <div><div class="n">3 days</div><div class="l">brief to launch</div></div>
+        <div style="text-align:right;"><div class="n">100%</div><div class="l">human-reviewed</div></div>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
-
-<div class="section-intro">
-<span class="section-tag">OUR STORY</span>
-<h2>Technology should feel invisible. Not complicated.</h2>
-</div>
-
-<div class="story-grid">
-
-<div class="story-left">
-
-<p>
-Most businesses don't need more software.
-They need intelligent systems that remove friction.
-</p>
-
-<p>
-Every Buildifo product starts with one question:
-"What if technology adapted to people?"
-</p>
-
-<p>
-Everything we build is designed around clarity, speed and long-term value.
-</p>
-
-</div>
-
-<div class="story-right">
-
-<div class="story-card">
-<h3>01</h3>
-<h4>Discover</h4>
-<p>Understand the business and define objectives.</p>
-</div>
-
-<div class="story-card">
-<h3>02</h3>
-<h4>Design</h4>
-<p>Create intuitive AI experiences.</p>
-</div>
-
-<div class="story-card">
-<h3>03</h3>
-<h4>Deliver</h4>
-<p>Launch scalable intelligent systems.</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+  <div class="wrap">
+    <div class="compare-strip reveal">
+      <div class="compare-head">
+        <div>What changes with AI-assisted building</div>
+        <div>Typical agency</div>
+        <div class="us">Buildifo</div>
+      </div>
+      <div class="compare-row">
+        <div>Time from brief to first working draft</div>
+        <div>2–3 weeks</div>
+        <div class="yes">2–3 days</div>
+      </div>
+      <div class="compare-row">
+        <div>Every line reviewed by a senior engineer</div>
+        <div class="no"></div>
+        <div class="yes">Always</div>
+      </div>
+      <div class="compare-row">
+        <div>Junior staff learning on your invoice</div>
+        <div>Often</div>
+        <div class="no"></div>
+      </div>
+      <div class="compare-row">
+        <div>Fixed price, scope agreed up front</div>
+        <div class="no"></div>
+        <div class="yes">Always</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="services" class="services">
+<section class="dark" id="process" style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow reveal">Our approach</div>
+    <h2 class="reveal">A thoughtful process,<br>built around your success.</h2>
 
-<div class="container">
-
-<div class="section-intro">
-<span class="section-tag">SERVICES</span>
-<h2>Designed around business outcomes.</h2>
-</div>
-
-<div class="services-grid">
-
-<div class="service-card">
-<span>01</span>
-<h3>AI Automation</h3>
-<p>Automate repetitive operations.</p>
-</div>
-
-<div class="service-card">
-<span>02</span>
-<h3>Custom AI Products</h3>
-<p>Purpose-built intelligent systems.</p>
-</div>
-
-<div class="service-card">
-<span>03</span>
-<h3>Web Experiences</h3>
-<p>Modern digital products.</p>
-</div>
-
-<div class="service-card">
-<span>04</span>
-<h3>AI Consulting</h3>
-<p>Strategy and implementation.</p>
-</div>
-
-</div>
-
-</div>
-
+    <div class="process-row reveal">
+      <div class="step-num">01</div>
+      <div class="step-text"><h3>Understand</h3><p>We spend real time in your business before touching a single line of code — goals, constraints, the people who'll actually use this.</p></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="20" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><rect x="100" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><line x1="80" y1="60" x2="100" y2="60" stroke="#C79553" stroke-width="1.5"/><circle cx="140" cy="60" r="4" fill="#C79553"/></svg></div>
+    </div>
+    <div class="process-row reveal">
+      <div class="step-num">02</div>
+      <div class="step-text"><h3>Strategize</h3><p>A roadmap tailored to what you actually need — not a template, not a trend, a plan built for your constraints.</p><span class="deliverable">You get: scoped roadmap + technical spec</span></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><path d="M20 90 L70 60 L110 75 L150 35 L200 50" stroke="#C79553" stroke-width="1.5" fill="none"/><circle cx="150" cy="35" r="3" fill="#C79553"/></svg></div>
+    </div>
+    <div class="process-row reveal">
+      <div class="step-num">03</div>
+      <div class="step-text"><h3>Build</h3><p>Reliable, scalable, intuitive — engineered by people who'll still be answering your calls a year after launch.</p><span class="deliverable">You get: weekly demos, staging access from day one</span></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="30" y="25" width="160" height="70" fill="none" stroke="#3A342A"/><line x1="30" y1="45" x2="190" y2="45" stroke="#3A342A"/><line x1="30" y1="65" x2="190" y2="65" stroke="#3A342A"/><rect x="30" y="45" width="90" height="20" fill="#C79553" opacity=".22"/></svg></div>
+    </div>
+    <div class="process-row reveal">
+      <div class="step-num">04</div>
+      <div class="step-text"><h3>Support</h3><p>Launch is day one. We stay on to optimize, evolve, and make sure the system keeps paying off.</p><span class="deliverable">You get: 30-day post-launch window + a direct line to the team</span></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><circle cx="110" cy="60" r="34" fill="none" stroke="#3A342A"/><circle cx="110" cy="60" r="34" fill="none" stroke="#C79553" stroke-width="2" stroke-dasharray="70 300" stroke-linecap="round"/></svg></div>
+    </div>
+  </div>
 </section>
 
-<section id="products" class="products">
-
-<div class="container">
-
-<div class="section-intro">
-<span class="section-tag">AI PRODUCTS</span>
-<h2>Intelligent systems built for modern businesses.</h2>
-</div>
-
-<div class="product-grid">
-
-<div class="product-card">
-<h3>Vision Agent</h3>
-<p>Observe. Analyze. Automate.</p>
-</div>
-
-<div class="product-card">
-<h3>Digital Extractor</h3>
-<p>Extract structured information instantly.</p>
-</div>
-
-<div class="product-card">
-<h3>Talking Bot</h3>
-<p>Human-like AI assistants.</p>
-</div>
-
-<div class="product-card">
-<h3>Workflow Monitor</h3>
-<p>Monitor operations in real time.</p>
-</div>
-
-<div class="product-card">
-<h3>Knowledge AI</h3>
-<p>Search company knowledge instantly.</p>
-</div>
-
-<div class="product-card">
-<h3>Custom AI Solutions</h3>
-<p>Built around your workflow.</p>
-</div>
-
-</div>
-
-</div>
-
+<section class="dark" id="why">
+  <div class="wrap">
+    <div class="eyebrow reveal">Why Buildifo</div>
+    <h2 class="reveal">What actually makes us different.</h2>
+    <p class="body-text reveal" style="margin-bottom:56px;">Not a tagline — the specific ways working with us looks different from working with a typical agency.</p>
+    <div class="diff-grid reveal">
+      <div class="diff-card">
+        <span class="diff-num">01</span>
+        <h3>Senior engineers only</h3>
+        <p>No junior devs learning on your budget. Everyone on your project has shipped production systems before.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-num">02</span>
+        <h3>You see it building</h3>
+        <p>Staging access and weekly demos from week one — you're never waiting on a "big reveal" at the end.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-num">03</span>
+        <h3>Fixed scope, fixed price</h3>
+        <p>The roadmap we agree on in strategy is the roadmap you're billed for. No scope creep, no surprise invoices.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-num">04</span>
+        <h3>We stay after launch</h3>
+        <p>30 days of support is built into every project, not sold as an add-on afterward.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="work" class="work">
-
-<div class="container">
-
-<div class="section-intro">
-<span class="section-tag">SELECTED WORK</span>
-<h2>Every solution starts with a vision.</h2>
-</div>
-
-<div class="work-grid">
-
-<div class="work-card">
-<h3>Enterprise Workflow Platform</h3>
-</div>
-
-<div class="work-card">
-<h3>AI Customer Assistant</h3>
-</div>
-
-<div class="work-card">
-<h3>Business Intelligence Dashboard</h3>
-</div>
-
-<div class="work-card">
-<h3>Vision Recognition Platform</h3>
-</div>
-
-</div>
-
-</div>
-
+<section class="dark panelbg" id="products">
+  <div class="wrap">
+    <div class="eyebrow reveal">Products we've built</div>
+    <h2 class="reveal">Platforms that solve real problems.</h2>
+    <div class="prod-grid reveal">
+      <div class="prod-card">
+        <span class="idx">P.01</span>
+        <h3>Vision Agent</h3>
+        <p>An autonomous agent that turns raw data into decisions someone can actually act on.</p>
+        <a class="link-arrow" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+      </div>
+      <div class="prod-card">
+        <span class="idx">P.02</span>
+        <h3>Live Vision</h3>
+        <p>Real-time computer vision for monitoring and analyzing whatever your business needs watched.</p>
+        <a class="link-arrow" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+      </div>
+      <div class="prod-card">
+        <span class="idx">P.03</span>
+        <h3>Table Extractor</h3>
+        <p>Pulls structured data out of any table or document, with the accuracy to trust it downstream.</p>
+        <a class="link-arrow" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+      </div>
+      <div class="prod-card">
+        <span class="idx">P.04</span>
+        <h3>Talking Bot</h3>
+        <p>Conversational assistants that actually understand context, not just keywords.</p>
+        <a class="link-arrow" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+      </div>
+    </div>
+    <div style="margin-top:44px;" class="reveal"><a class="link-arrow" href="#">Explore all products <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a></div>
+  </div>
 </section>
 
-<section class="process">
-
-<div class="container">
-
-<div class="section-intro">
-<span class="section-tag">OUR PROCESS</span>
-<h2>Every great product starts with understanding.</h2>
-</div>
-
-<div class="timeline">
-
-<div class="timeline-item"><h3>01 Discovery</h3></div>
-<div class="timeline-item"><h3>02 Strategy</h3></div>
-<div class="timeline-item"><h3>03 Design</h3></div>
-<div class="timeline-item"><h3>04 Development</h3></div>
-<div class="timeline-item"><h3>05 Launch</h3></div>
-
-</div>
-
-</div>
-
+<section class="dark" id="work">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;" class="reveal">
+      <div>
+        <div class="eyebrow">Selected work</div>
+        <h2 style="margin-bottom:0;">Solutions that create<br>measurable impact.</h2>
+      </div>
+      <a class="link-arrow" href="#">View all case studies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    </div>
+    <div class="work-grid reveal">
+      <div class="work-card">
+        <div class="plate"></div><div class="grain"></div>
+        <div class="year">2024</div>
+        <div class="content">
+          <div class="sector">Fintech</div>
+          <h3>Automated KYC Platform</h3>
+          <p><strong style="color:var(--bone);">Before:</strong> manual review queues took 3 days per user. <strong style="color:var(--bone);">After:</strong> automated verification in under 4 hours, 80% faster onboarding.</p>
+          <a class="link-arrow" href="#">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="plate"></div><div class="grain"></div>
+        <div class="year">2023</div>
+        <div class="content">
+          <div class="sector">Healthcare</div>
+          <h3>Smart Operations Dashboard</h3>
+          <p><strong style="color:var(--bone);">Before:</strong> department heads pulled reports from five disconnected systems. <strong style="color:var(--bone);">After:</strong> one live dashboard, decisions made same-day instead of same-week.</p>
+          <a class="link-arrow" href="#">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="plate"></div><div class="grain"></div>
+        <div class="year">2025</div>
+        <div class="content">
+          <div class="sector">E-commerce</div>
+          <h3>Inventory Intelligence System</h3>
+          <p><strong style="color:var(--bone);">Before:</strong> stockouts on best-sellers every peak season. <strong style="color:var(--bone);">After:</strong> demand predicted 3 weeks out, 35% fewer stockouts.</p>
+          <a class="link-arrow" href="#">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="plate"></div><div class="grain"></div>
+        <div class="year">2024</div>
+        <div class="content">
+          <div class="sector">Logistics</div>
+          <h3>Route Optimization Engine</h3>
+          <p><strong style="color:var(--bone);">Before:</strong> routes planned manually every morning, no visibility into delays. <strong style="color:var(--bone);">After:</strong> live rerouting, 22% faster deliveries across 400+ vehicles.</p>
+          <a class="link-arrow" href="#">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="testimonial">
-
-<div class="container">
-
-<p>
-"We build digital experiences that make businesses impossible to ignore."
-</p>
-
+<div class="stats-bar dark">
+  <div class="wrap stats-grid">
+    <div class="stat reveal"><div class="n" data-count="50">0</div><div class="l">Projects delivered</div></div>
+    <div class="stat reveal"><div class="n" data-count="30">0</div><div class="l">Products built</div></div>
+    <div class="stat reveal"><div class="n" data-count="98" data-suffix="%">0</div><div class="l">Client satisfaction</div></div>
+    <div class="stat reveal"><div class="n" data-count="12" data-suffix="+">0</div><div class="l">Industries served</div></div>
+  </div>
 </div>
 
+<section class="dark">
+  <div class="wrap">
+    <div class="eyebrow reveal">What clients say</div>
+    <h2 class="reveal" style="margin-bottom:0;">Results, not promises.</h2>
+  </div>
+  <div class="testi-track reveal">
+    <div class="testi-scroll">
+      <div class="testi-card"><p>"Buildifo didn't just build a system for us. They took the time to understand how we work and delivered something that truly made a difference."</p><div class="who"><div class="avatar"></div><div><div class="name">Adeel Raza</div><div class="role">COO, Profolio</div></div></div></div>
+      <div class="testi-card"><p>"The team scoped the real problem before writing a single line — that alone saved us months of building the wrong thing."</p><div class="who"><div class="avatar"></div><div><div class="name">Sara Malik</div><div class="role">Founder, Nova</div></div></div></div>
+      <div class="testi-card"><p>"Communication was direct and constant. We always knew exactly where the build stood."</p><div class="who"><div class="avatar"></div><div><div class="name">Hamza Farooq</div><div class="role">Head of Product, Vertex</div></div></div></div>
+      <div class="testi-card"><p>"Six months post-launch and they're still the first call we make when something needs to scale."</p><div class="who"><div class="avatar"></div><div><div class="name">Emily Rhodes</div><div class="role">COO, Frames</div></div></div></div>
+      <div class="testi-card"><p>"Buildifo didn't just build a system for us. They took the time to understand how we work and delivered something that truly made a difference."</p><div class="who"><div class="avatar"></div><div><div class="name">Adeel Raza</div><div class="role">COO, Profolio</div></div></div></div>
+      <div class="testi-card"><p>"The team scoped the real problem before writing a single line — that alone saved us months of building the wrong thing."</p><div class="who"><div class="avatar"></div><div><div class="name">Sara Malik</div><div class="role">Founder, Nova</div></div></div></div>
+      <div class="testi-card"><p>"Communication was direct and constant. We always knew exactly where the build stood."</p><div class="who"><div class="avatar"></div><div><div class="name">Hamza Farooq</div><div class="role">Head of Product, Vertex</div></div></div></div>
+      <div class="testi-card"><p>"Six months post-launch and they're still the first call we make when something needs to scale."</p><div class="who"><div class="avatar"></div><div><div class="name">Emily Rhodes</div><div class="role">COO, Frames</div></div></div></div>
+    </div>
+  </div>
 </section>
 
-<section id="contact" class="contact">
-
-<div class="container">
-
-<h2>Tell us what you're building.</h2>
-
-<form>
-
-<input type="text" placeholder="Your Name">
-<input type="email" placeholder="Email">
-<input type="text" placeholder="Company">
-
-<textarea placeholder="Tell us about your project"></textarea>
-
-<button>Share Your Vision</button>
-
-</form>
-
-</div>
-
+<section class="manifesto dark">
+  <div class="wrap">
+    <div class="eyebrow">Our manifesto</div>
+    <h2>We don't build software to follow trends.</h2>
+    <p>We build products that solve real problems, systems that help businesses grow, and experiences that people enjoy using. Every decision is guided by clarity, craftsmanship, and long-term thinking.</p>
+  </div>
 </section>
 
-<footer>
+<section class="cta-section" id="cta">
+  <div class="wrap">
+    <div class="eyebrow">Ready when you are</div>
+    <h2>Tell us what<br>you're building.</h2>
+    <p>Whether you're exploring an idea, replacing an outdated process, or launching something entirely new — let's talk it through.</p>
+    <a class="cta-btn on-paper" href="#" style="background:var(--ink);color:var(--bone);border-color:var(--ink);" data-magnetic>Start the Conversation →</a>
+  </div>
+</section>
 
-<div class="container">
-
-<h2>BUILDIFO</h2>
-
-<p>
-Building intelligent products for tomorrow.
-</p>
-
-</div>
-
+<footer class="dark">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="logo"><span class="mark"></span>BUILDIFO</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="#story">Story</a>
+          <a href="#process">Process</a>
+          <a href="#work">Work</a>
+          <a href="#">About</a>
+        </div>
+        <div class="footer-col">
+          <h4>Work</h4>
+          <a href="#products">Products</a>
+          <a href="#work">Case studies</a>
+          <a href="#">Insights</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#cta">Start a project</a>
+          <a href="#">hello@buildifo.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copy">© 2026 Buildifo. All rights reserved.</div>
+      <div class="socials">
+        <a href="#" aria-label="LinkedIn">IN</a>
+        <a href="#" aria-label="GitHub">GH</a>
+        <a href="#" aria-label="X">X</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+  // cursor
+  const cursor = document.querySelector('.cursor');
+  const ring = document.querySelector('.cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  function loop(){ rx += (mx-rx)*0.15; ry += (my-ry)*0.15; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop);}
+  loop();
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+  });
+
+  // magnetic buttons
+  document.querySelectorAll('[data-magnetic]').forEach(btn=>{
+    btn.addEventListener('mousemove', e=>{
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width/2;
+      const y = e.clientY - r.top - r.height/2;
+      btn.style.transform = `translate(${x*0.25}px, ${y*0.35}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform='translate(0,0)'; });
+  });
+
+  // reveal + line-reveal
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  },{threshold:.1,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal, .line-reveal').forEach(el=>obs.observe(el));
+
+  // count up
+  const counters = document.querySelectorAll('[data-count]');
+  const cobs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.dataset.count,10);
+        const suffix = el.dataset.suffix || '+';
+        let cur = 0;
+        const step = Math.max(1, Math.round(target/40));
+        const t = setInterval(()=>{
+          cur += step;
+          if(cur >= target){ cur = target; clearInterval(t); }
+          el.textContent = cur + suffix;
+        }, 30);
+        cobs.unobserve(el);
+      }
+    });
+  },{threshold:.5});
+  counters.forEach(c=>cobs.observe(c));
+</script>
 
 </body>
 </html>
