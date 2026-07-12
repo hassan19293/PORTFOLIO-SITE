@@ -6,12 +6,6 @@
     root.setAttribute('data-theme', next);
   });
 
-  // ---- Resume dummy button ----
-  document.getElementById('resumeBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('Add your resume PDF link here.');
-  });
-
   // =====================================================================
   // ---- DETECTION OVERLAY: confidence-score tick-up --------------------
   // Purely cosmetic counter that ticks 0.00 -> 0.98 in sync with the CSS
