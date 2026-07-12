@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildifo — Web Development &amp; AI Automation Studio</title>
-<meta name="description" content="Buildifo is a software studio — custom web development and AI automation builds, fixed price, fixed scope.">
+<meta name="description" content="Buildifo is a one-person software studio — custom web development and AI automation builds, fixed price, fixed scope.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,22 +15,20 @@
 <body>
 
 <div class="bg-grid"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <header class="nav">
   <div class="nav-inner">
     <div class="logo"><span class="dot"></span>BUILDIFO<span style="color:var(--text-dim)">.dev</span></div>
     <nav class="nav-links">
-      <a href="#services" data-cursor="link">Services</a>
-      <a href="#pricing" class="nav-pricing" data-cursor="link">Pricing</a>
-      <a href="#projects" data-cursor="link">Work</a>
-      <a href="#contact" data-cursor="link">Contact</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-cursor="link"><span class="knob"></span></button>
-      <a class="btn-resume" href="#contact" data-cursor="link">Book a Call →</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="knob"></span></button>
+      <a class="btn-resume" href="#contact">Book a Call →</a>
     </div>
   </div>
 </header>
@@ -40,9 +38,9 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow"><span class="dot-live"></span> Taking on 2 new builds this month</div>
-      <h1 class="hero-title">
+      <h1 class="hero-title reveal">
         BUILD IT<br>ONCE, RIGHT
-        <span class="rule">A software studio building websites and AI automations for businesses that don't have time to babysit an agency.</span>
+        <span class="rule">A one-person studio building websites and AI automations for businesses that don't have time to babysit an agency.</span>
       </h1>
       <div class="tag-row">
         <span class="tag">Web Development</span>
@@ -51,16 +49,14 @@
         <span class="tag">No Retainer</span>
       </div>
       <div class="hero-cta">
-        <a href="#pricing" class="btn-primary" data-cursor="link">View Pricing →</a>
-        <a href="#projects" class="btn-ghost" data-cursor="link">See the Work</a>
+        <a href="#pricing" class="btn-primary">View Pricing →</a>
+        <a href="#projects" class="btn-ghost">See the Work</a>
       </div>
     </div>
 
     <!-- SIGNATURE: build console. Instead of a founder headshot, the hero
          shows the studio's own process running live — a terminal that
-         "builds" a site and an automation in real time, then loops. It's
-         the same JSON/console vernacular the pricing cards use later,
-         so the page's one visual idea shows up twice, deliberately. -->
+         "builds" a site and an automation in real time, then loops. -->
     <div class="hero-console-wrap">
       <div class="console" id="buildConsole">
         <div class="console-bar">
@@ -73,7 +69,7 @@
       <div class="hero-stats">
         <div><b>7–10d</b><span>Web Build</span></div>
         <div><b>10–14d</b><span>AI Build</span></div>
-        <div><b>30d</b><span>Support Included</span></div>
+        <div><b>1</b><span>Engineer, No Handoffs</span></div>
       </div>
     </div>
   </div>
@@ -81,10 +77,26 @@
   <div class="scroll-cue"><span>Scroll</span><div class="stick"><i></i></div></div>
 </section>
 
+<!-- MARQUEE: tech / stack strip, infinite auto-scroll, pauses on hover -->
+<section class="marquee-section">
+  <div class="marquee-track" aria-hidden="false">
+    <div class="marquee-group">
+      <span>Next.js</span><span>Python</span><span>OpenAI API</span><span>Gemini API</span>
+      <span>Gradio</span><span>FastAPI</span><span>Supabase</span><span>YOLOv8</span>
+      <span>Docker</span><span>Vercel</span><span>n8n</span><span>Twilio</span>
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      <span>Next.js</span><span>Python</span><span>OpenAI API</span><span>Gemini API</span>
+      <span>Gradio</span><span>FastAPI</span><span>Supabase</span><span>YOLOv8</span>
+      <span>Docker</span><span>Vercel</span><span>n8n</span><span>Twilio</span>
+    </div>
+  </div>
+</section>
+
 <!-- STUDIO NOTE -->
 <section class="studio-note-section">
   <div class="wrap">
-    <p class="studio-note reveal">Direct access to the people building your project — no account manager relay, no context lost in a hand-off, no message sitting in a queue.</p>
+    <p class="studio-note reveal">One engineer. One deadline. One thread you message directly — no designer, developer, and project manager to get lost between.</p>
   </div>
 </section>
 
@@ -96,11 +108,11 @@
         <span class="section-idx">01 / Services</span>
         <h2 class="section-title">Two ways to move faster</h2>
       </div>
-      <p class="section-note">Pick the one your business needs right now — or bundle both and save on the combined build.</p>
+      <p class="section-note">Pick the one your business needs right now — or bundle both and I'll adjust the price.</p>
     </div>
 
     <div class="proj-grid">
-      <a class="proj-card" style="--card-c:#FFB020" href="#pricing" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#FFB020" href="#pricing">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-webdev" aria-hidden="true">
@@ -124,7 +136,7 @@
         <div class="proj-cta"><span>See what's included</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card" style="--card-c:#B98CFF" href="#pricing" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#B98CFF" href="#pricing">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-automate" aria-hidden="true">
@@ -139,7 +151,7 @@
               <path class="au-flow" d="M28 35 L35 26"/>
             </svg>
           </div>
-          <span class="proj-badge">From $599</span>
+          <span class="proj-badge">From $1,199</span>
         </div>
         <h3>AI Automation</h3>
         <p>An AI system wired into your business — calls, bookings, leads, or documents — handling the repetitive work.</p>
@@ -177,7 +189,7 @@
       <div class="process-step reveal">
         <span class="process-num">03</span>
         <h3>Ship</h3>
-        <p>Live, tested, and handed off — or we keep maintaining it for you if you'd rather not think about it again.</p>
+        <p>Live, tested, and handed off — or I keep maintaining it for you if you'd rather not think about it again.</p>
       </div>
     </div>
   </div>
@@ -191,11 +203,11 @@
         <span class="section-idx">03 / Selected Work</span>
         <h2 class="section-title">Live projects</h2>
       </div>
-      <p class="section-note">A few systems designed and shipped for real use — each solving one concrete problem end to end.</p>
+      <p class="section-note">A few systems I've designed and shipped — each solving one concrete problem end to end.</p>
     </div>
 
     <div class="proj-grid">
-      <a class="proj-card" style="--card-c:#4ADE80" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#4ADE80" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-vision" aria-hidden="true">
@@ -220,7 +232,7 @@
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card" style="--card-c:#FF7A59" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#FF7A59" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-frontdesk" aria-hidden="true">
@@ -243,7 +255,7 @@
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card" style="--card-c:#FFD166" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#FFD166" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-extract" aria-hidden="true">
@@ -267,7 +279,7 @@
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card" style="--card-c:#FF6FB5" href="https://h1239-bellavistarestaurant.hf.space" target="_blank" rel="noopener" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#FF6FB5" href="https://h1239-bellavistarestaurant.hf.space" target="_blank" rel="noopener">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-booking" aria-hidden="true">
@@ -288,7 +300,7 @@
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <div class="proj-card" style="--card-c:#4DD8FF">
+      <div class="proj-card reveal" style="--card-c:#4DD8FF">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-shelf" aria-hidden="true">
@@ -314,7 +326,7 @@
         <div class="proj-cta proj-cta-muted"><span>Internal deployment · no public demo</span></div>
       </div>
 
-      <a class="proj-card" style="--card-c:#B98CFF" href="https://huggingface.co/spaces/H1239/RAG-ASSISTANT" target="_blank" rel="noopener" data-cursor="link">
+      <a class="proj-card reveal" style="--card-c:#B98CFF" href="https://huggingface.co/spaces/H1239/RAG-ASSISTANT" target="_blank" rel="noopener">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-rag" aria-hidden="true">
@@ -346,19 +358,19 @@
     <div class="section-head reveal">
       <div>
         <span class="section-idx">04 / Pricing</span>
-        <h2 class="section-title">Three plans, no retainer</h2>
+        <h2 class="section-title">Two plans, no retainer</h2>
       </div>
       <p class="section-note">Fixed price, fixed scope. You know the cost before we start, and there's no contract locking you in after.</p>
     </div>
 
-    <div class="pricing-grid pricing-grid--three">
+    <div class="pricing-grid">
 
       <!-- PLAN 1: Website -->
-      <div class="price-card reveal price-card--web" data-cursor="link">
+      <div class="price-card reveal price-card--web">
         <div class="price-card-top">
           <span class="price-kicker">Web Development</span>
           <h3 class="price-name">Rapid Web Build</h3>
-          <p class="price-sub">Delivered in 1 week</p>
+          <p class="price-sub">Delivered in 7–10 days</p>
         </div>
         <div class="price-amount">
           <span class="price-currency">$</span><span class="price-figure">599</span><span class="price-period">/one-time</span>
@@ -372,124 +384,63 @@
           <li>SEO basics + fast load times</li>
           <li>2 rounds of revisions</li>
         </ul>
-        <a class="btn-primary price-cta" href="#contact" data-cursor="link">Start this project →</a>
+        <a class="btn-primary price-cta" href="#contact">Start this project →</a>
       </div>
 
-      <!-- PLAN 2: Web + AI Automation — featured / bundle -->
-      <div class="price-card price-card--ai reveal" data-cursor="link">
-        <span class="price-featured-tag">Most Popular</span>
+      <!-- PLAN 2: AI Automation — featured -->
+      <div class="price-card price-card--ai reveal">
+        <span class="price-featured-tag">Most Requested</span>
         <div class="price-card-top">
-          <span class="price-kicker">Web + AI Automation</span>
+          <span class="price-kicker">AI Automation</span>
           <h3 class="price-name">Automation Build</h3>
           <p class="price-sub">Delivered in 10–14 days</p>
         </div>
         <div class="price-amount">
           <span class="price-currency">$</span><span class="price-figure">1,199</span><span class="price-period">/one-time</span>
         </div>
-        <p class="price-value-note">Buy the site and an automation separately and it's $1,198. Get both built as one connected system for a dollar more.</p>
         <ul class="price-features">
-          <li>Everything in Rapid Web Build</li>
-          <li>One core AI automation — calls, booking, docs, or leads</li>
+          <li>One core automation — calls, booking, docs, or leads</li>
           <li>Custom AI agent, trained on your business</li>
           <li>Connected to your calendar, CRM, or inbox</li>
-          <li>Site and automation launch together, fully wired</li>
+          <li>Structured data extraction &amp; handoff</li>
           <li>Handoff docs + 30 days of support</li>
           <li>Progress updates via Slack or WhatsApp</li>
-        </ul>
-        <a class="btn-primary price-cta price-cta--ai" href="#contact" data-cursor="link">Start this project →</a>
-      </div>
-
-      <!-- PLAN 3: Front Desk AI -->
-      <div class="price-card reveal price-card--frontdesk" data-cursor="link">
-        <div class="price-card-top">
-          <span class="price-kicker">AI Automation</span>
-          <h3 class="price-name">Front Desk AI</h3>
-          <p class="price-sub">Delivered in 10–14 days</p>
-        </div>
-        <div class="price-amount">
-          <span class="price-currency">$</span><span class="price-figure">599</span><span class="price-period">/one-time</span>
-        </div>
-        <ul class="price-features">
-          <li>Answers and texts back every missed call</li>
-          <li>Books straight into your calendar, no double-entry</li>
-          <li>Follows up automatically so no lead goes cold</li>
-          <li>Works nights, weekends, and while you're off</li>
-          <li>Trained on your services, hours, and pricing</li>
-          <li>Handoff docs + 30 days of support</li>
           <li>1 revision round after testing</li>
         </ul>
-        <a class="btn-primary price-cta" href="#contact" data-cursor="link">Start this project →</a>
+        <a class="btn-primary price-cta price-cta--ai" href="#contact">Start this project →</a>
       </div>
 
     </div>
-    <p class="pricing-footnote reveal">Not sure which fits? Tell me what's eating the most time in your business on the call, and I'll point you at the right plan.</p>
-
-    <!-- TRUST / GUARANTEE BAR -->
-    <div class="guarantee-bar reveal">
-      <div class="guarantee-item">
-        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.4 8 9 4.6-.6 8-4.6 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-        <div>
-          <b>Fixed price, agreed upfront</b>
-          <span>The number on this page is the number on the invoice.</span>
-        </div>
-      </div>
-      <div class="guarantee-item">
-        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        <div>
-          <b>You own 100% of the code</b>
-          <span>Full source handoff — nothing is licensed back to us.</span>
-        </div>
-      </div>
-      <div class="guarantee-item">
-        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        <div>
-          <b>30 days of support included</b>
-          <span>Bugs and small fixes after launch, covered.</span>
-        </div>
-      </div>
-      <div class="guarantee-item">
-        <svg class="guarantee-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M14 3v5h5"/></svg>
-        <div>
-          <b>Scope in writing before we start</b>
-          <span>No surprise invoices, no quiet feature cuts.</span>
-        </div>
-      </div>
-    </div>
+    <p class="pricing-footnote reveal">Need both? Bundle web development and AI automation together and I'll adjust the price — just ask on the call.</p>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section" id="faq">
+<!-- TESTIMONIALS -->
+<section class="section testimonial-section" id="testimonials">
   <div class="wrap">
     <div class="section-head reveal">
       <div>
-        <span class="section-idx">05 / FAQ</span>
-        <h2 class="section-title">Before you ask</h2>
+        <span class="section-idx">05 / Testimonials</span>
+        <h2 class="section-title">Results, not promises</h2>
       </div>
-      <p class="section-note">The questions that come up on nearly every first call.</p>
+      <p class="section-note">A few notes from people who booked a build.</p>
     </div>
+  </div>
 
-    <div class="faq-list">
-      <details class="faq-item reveal" open>
-        <summary><span>Do I own the website or automation once it's done?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-        <p>Yes, completely. You get the full source code and any credentials set up during the build. Nothing is rented back to you.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary><span>What happens if my needs change mid-build?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-        <p>Small adjustments are handled inside the two revision rounds. Anything outside the agreed scope gets quoted separately before any work starts on it — so the price on this page never moves without your sign-off.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary><span>Can the AI automation connect to tools I already use?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-        <p>In most cases, yes — calendars, CRMs, inboxes, and booking systems are the common ones. If your stack is unusual, we'll flag feasibility on the scoping call before you commit to anything.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary><span>What if I only need part of a plan?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-        <p>Tell me what you actually need on the call. Plans are a starting point, not a strict menu — scope and price get adjusted to fit before anything is agreed in writing.</p>
-      </details>
-      <details class="faq-item reveal">
-        <summary><span>How soon can we start?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-        <p>Usually within a few days of the scoping call, depending on the current build queue — there are only 2 new build slots open this month.</p>
-      </details>
+  <div class="t-marquee-wrap reveal">
+    <div class="t-marquee-track">
+      <div class="t-marquee-group">
+        <div class="t-card"><p>"Had a working booking bot in under two weeks — no back and forth, no scope drift. Just what we agreed on, on time."</p><span>— Restaurant client, Table Booking Bot</span></div>
+        <div class="t-card"><p>"Direct line to the person actually writing the code. Faster answers than any agency I've used."</p><span>— Local services client</span></div>
+        <div class="t-card"><p>"The extraction tool alone saved us hours of manual data entry every week."</p><span>— Ops lead, document workflow</span></div>
+        <div class="t-card"><p>"Fixed price meant zero surprises on the invoice. Would book again."</p><span>— Small business owner</span></div>
+      </div>
+      <div class="t-marquee-group" aria-hidden="true">
+        <div class="t-card"><p>"Had a working booking bot in under two weeks — no back and forth, no scope drift. Just what we agreed on, on time."</p><span>— Restaurant client, Table Booking Bot</span></div>
+        <div class="t-card"><p>"Direct line to the person actually writing the code. Faster answers than any agency I've used."</p><span>— Local services client</span></div>
+        <div class="t-card"><p>"The extraction tool alone saved us hours of manual data entry every week."</p><span>— Ops lead, document workflow</span></div>
+        <div class="t-card"><p>"Fixed price meant zero surprises on the invoice. Would book again."</p><span>— Small business owner</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -500,7 +451,7 @@
     <div class="contact-panel reveal">
       <span class="section-idx">06 / Contact</span>
       <h2>Have a site to build, or a system to automate?</h2>
-      <p>Tell me what you're working on — every message gets read and answered within a day or two.</p>
+      <p>Tell me what you're working on — I read every message and reply within a day or two.</p>
 
       <form class="contact-form" onsubmit="return false;">
         <div class="field">
@@ -516,16 +467,16 @@
           <textarea placeholder="What are you building?"></textarea>
         </div>
         <div class="contact-submit full">
-          <button type="submit" class="btn-primary" data-cursor="link">Send Message →</button>
+          <button type="submit" class="btn-primary">Send Message →</button>
           <span class="font-mono" style="font-size:12px;color:var(--text-dim)">or email hello@buildifo.dev directly</span>
         </div>
       </form>
 
       <div class="social-row">
-        <a href="#" data-cursor="link">GitHub ↗</a>
-        <a href="#" data-cursor="link">LinkedIn ↗</a>
-        <a href="#" data-cursor="link">Twitter / X ↗</a>
-        <a href="#" data-cursor="link">Kaggle ↗</a>
+        <a href="#">GitHub ↗</a>
+        <a href="#">LinkedIn ↗</a>
+        <a href="#">Twitter / X ↗</a>
+        <a href="#">Kaggle ↗</a>
       </div>
     </div>
   </div>
@@ -537,9 +488,6 @@
     <p>Built with care, coffee, and a few thousand epochs.</p>
   </div>
 </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script src="script.js"></script>
 
