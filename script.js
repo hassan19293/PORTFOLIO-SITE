@@ -82,7 +82,7 @@
       { text: '✓ site is live', cls: 'ln-ok' },
       { text: '', cls: '' },
       { text: '$ status', cls: 'ln-cmd' },
-      { text: '> 1 engineer · fixed price · no retainer', cls: 'ln-accent' },
+      { text: '> fixed price · fixed scope · no retainer', cls: 'ln-accent' },
     ];
 
     const reduceMotion = reduceMotionQuery.matches;
