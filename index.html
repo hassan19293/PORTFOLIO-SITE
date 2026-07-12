@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Buildifo — Web Development &amp; AI Automation Studio</title>
-<meta name="description" content="Buildifo is a one-person software studio run by Muhammad Hassan — custom web development and AI automation builds, fixed price, fixed scope.">
+<meta name="description" content="Buildifo is a one-person software studio — custom web development and AI automation builds, fixed price, fixed scope.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,20 +15,22 @@
 <body>
 
 <div class="bg-grid"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <header class="nav">
   <div class="nav-inner">
     <div class="logo"><span class="dot"></span>BUILDIFO<span style="color:var(--text-dim)">.dev</span></div>
     <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#projects">Work</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Contact</a>
+      <a href="#services" data-cursor="link">Services</a>
+      <a href="#projects" data-cursor="link">Work</a>
+      <a href="#pricing" data-cursor="link">Pricing</a>
+      <a href="#contact" data-cursor="link">Contact</a>
     </nav>
     <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="knob"></span></button>
-      <a class="btn-resume" href="#contact">Book a Call →</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" data-cursor="link"><span class="knob"></span></button>
+      <a class="btn-resume" href="#contact" data-cursor="link">Book a Call →</a>
     </div>
   </div>
 </header>
@@ -49,44 +51,29 @@
         <span class="tag">No Retainer</span>
       </div>
       <div class="hero-cta">
-        <a href="#pricing" class="btn-primary">View Pricing →</a>
-        <a href="#projects" class="btn-ghost">See the Work</a>
+        <a href="#pricing" class="btn-primary" data-cursor="link">View Pricing →</a>
+        <a href="#projects" class="btn-ghost" data-cursor="link">See the Work</a>
       </div>
     </div>
 
-    <div class="hero-photo-wrap">
-      <div>
-        <!-- DETECTION FRAME: signature animation.
-             A live-CV-style scan runs over the photo on load — corner
-             brackets draw in, a scan-line sweeps once, then it settles
-             into an idle "tracked" state with a ticking confidence score.
-             A nod to the AI automation work this studio ships. -->
-        <div class="photo-frame" id="detectFrame">
-          <img src="hassana.png" alt="Muhammad Hassan, founder of Buildifo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="img-fallback" style="display:none;">hassana.png<br>not found in this folder</div>
-
-          <svg class="detect-corners" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <path class="corner corner-tl" d="M4,16 L4,4 L16,4" />
-            <path class="corner corner-tr" d="M84,4 L96,4 L96,16" />
-            <path class="corner corner-bl" d="M4,84 L4,96 L16,96" />
-            <path class="corner corner-br" d="M96,84 L96,96 L84,96" />
-          </svg>
-
-          <div class="detect-scanline" aria-hidden="true"></div>
-
-          <div class="detect-tag detect-tag-top" aria-hidden="true">
-            <span class="dot-live"></span>FOUNDER
-          </div>
-          <div class="detect-tag detect-tag-bottom" aria-hidden="true">
-            conf&nbsp;<span id="confScore">0.00</span>
-          </div>
+    <!-- SIGNATURE: build console. Instead of a founder headshot, the hero
+         shows the studio's own process running live — a terminal that
+         "builds" a site and an automation in real time, then loops. It's
+         the same JSON/console vernacular the pricing cards use later,
+         so the page's one visual idea shows up twice, deliberately. -->
+    <div class="hero-console-wrap">
+      <div class="console" id="buildConsole">
+        <div class="console-bar">
+          <span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span>
+          <span class="console-filename">buildifo — zsh</span>
         </div>
+        <pre class="console-body"><code id="consoleCode"></code><span class="console-cursor" aria-hidden="true"></span></pre>
+      </div>
 
-        <div class="hero-stats">
-          <div><b>7–10d</b><span>Web Build</span></div>
-          <div><b>10–14d</b><span>AI Build</span></div>
-          <div><b>1</b><span>Engineer, No Handoffs</span></div>
-        </div>
+      <div class="hero-stats">
+        <div><b>7–10d</b><span>Web Build</span></div>
+        <div><b>10–14d</b><span>AI Build</span></div>
+        <div><b>1</b><span>Engineer, No Handoffs</span></div>
       </div>
     </div>
   </div>
@@ -97,7 +84,7 @@
 <!-- STUDIO NOTE -->
 <section class="studio-note-section">
   <div class="wrap">
-    <p class="studio-note reveal">I'm Muhammad Hassan. I scope, design, build, and ship every project myself — so nothing gets lost between a designer, a developer, and a project manager. One person, one deadline, one thread you can message directly.</p>
+    <p class="studio-note reveal">One engineer. One deadline. One thread you message directly — no designer, developer, and project manager to get lost between.</p>
   </div>
 </section>
 
@@ -113,7 +100,7 @@
     </div>
 
     <div class="proj-grid">
-      <a class="proj-card reveal" style="--card-c:#FFB020" href="#pricing">
+      <a class="proj-card" style="--card-c:#FFB020" href="#pricing" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-webdev" aria-hidden="true">
@@ -127,17 +114,17 @@
               <path class="wd-brackets" d="M30 27 l5 4 -5 4"/>
             </svg>
           </div>
-          <span class="proj-badge">From $699</span>
+          <span class="proj-badge">From $599</span>
         </div>
         <h3>Web Development</h3>
-        <p>A custom-coded site built around your brand and your customers — no page builder, no template seams. Fast to load, easy to find, built to convert visitors into leads.</p>
+        <p>Custom-coded, on-brand, built to convert. No template seams.</p>
         <div class="proj-stack">
-          <span>Custom Code</span><span>Responsive</span><span>SEO-Ready</span><span>Fast Load</span>
+          <span>Custom Code</span><span>UI/UX Design</span><span>SEO-Ready</span><span>Fast Load</span>
         </div>
         <div class="proj-cta"><span>See what's included</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card reveal" style="--card-c:#B98CFF" href="#pricing">
+      <a class="proj-card" style="--card-c:#B98CFF" href="#pricing" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-automate" aria-hidden="true">
@@ -152,10 +139,10 @@
               <path class="au-flow" d="M28 35 L35 26"/>
             </svg>
           </div>
-          <span class="proj-badge">From $1,599</span>
+          <span class="proj-badge">From $1,199</span>
         </div>
         <h3>AI Automation</h3>
-        <p>An AI system wired directly into your business — missed-call recovery, booking, lead qualification, or document extraction — handling the repetitive work your team shouldn't have to.</p>
+        <p>An AI system wired into your business — calls, bookings, leads, or documents — handling the repetitive work.</p>
         <div class="proj-stack">
           <span>LLM Agents</span><span>Calendar / CRM Sync</span><span>Custom-Trained</span><span>Real Integrations</span>
         </div>
@@ -180,17 +167,17 @@
       <div class="process-step reveal">
         <span class="process-num">01</span>
         <h3>Scope</h3>
-        <p>We agree on exactly what's being built — pages, integrations, or automations — in writing, before any code gets written. No scope creep, no surprise invoices.</p>
+        <p>Exactly what's being built, agreed in writing before any code gets written. No scope creep, no surprise invoices.</p>
       </div>
       <div class="process-step reveal">
         <span class="process-num">02</span>
         <h3>Build</h3>
-        <p>I design and build in the open. You get progress updates every few days, not just a reveal at the end — so you can catch anything early.</p>
+        <p>Built in the open, with progress updates every few days — not just a reveal at the end.</p>
       </div>
       <div class="process-step reveal">
         <span class="process-num">03</span>
         <h3>Ship</h3>
-        <p>Live, tested, and handed off with everything you need to run it yourself — or I keep maintaining it for you if you'd rather not think about it again.</p>
+        <p>Live, tested, and handed off — or I keep maintaining it for you if you'd rather not think about it again.</p>
       </div>
     </div>
   </div>
@@ -208,7 +195,7 @@
     </div>
 
     <div class="proj-grid">
-      <a class="proj-card reveal" style="--card-c:#4ADE80" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener">
+      <a class="proj-card" style="--card-c:#4ADE80" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-vision" aria-hidden="true">
@@ -226,14 +213,14 @@
           <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
         </div>
         <h3>Live Vision Agent</h3>
-        <p>Turn on your webcam and ask what it sees — a chat assistant answers in real time, grounded strictly in live YOLOv8 detections instead of guessing at the scene.</p>
+        <p>Ask your webcam what it sees — answered live, grounded in real YOLOv8 detections instead of a guess.</p>
         <div class="proj-stack">
           <span>YOLOv8</span><span>Gemini API</span><span>Real-Time CV</span><span>Gradio</span>
         </div>
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card reveal" style="--card-c:#FF7A59" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener">
+      <a class="proj-card" style="--card-c:#FF7A59" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-frontdesk" aria-hidden="true">
@@ -249,14 +236,14 @@
           <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
         </div>
         <h3>Front Desk AI</h3>
-        <p>An always-on AI receptionist that catches missed calls, texts the customer back in seconds, and books the appointment straight into Google Calendar — then follows up for a review, no front desk required.</p>
+        <p>Catches missed calls, texts the customer back, books straight into Google Calendar, follows up for a review.</p>
         <div class="proj-stack">
           <span>LLM Agent</span><span>Calendar Sync</span><span>Lead Automation</span><span>Next.js</span>
         </div>
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card reveal" style="--card-c:#FFD166" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener">
+      <a class="proj-card" style="--card-c:#FFD166" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-extract" aria-hidden="true">
@@ -273,14 +260,14 @@
           <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
         </div>
         <h3>Digital Extractor</h3>
-        <p>Upload a scanned or digital invoice/contract as a PDF or image — the app reads it and pulls out key fields like dates, amounts, vendor, and invoice number into a clean table.</p>
+        <p>Upload a scanned invoice or contract — key fields like dates, amounts, and vendor land in a clean table.</p>
         <div class="proj-stack">
           <span>OCR</span><span>NLP</span><span>Document AI</span><span>Gradio</span>
         </div>
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <a class="proj-card reveal" style="--card-c:#FF6FB5" href="https://h1239-bellavistarestaurant.hf.space" target="_blank" rel="noopener">
+      <a class="proj-card" style="--card-c:#FF6FB5" href="https://h1239-bellavistarestaurant.hf.space" target="_blank" rel="noopener" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-booking" aria-hidden="true">
@@ -294,14 +281,14 @@
           <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
         </div>
         <h3>Table Booking Bot</h3>
-        <p>A WhatsApp-style assistant that takes restaurant reservation requests through natural conversation, then extracts a clean structured booking card — no missed DMs, no manual back-and-forth.</p>
+        <p>Takes restaurant reservations through natural conversation, then extracts a clean structured booking card.</p>
         <div class="proj-stack">
           <span>Gemini API</span><span>Conversational AI</span><span>Structured Extraction</span><span>Gradio</span>
         </div>
         <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
       </a>
 
-      <div class="proj-card reveal" style="--card-c:#4DD8FF">
+      <div class="proj-card" style="--card-c:#4DD8FF">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-shelf" aria-hidden="true">
@@ -320,14 +307,14 @@
           <span class="proj-badge">94.6% mAP</span>
         </div>
         <h3>Vision Shelf Monitor</h3>
-        <p>A real-time object detection pipeline that scans retail shelf footage to flag out-of-stock and misplaced items as they happen — the dashed box is the one it just caught.</p>
+        <p>Scans retail shelf footage in real time to flag out-of-stock and misplaced items as they happen.</p>
         <div class="proj-stack">
           <span>YOLOv8</span><span>OpenCV</span><span>FastAPI</span><span>Docker</span>
         </div>
         <div class="proj-cta proj-cta-muted"><span>Internal deployment · no public demo</span></div>
       </div>
 
-      <a class="proj-card reveal" style="--card-c:#B98CFF" href="https://huggingface.co/spaces/H1239/RAG-ASSISTANT" target="_blank" rel="noopener">
+      <a class="proj-card" style="--card-c:#B98CFF" href="https://huggingface.co/spaces/H1239/RAG-ASSISTANT" target="_blank" rel="noopener" data-cursor="link">
         <span class="proj-sweep" aria-hidden="true"></span>
         <div class="proj-card-top">
           <div class="proj-icon icon-rag" aria-hidden="true">
@@ -343,7 +330,7 @@
           <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
         </div>
         <h3>RAG Assistant</h3>
-        <p>Upload one or more PDF/TXT documents and ask questions in plain language — the assistant retrieves the relevant passages and answers with sources cited.</p>
+        <p>Upload PDFs or text files and ask questions in plain language — answered with sources cited.</p>
         <div class="proj-stack">
           <span>RAG</span><span>Vector Search</span><span>LLM API</span><span>Gradio</span>
         </div>
@@ -365,49 +352,52 @@
     </div>
 
     <div class="pricing-grid">
-      <div class="price-card reveal" style="--card-c:#FFB020">
-        <div class="price-card-bar">
-          <span class="price-dot"></span><span class="price-dot"></span><span class="price-dot"></span>
-          <span class="price-filename">web-development.json</span>
-          <span class="proj-badge price-badge">$699</span>
+
+      <!-- PLAN 1: Website -->
+      <div class="price-card reveal price-card--web" data-cursor="link">
+        <div class="price-card-top">
+          <span class="price-kicker">Web Development</span>
+          <h3 class="price-name">Rapid Web Build</h3>
+          <p class="price-sub">Delivered in 7–10 days</p>
         </div>
-        <pre class="price-code"><code>{
-  <span class="pc-key">"plan"</span>: <span class="pc-str">"Rapid Web Build"</span>,
-  <span class="pc-key">"delivery"</span>: <span class="pc-str">"7–10 days"</span>,
-  <span class="pc-key">"billing"</span>: <span class="pc-str">"one-time"</span>,
-  <span class="pc-key">"includes"</span>: [
-    <span class="pc-str">"Custom-coded site, no page builder"</span>,
-    <span class="pc-str">"Responsive on every screen size"</span>,
-    <span class="pc-str">"Up to 6 pages"</span>,
-    <span class="pc-str">"Contact form wired to your inbox"</span>,
-    <span class="pc-str">"SEO basics + fast load times"</span>,
-    <span class="pc-str">"2 rounds of revisions"</span>
-  ]
-}</code></pre>
-        <a class="btn-primary price-cta" href="#contact">Start this project →</a>
+        <div class="price-amount">
+          <span class="price-currency">$</span><span class="price-figure">599</span><span class="price-period">/one-time</span>
+        </div>
+        <ul class="price-features">
+          <li>Custom-coded site, no page builder</li>
+          <li>UI/UX design tailored to your brand</li>
+          <li>Fully responsive on every screen size</li>
+          <li>Up to 6 pages</li>
+          <li>Contact form wired to your inbox</li>
+          <li>SEO basics + fast load times</li>
+          <li>2 rounds of revisions</li>
+        </ul>
+        <a class="btn-primary price-cta" href="#contact" data-cursor="link">Start this project →</a>
       </div>
 
-      <div class="price-card reveal" style="--card-c:#B98CFF">
-        <div class="price-card-bar">
-          <span class="price-dot"></span><span class="price-dot"></span><span class="price-dot"></span>
-          <span class="price-filename">ai-automation.json</span>
-          <span class="proj-badge price-badge">$1,599</span>
+      <!-- PLAN 2: AI Automation — featured -->
+      <div class="price-card price-card--ai reveal" data-cursor="link">
+        <span class="price-featured-tag">Most Requested</span>
+        <div class="price-card-top">
+          <span class="price-kicker">AI Automation</span>
+          <h3 class="price-name">Automation Build</h3>
+          <p class="price-sub">Delivered in 10–14 days</p>
         </div>
-        <pre class="price-code"><code>{
-  <span class="pc-key">"plan"</span>: <span class="pc-str">"AI Automation Build"</span>,
-  <span class="pc-key">"delivery"</span>: <span class="pc-str">"10–14 days"</span>,
-  <span class="pc-key">"billing"</span>: <span class="pc-str">"one-time"</span>,
-  <span class="pc-key">"includes"</span>: [
-    <span class="pc-str">"One core automation (calls, booking, docs, or leads)"</span>,
-    <span class="pc-str">"Connected to your calendar, CRM, or inbox"</span>,
-    <span class="pc-str">"Custom-trained on your business info"</span>,
-    <span class="pc-str">"Handoff docs + 30 days of support"</span>,
-    <span class="pc-str">"Progress updates via Slack or WhatsApp"</span>,
-    <span class="pc-str">"1 revision round after testing"</span>
-  ]
-}</code></pre>
-        <a class="btn-primary price-cta" href="#contact">Start this project →</a>
+        <div class="price-amount">
+          <span class="price-currency">$</span><span class="price-figure">1,199</span><span class="price-period">/one-time</span>
+        </div>
+        <ul class="price-features">
+          <li>One core automation — calls, booking, docs, or leads</li>
+          <li>Custom AI agent, trained on your business</li>
+          <li>Connected to your calendar, CRM, or inbox</li>
+          <li>Structured data extraction &amp; handoff</li>
+          <li>Handoff docs + 30 days of support</li>
+          <li>Progress updates via Slack or WhatsApp</li>
+          <li>1 revision round after testing</li>
+        </ul>
+        <a class="btn-primary price-cta price-cta--ai" href="#contact" data-cursor="link">Start this project →</a>
       </div>
+
     </div>
     <p class="pricing-footnote reveal">Need both? Bundle web development and AI automation together and I'll adjust the price — just ask on the call.</p>
   </div>
@@ -435,16 +425,16 @@
           <textarea placeholder="What are you building?"></textarea>
         </div>
         <div class="contact-submit full">
-          <button type="submit" class="btn-primary">Send Message →</button>
+          <button type="submit" class="btn-primary" data-cursor="link">Send Message →</button>
           <span class="font-mono" style="font-size:12px;color:var(--text-dim)">or email hello@buildifo.dev directly</span>
         </div>
       </form>
 
       <div class="social-row">
-        <a href="#">GitHub ↗</a>
-        <a href="#">LinkedIn ↗</a>
-        <a href="#">Twitter / X ↗</a>
-        <a href="#">Kaggle ↗</a>
+        <a href="#" data-cursor="link">GitHub ↗</a>
+        <a href="#" data-cursor="link">LinkedIn ↗</a>
+        <a href="#" data-cursor="link">Twitter / X ↗</a>
+        <a href="#" data-cursor="link">Kaggle ↗</a>
       </div>
     </div>
   </div>
@@ -452,7 +442,7 @@
 
 <footer>
   <div class="wrap footer-inner">
-    <p>© 2026 MUHAMMAD HASSAN — BUILDIFO.DEV</p>
+    <p>© 2026 BUILDIFO.DEV</p>
     <p>Built with care, coffee, and a few thousand epochs.</p>
   </div>
 </footer>
