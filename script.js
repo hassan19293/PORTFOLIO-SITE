@@ -6,34 +6,125 @@
     root.setAttribute('data-theme', next);
   });
 
+  const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarsePointerQuery = window.matchMedia('(hover: none), (pointer: coarse)');
+
   // =====================================================================
-  // ---- DETECTION OVERLAY: confidence-score tick-up --------------------
-  // Purely cosmetic counter that ticks 0.00 -> 0.98 in sync with the CSS
-  // corner-bracket / scan-line animation on the hero photo (see style.css
-  // ".detect-*" rules). Skipped entirely if reduced motion is requested.
+  // ---- CUSTOM CURSOR: dot + trailing ring ------------------------------
+  // Dot tracks the pointer exactly; the ring eases toward it every frame
+  // and expands over anything interactive (data-cursor="link", or any
+  // native <a>/<button>/input/textarea). Skipped on touch devices and
+  // when reduced motion is requested — those have no real pointer to
+  // replace, and forcing a fake one there would hurt usability.
   // =====================================================================
-  (function initConfidenceCounter(){
-    const el = document.getElementById('confScore');
-    if (!el) return;
+  (function initCustomCursor(){
+    if (coarsePointerQuery.matches || reduceMotionQuery.matches) return;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion){ el.textContent = '0.98'; return; }
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
 
-    const target = 0.98;
-    const startDelay = 1300;   // sync with .detect-tag-bottom's animation-delay
-    const duration = 650;
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    let ringX = mouseX, ringY = mouseY;
+    let started = false;
 
-    setTimeout(() => {
-      const start = performance.now();
-      function tick(now){
-        const t = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = (eased * target).toFixed(2);
-        if (t < 1) requestAnimationFrame(tick);
-        else el.textContent = target.toFixed(2);
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+      if (!started){
+        started = true;
+        document.body.classList.add('cursor-ready');
+        ringX = mouseX; ringY = mouseY;
       }
-      requestAnimationFrame(tick);
-    }, startDelay);
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-ready'));
+    document.addEventListener('mouseenter', () => { if (started) document.body.classList.add('cursor-ready'); });
+
+    function ringLoop(){
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(ringLoop);
+    }
+    requestAnimationFrame(ringLoop);
+
+    const HOVER_SELECTOR = 'a, button, input, textarea, [data-cursor="link"]';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(HOVER_SELECTOR)) document.body.classList.add('cursor-hover');
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(HOVER_SELECTOR) && !e.relatedTarget?.closest(HOVER_SELECTOR)){
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+  })();
+
+  // =====================================================================
+  // ---- HERO SIGNATURE: build console typewriter ------------------------
+  // Types out a short "build log" once on load, then loops on a longer
+  // delay. Pure text/DOM, no external assets, so it can't fail the way
+  // an image reference can — replaces the old founder-photo hero.
+  // =====================================================================
+  (function initBuildConsole(){
+    const codeEl = document.getElementById('consoleCode');
+    if (!codeEl) return;
+
+    const lines = [
+      { text: '$ buildifo deploy --client acme-co', cls: 'ln-cmd' },
+      { text: '> scoping requirements ......... done', cls: '' },
+      { text: '> designing UI/UX .............. done', cls: '' },
+      { text: '> writing custom code .......... done', cls: '' },
+      { text: '> wiring AI automation ......... done', cls: '' },
+      { text: '> shipping to production ....... done', cls: '' },
+      { text: '✓ site is live', cls: 'ln-ok' },
+      { text: '', cls: '' },
+      { text: '$ status', cls: 'ln-cmd' },
+      { text: '> 1 engineer · fixed price · no retainer', cls: 'ln-accent' },
+    ];
+
+    const reduceMotion = reduceMotionQuery.matches;
+
+    if (reduceMotion){
+      codeEl.innerHTML = lines.map(l => `<span class="${l.cls}">${l.text}</span>`).join('\n');
+      return;
+    }
+
+    let cancelled = false;
+
+    async function typeLine(line){
+      const span = document.createElement('span');
+      if (line.cls) span.className = line.cls;
+      codeEl.appendChild(span);
+      for (let i = 0; i < line.text.length; i++){
+        if (cancelled) return;
+        span.textContent += line.text[i];
+        await sleep(line.cls === 'ln-cmd' ? 26 : 10);
+      }
+      codeEl.appendChild(document.createTextNode('\n'));
+    }
+
+    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+    async function runOnce(){
+      codeEl.innerHTML = '';
+      for (const line of lines){
+        if (cancelled) return;
+        await typeLine(line);
+        await sleep(line.text === '' ? 120 : 90);
+      }
+    }
+
+    async function loop(){
+      while (!cancelled){
+        await runOnce();
+        await sleep(4200);
+      }
+    }
+
+    loop();
   })();
 
   // =====================================================================
@@ -43,8 +134,8 @@
   // like an elevator car catching up to the floor you pressed.
   // =====================================================================
   (function initLiftScroll(){
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return; // respect accessibility setting, skip custom scroll entirely
+    if (reduceMotionQuery.matches) return; // respect accessibility setting, skip custom scroll entirely
+    if (coarsePointerQuery.matches) return; // touch devices scroll natively; wheel hijack doesn't apply
 
     let current = window.scrollY;
     let target = window.scrollY;
@@ -121,7 +212,7 @@
 
   if (!libsLoaded){
     console.warn('GSAP did not load from the CDN (offline, blocked, or opened via file:// — try a local server instead). Lift scroll still works; using CSS-only reveals.');
-    document.querySelectorAll('.reveal, .proj-card').forEach(el=>{
+    document.querySelectorAll('.reveal, .proj-card, .price-card').forEach(el=>{
       el.style.opacity = 1; el.style.transform = 'none';
     });
   } else {
@@ -134,7 +225,7 @@
         .from('.tag-row .tag', { y:16, opacity:0, stagger:.05, duration:.6 }, '-=.6')
         .from('.hero-cta > *', { y:16, opacity:0, stagger:.08, duration:.6 }, '-=.5')
         .from('.eyebrow', { opacity:0, x:-16, duration:.6 }, 0)
-        .from('#detectFrame img', { scale:1.15, opacity:0, duration:1.2, ease:'power2.out' }, .2)
+        .from('.console', { scale:.92, opacity:0, duration:1, ease:'power2.out' }, .2)
         .from('.hero-stats div', { opacity:0, y:10, stagger:.08, duration:.5 }, .8);
 
       // ---- Scroll reveals ----
@@ -161,7 +252,7 @@
       });
     } catch (err){
       console.error('GSAP animation setup failed:', err);
-      document.querySelectorAll('.reveal, .proj-card').forEach(el=>{
+      document.querySelectorAll('.reveal, .proj-card, .price-card').forEach(el=>{
         el.style.opacity = 1; el.style.transform = 'none';
       });
     }
