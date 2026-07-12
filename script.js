@@ -1,259 +1,112 @@
-// ---- Theme: locked to dark by default (bold aesthetic); manual toggle still available ----
-  const root = document.documentElement;
-  root.setAttribute('data-theme', 'dark');
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-  });
+// ---- Theme: locked to dark by default; manual toggle still available ----
+const root = document.documentElement;
+root.setAttribute('data-theme', 'dark');
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+});
 
-  const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const coarsePointerQuery = window.matchMedia('(hover: none), (pointer: coarse)');
+const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // =====================================================================
-  // ---- CUSTOM CURSOR: dot + trailing ring ------------------------------
-  // Dot tracks the pointer exactly; the ring eases toward it every frame
-  // and expands over anything interactive (data-cursor="link", or any
-  // native <a>/<button>/input/textarea). Skipped on touch devices and
-  // when reduced motion is requested — those have no real pointer to
-  // replace, and forcing a fake one there would hurt usability.
-  // =====================================================================
-  (function initCustomCursor(){
-    if (coarsePointerQuery.matches || reduceMotionQuery.matches) return;
+// =====================================================================
+// ---- HERO SIGNATURE: build console typewriter ------------------------
+// Types out a short "build log" once on load, then loops on a longer
+// delay. Pure text/DOM, no external assets or libraries.
+// =====================================================================
+(function initBuildConsole(){
+  const codeEl = document.getElementById('consoleCode');
+  if (!codeEl) return;
 
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    if (!dot || !ring) return;
+  const lines = [
+    { text: '$ buildifo deploy --client acme-co', cls: 'ln-cmd' },
+    { text: '> scoping requirements ......... done', cls: '' },
+    { text: '> designing UI/UX .............. done', cls: '' },
+    { text: '> writing custom code .......... done', cls: '' },
+    { text: '> wiring AI automation ......... done', cls: '' },
+    { text: '> shipping to production ....... done', cls: '' },
+    { text: '✓ site is live', cls: 'ln-ok' },
+    { text: '', cls: '' },
+    { text: '$ status', cls: 'ln-cmd' },
+    { text: '> 1 engineer · fixed price · no retainer', cls: 'ln-accent' },
+  ];
 
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let ringX = mouseX, ringY = mouseY;
-    let started = false;
+  if (reduceMotionQuery.matches){
+    codeEl.innerHTML = lines.map(l => `<span class="${l.cls}">${l.text}</span>`).join('\n');
+    return;
+  }
 
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
-      if (!started){
-        started = true;
-        document.body.classList.add('cursor-ready');
-        ringX = mouseX; ringY = mouseY;
-      }
-    }, { passive: true });
+  let cancelled = false;
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-    document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-ready'));
-    document.addEventListener('mouseenter', () => { if (started) document.body.classList.add('cursor-ready'); });
-
-    function ringLoop(){
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(ringLoop);
+  async function typeLine(line){
+    const span = document.createElement('span');
+    if (line.cls) span.className = line.cls;
+    codeEl.appendChild(span);
+    for (let i = 0; i < line.text.length; i++){
+      if (cancelled) return;
+      span.textContent += line.text[i];
+      await sleep(line.cls === 'ln-cmd' ? 26 : 10);
     }
-    requestAnimationFrame(ringLoop);
+    codeEl.appendChild(document.createTextNode('\n'));
+  }
 
-    const HOVER_SELECTOR = 'a, button, input, textarea, [data-cursor="link"]';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(HOVER_SELECTOR)) document.body.classList.add('cursor-hover');
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(HOVER_SELECTOR) && !e.relatedTarget?.closest(HOVER_SELECTOR)){
-        document.body.classList.remove('cursor-hover');
-      }
-    });
-  })();
-
-  // =====================================================================
-  // ---- HERO SIGNATURE: build console typewriter ------------------------
-  // Types out a short "build log" once on load, then loops on a longer
-  // delay. Pure text/DOM, no external assets, so it can't fail the way
-  // an image reference can — replaces the old founder-photo hero.
-  // =====================================================================
-  (function initBuildConsole(){
-    const codeEl = document.getElementById('consoleCode');
-    if (!codeEl) return;
-
-    const lines = [
-      { text: '$ buildifo deploy --client acme-co', cls: 'ln-cmd' },
-      { text: '> scoping requirements ......... done', cls: '' },
-      { text: '> designing UI/UX .............. done', cls: '' },
-      { text: '> writing custom code .......... done', cls: '' },
-      { text: '> wiring AI automation ......... done', cls: '' },
-      { text: '> shipping to production ....... done', cls: '' },
-      { text: '✓ site is live', cls: 'ln-ok' },
-      { text: '', cls: '' },
-      { text: '$ status', cls: 'ln-cmd' },
-      { text: '> fixed price · fixed scope · no retainer', cls: 'ln-accent' },
-    ];
-
-    const reduceMotion = reduceMotionQuery.matches;
-
-    if (reduceMotion){
-      codeEl.innerHTML = lines.map(l => `<span class="${l.cls}">${l.text}</span>`).join('\n');
-      return;
-    }
-
-    let cancelled = false;
-
-    async function typeLine(line){
-      const span = document.createElement('span');
-      if (line.cls) span.className = line.cls;
-      codeEl.appendChild(span);
-      for (let i = 0; i < line.text.length; i++){
-        if (cancelled) return;
-        span.textContent += line.text[i];
-        await sleep(line.cls === 'ln-cmd' ? 26 : 10);
-      }
-      codeEl.appendChild(document.createTextNode('\n'));
-    }
-
-    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-    async function runOnce(){
-      codeEl.innerHTML = '';
-      for (const line of lines){
-        if (cancelled) return;
-        await typeLine(line);
-        await sleep(line.text === '' ? 120 : 90);
-      }
-    }
-
-    async function loop(){
-      while (!cancelled){
-        await runOnce();
-        await sleep(4200);
-      }
-    }
-
-    loop();
-  })();
-
-  // =====================================================================
-  // ---- LIFT SCROLL: hand-written, zero dependencies -----------------
-  // No CDN, no library. This intercepts mouse-wheel input and moves the
-  // page toward a target position with heavy lag + a strong ease-out,
-  // like an elevator car catching up to the floor you pressed.
-  // =====================================================================
-  (function initLiftScroll(){
-    if (reduceMotionQuery.matches) return; // respect accessibility setting, skip custom scroll entirely
-    if (coarsePointerQuery.matches) return; // touch devices scroll natively; wheel hijack doesn't apply
-
-    let current = window.scrollY;
-    let target = window.scrollY;
-    let raf = null;
-    const DAMPING = 0.065; // lower = heavier / slower lift feel, higher = snappier
-
-    function maxScroll(){
-      return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    }
-
-    function loop(){
-      current += (target - current) * DAMPING;
-      if (Math.abs(target - current) < 0.4){
-        current = target;
-        window.scrollTo(0, current);
-        raf = null;
-        return;
-      }
-      window.scrollTo(0, current);
-      raf = requestAnimationFrame(loop);
-    }
-
-    function kick(){
-      if (!raf) raf = requestAnimationFrame(loop);
-    }
-
-    window.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      target = Math.min(maxScroll(), Math.max(0, target + e.deltaY));
-      kick();
-    }, { passive: false });
-
-    // keep target in sync if the user drags the scrollbar or the OS scrolls directly
-    window.addEventListener('scroll', () => {
-      if (!raf){ current = window.scrollY; target = window.scrollY; }
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-      target = Math.min(target, maxScroll());
-    });
-
-    // smooth, eased anchor-link scrolling using the same lift feel
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const id = a.getAttribute('href');
-        if (id.length > 1){
-          e.preventDefault();
-          const el = document.querySelector(id);
-          if (!el) return;
-          const dest = Math.min(maxScroll(), Math.max(0, el.getBoundingClientRect().top + window.scrollY - 90));
-          const startY = current;
-          const startTime = performance.now();
-          const duration = 1300;
-          function step(now){
-            const t = Math.min((now - startTime) / duration, 1);
-            const eased = 1 - Math.pow(1 - t, 4); // strong deceleration, elevator-style stop
-            current = startY + (dest - startY) * eased;
-            target = current;
-            window.scrollTo(0, current);
-            if (t < 1) requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        }
-      });
-    });
-  })();
-
-  // =====================================================================
-  // ---- Everything below is decorative (GSAP) and optional -----------
-  // If the CDN scripts didn't load, this block is skipped entirely and
-  // the CSS-only reveal/float/glow animations still run on their own.
-  // =====================================================================
-  const libsLoaded = (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined');
-
-  if (!libsLoaded){
-    console.warn('GSAP did not load from the CDN (offline, blocked, or opened via file:// — try a local server instead). Lift scroll still works; using CSS-only reveals.');
-    document.querySelectorAll('.reveal, .proj-card, .price-card').forEach(el=>{
-      el.style.opacity = 1; el.style.transform = 'none';
-    });
-  } else {
-    try {
-      gsap.registerPlugin(ScrollTrigger);
-
-      // ---- Hero entrance timeline ----
-      const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
-      tl.from('.hero-title', { y:50, opacity:0, duration:1 })
-        .from('.tag-row .tag', { y:16, opacity:0, stagger:.05, duration:.6 }, '-=.6')
-        .from('.hero-cta > *', { y:16, opacity:0, stagger:.08, duration:.6 }, '-=.5')
-        .from('.eyebrow', { opacity:0, x:-16, duration:.6 }, 0)
-        .from('.console', { scale:.92, opacity:0, duration:1, ease:'power2.out' }, .2)
-        .from('.hero-stats div', { opacity:0, y:10, stagger:.08, duration:.5 }, .8);
-
-      // ---- Scroll reveals ----
-      gsap.utils.toArray('.reveal').forEach((el)=>{
-        gsap.to(el, {
-          opacity:1, y:0, duration:1, ease:'power3.out',
-          scrollTrigger:{ trigger: el, start:'top 85%' }
-        });
-      });
-
-      gsap.utils.toArray('.proj-card').forEach((el, i)=>{
-        gsap.to(el, {
-          opacity:1, y:0, duration:.9, ease:'power3.out', delay: i*0.05,
-          scrollTrigger:{ trigger: el, start:'top 90%' }
-        });
-      });
-
-      // ---- Nav background on scroll ----
-      ScrollTrigger.create({
-        trigger: 'body', start: 'top -60',
-        onUpdate: (self)=>{
-          document.querySelector('.nav-inner').style.boxShadow = self.progress ? 'var(--shadow)' : 'none';
-        }
-      });
-    } catch (err){
-      console.error('GSAP animation setup failed:', err);
-      document.querySelectorAll('.reveal, .proj-card, .price-card').forEach(el=>{
-        el.style.opacity = 1; el.style.transform = 'none';
-      });
+  async function runOnce(){
+    codeEl.innerHTML = '';
+    for (const line of lines){
+      if (cancelled) return;
+      await typeLine(line);
+      await sleep(line.text === '' ? 120 : 90);
     }
   }
+
+  async function loop(){
+    while (!cancelled){
+      await runOnce();
+      await sleep(4200);
+    }
+  }
+
+  loop();
+})();
+
+// =====================================================================
+// ---- REVEAL SYSTEM: IntersectionObserver, fail-safe -------------------
+// Every .reveal element is visible by default (see CSS). This only
+// ADDS the hidden state right before observing, so if this script
+// never runs — blocked, error, disabled JS — nothing stays invisible.
+// No external library, no CDN dependency.
+// =====================================================================
+(function initReveal(){
+  const items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
+
+  if (reduceMotionQuery.matches || !('IntersectionObserver' in window)){
+    return; // leave everything at its default visible state
+  }
+
+  items.forEach(el => el.classList.add('reveal-armed'));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+  items.forEach(el => observer.observe(el));
+})();
+
+// =====================================================================
+// ---- NAV background on scroll -----------------------------------------
+// =====================================================================
+(function initNavShadow(){
+  const nav = document.querySelector('.nav-inner');
+  if (!nav) return;
+  const update = () => {
+    nav.style.boxShadow = window.scrollY > 60 ? 'var(--shadow)' : 'none';
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
