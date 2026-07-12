@@ -1,492 +1,349 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buildifo — Web Development &amp; AI Automation Studio</title>
-<meta name="description" content="Buildifo is a one-person software studio — custom web development and AI automation builds, fixed price, fixed scope.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buildifo | AI Product Studio</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description"
+    content="Buildifo builds intelligent AI products, automation systems and modern digital experiences.">
 
-<link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="bg-grid"></div>
+<div class="noise"></div>
 
-<!-- NAV -->
-<header class="nav">
-  <div class="nav-inner">
-    <div class="logo"><span class="dot"></span>BUILDIFO<span style="color:var(--text-dim)">.dev</span></div>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#projects">Work</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="knob"></span></button>
-      <a class="btn-resume" href="#contact">Book a Call →</a>
-    </div>
-  </div>
+<header class="header">
+<div class="container">
+
+<a href="#" class="logo">BUILDIFO</a>
+
+<nav>
+<ul>
+<li><a href="#story">Story</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#products">Products</a></li>
+<li><a href="#work">Work</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<a href="#contact" class="nav-btn">Start a Project</a>
+
+</div>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow"><span class="dot-live"></span> Taking on 2 new builds this month</div>
-      <h1 class="hero-title reveal">
-        BUILD IT<br>ONCE, RIGHT
-        <span class="rule">A one-person studio building websites and AI automations for businesses that don't have time to babysit an agency.</span>
-      </h1>
-      <div class="tag-row">
-        <span class="tag">Web Development</span>
-        <span class="tag">AI Automation</span>
-        <span class="tag">Fixed Price</span>
-        <span class="tag">No Retainer</span>
-      </div>
-      <div class="hero-cta">
-        <a href="#pricing" class="btn-primary">View Pricing →</a>
-        <a href="#projects" class="btn-ghost">See the Work</a>
-      </div>
-    </div>
+<section class="hero">
 
-    <!-- SIGNATURE: build console. Instead of a founder headshot, the hero
-         shows the studio's own process running live — a terminal that
-         "builds" a site and an automation in real time, then loops. -->
-    <div class="hero-console-wrap">
-      <div class="console" id="buildConsole">
-        <div class="console-bar">
-          <span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span>
-          <span class="console-filename">buildifo — zsh</span>
-        </div>
-        <pre class="console-body"><code id="consoleCode"></code><span class="console-cursor" aria-hidden="true"></span></pre>
-      </div>
+<div class="hero-background">
+<div class="circle circle-one"></div>
+<div class="circle circle-two"></div>
+<div class="grid"></div>
+</div>
 
-      <div class="hero-stats">
-        <div><b>7–10d</b><span>Web Build</span></div>
-        <div><b>10–14d</b><span>AI Build</span></div>
-        <div><b>1</b><span>Engineer, No Handoffs</span></div>
-      </div>
-    </div>
-  </div>
+<div class="container hero-grid">
 
-  <div class="scroll-cue"><span>Scroll</span><div class="stick"><i></i></div></div>
+<div class="hero-left">
+
+<span class="eyebrow">AI PRODUCT STUDIO</span>
+
+<h1>
+Building Digital Experiences That Think Ahead.
+</h1>
+
+<p>
+Your vision deserves more than software.
+We design AI systems, automation platforms and modern digital products that help ambitious companies move faster.
+</p>
+
+<div class="hero-buttons">
+<a href="#contact" class="primary">Share Your Vision</a>
+<a href="#story" class="secondary">Explore Buildifo</a>
+</div>
+
+<div class="stats">
+<div><h2>20+</h2><p>AI Solutions</p></div>
+<div><h2>100%</h2><p>Custom Built</p></div>
+<div><h2>24/7</h2><p>Automation</p></div>
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="glass-card large">
+<span>Vision Agent</span>
+<h3>Observe. Understand. Automate.</h3>
+<p>A next-generation AI system that continuously monitors operations and transforms data into intelligent decisions.</p>
+</div>
+
+<div class="glass-card small">
+<h4>Digital Extractor</h4>
+<p>Turn complex files into structured intelligence.</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- MARQUEE: tech / stack strip, infinite auto-scroll, pauses on hover -->
-<section class="marquee-section">
-  <div class="marquee-track" aria-hidden="false">
-    <div class="marquee-group">
-      <span>Next.js</span><span>Python</span><span>OpenAI API</span><span>Gemini API</span>
-      <span>Gradio</span><span>FastAPI</span><span>Supabase</span><span>YOLOv8</span>
-      <span>Docker</span><span>Vercel</span><span>n8n</span><span>Twilio</span>
-    </div>
-    <div class="marquee-group" aria-hidden="true">
-      <span>Next.js</span><span>Python</span><span>OpenAI API</span><span>Gemini API</span>
-      <span>Gradio</span><span>FastAPI</span><span>Supabase</span><span>YOLOv8</span>
-      <span>Docker</span><span>Vercel</span><span>n8n</span><span>Twilio</span>
-    </div>
-  </div>
+<section id="story" class="story">
+
+<div class="container">
+
+<div class="section-intro">
+<span class="section-tag">OUR STORY</span>
+<h2>Technology should feel invisible. Not complicated.</h2>
+</div>
+
+<div class="story-grid">
+
+<div class="story-left">
+
+<p>
+Most businesses don't need more software.
+They need intelligent systems that remove friction.
+</p>
+
+<p>
+Every Buildifo product starts with one question:
+"What if technology adapted to people?"
+</p>
+
+<p>
+Everything we build is designed around clarity, speed and long-term value.
+</p>
+
+</div>
+
+<div class="story-right">
+
+<div class="story-card">
+<h3>01</h3>
+<h4>Discover</h4>
+<p>Understand the business and define objectives.</p>
+</div>
+
+<div class="story-card">
+<h3>02</h3>
+<h4>Design</h4>
+<p>Create intuitive AI experiences.</p>
+</div>
+
+<div class="story-card">
+<h3>03</h3>
+<h4>Deliver</h4>
+<p>Launch scalable intelligent systems.</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- STUDIO NOTE -->
-<section class="studio-note-section">
-  <div class="wrap">
-    <p class="studio-note reveal">One engineer. One deadline. One thread you message directly — no designer, developer, and project manager to get lost between.</p>
-  </div>
+<section id="services" class="services">
+
+<div class="container">
+
+<div class="section-intro">
+<span class="section-tag">SERVICES</span>
+<h2>Designed around business outcomes.</h2>
+</div>
+
+<div class="services-grid">
+
+<div class="service-card">
+<span>01</span>
+<h3>AI Automation</h3>
+<p>Automate repetitive operations.</p>
+</div>
+
+<div class="service-card">
+<span>02</span>
+<h3>Custom AI Products</h3>
+<p>Purpose-built intelligent systems.</p>
+</div>
+
+<div class="service-card">
+<span>03</span>
+<h3>Web Experiences</h3>
+<p>Modern digital products.</p>
+</div>
+
+<div class="service-card">
+<span>04</span>
+<h3>AI Consulting</h3>
+<p>Strategy and implementation.</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-idx">01 / Services</span>
-        <h2 class="section-title">Two ways to move faster</h2>
-      </div>
-      <p class="section-note">Pick the one your business needs right now — or bundle both and I'll adjust the price.</p>
-    </div>
+<section id="products" class="products">
 
-    <div class="proj-grid">
-      <a class="proj-card reveal" style="--card-c:#FFB020" href="#pricing">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-webdev" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="10" width="36" height="28" rx="3"/>
-              <line x1="6" y1="18" x2="42" y2="18"/>
-              <circle cx="12" cy="14" r="1.3" fill="currentColor" stroke="none"/>
-              <circle cx="17" cy="14" r="1.3" fill="currentColor" stroke="none"/>
-              <circle cx="22" cy="14" r="1.3" fill="currentColor" stroke="none"/>
-              <path class="wd-brackets" d="M18 27 l-5 4 5 4"/>
-              <path class="wd-brackets" d="M30 27 l5 4 -5 4"/>
-            </svg>
-          </div>
-          <span class="proj-badge">From $599</span>
-        </div>
-        <h3>Web Development</h3>
-        <p>Custom-coded, on-brand, built to convert. No template seams.</p>
-        <div class="proj-stack">
-          <span>Custom Code</span><span>UI/UX Design</span><span>SEO-Ready</span><span>Fast Load</span>
-        </div>
-        <div class="proj-cta"><span>See what's included</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
+<div class="container">
 
-      <a class="proj-card reveal" style="--card-c:#B98CFF" href="#pricing">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-automate" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="9" cy="24" r="5"/>
-              <circle cx="24" cy="11" r="5"/>
-              <circle cx="24" cy="37" r="5"/>
-              <circle cx="39" cy="24" r="5"/>
-              <path class="au-flow" d="M13 22 L20 14"/>
-              <path class="au-flow" d="M13 26 L20 34"/>
-              <path class="au-flow" d="M28 13 L35 22"/>
-              <path class="au-flow" d="M28 35 L35 26"/>
-            </svg>
-          </div>
-          <span class="proj-badge">From $1,199</span>
-        </div>
-        <h3>AI Automation</h3>
-        <p>An AI system wired into your business — calls, bookings, leads, or documents — handling the repetitive work.</p>
-        <div class="proj-stack">
-          <span>LLM Agents</span><span>Calendar / CRM Sync</span><span>Custom-Trained</span><span>Real Integrations</span>
-        </div>
-        <div class="proj-cta"><span>See what's included</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
-    </div>
-  </div>
+<div class="section-intro">
+<span class="section-tag">AI PRODUCTS</span>
+<h2>Intelligent systems built for modern businesses.</h2>
+</div>
+
+<div class="product-grid">
+
+<div class="product-card">
+<h3>Vision Agent</h3>
+<p>Observe. Analyze. Automate.</p>
+</div>
+
+<div class="product-card">
+<h3>Digital Extractor</h3>
+<p>Extract structured information instantly.</p>
+</div>
+
+<div class="product-card">
+<h3>Talking Bot</h3>
+<p>Human-like AI assistants.</p>
+</div>
+
+<div class="product-card">
+<h3>Workflow Monitor</h3>
+<p>Monitor operations in real time.</p>
+</div>
+
+<div class="product-card">
+<h3>Knowledge AI</h3>
+<p>Search company knowledge instantly.</p>
+</div>
+
+<div class="product-card">
+<h3>Custom AI Solutions</h3>
+<p>Built around your workflow.</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- PROCESS -->
-<section class="section" id="process">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-idx">02 / Process</span>
-        <h2 class="section-title">From scope to shipped</h2>
-      </div>
-      <p class="section-note">Same three steps whether it's a website or an automation — in that order, every time.</p>
-    </div>
+<section id="work" class="work">
 
-    <div class="process-grid">
-      <div class="process-step reveal">
-        <span class="process-num">01</span>
-        <h3>Scope</h3>
-        <p>Exactly what's being built, agreed in writing before any code gets written. No scope creep, no surprise invoices.</p>
-      </div>
-      <div class="process-step reveal">
-        <span class="process-num">02</span>
-        <h3>Build</h3>
-        <p>Built in the open, with progress updates every few days — not just a reveal at the end.</p>
-      </div>
-      <div class="process-step reveal">
-        <span class="process-num">03</span>
-        <h3>Ship</h3>
-        <p>Live, tested, and handed off — or I keep maintaining it for you if you'd rather not think about it again.</p>
-      </div>
-    </div>
-  </div>
+<div class="container">
+
+<div class="section-intro">
+<span class="section-tag">SELECTED WORK</span>
+<h2>Every solution starts with a vision.</h2>
+</div>
+
+<div class="work-grid">
+
+<div class="work-card">
+<h3>Enterprise Workflow Platform</h3>
+</div>
+
+<div class="work-card">
+<h3>AI Customer Assistant</h3>
+</div>
+
+<div class="work-card">
+<h3>Business Intelligence Dashboard</h3>
+</div>
+
+<div class="work-card">
+<h3>Vision Recognition Platform</h3>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- PROJECTS -->
-<section class="section" id="projects">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-idx">03 / Selected Work</span>
-        <h2 class="section-title">Live projects</h2>
-      </div>
-      <p class="section-note">A few systems I've designed and shipped — each solving one concrete problem end to end.</p>
-    </div>
+<section class="process">
 
-    <div class="proj-grid">
-      <a class="proj-card reveal" style="--card-c:#4ADE80" href="https://huggingface.co/spaces/hassanbro56/livevisionagent" target="_blank" rel="noopener">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-vision" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="10" y="10" width="28" height="28" rx="4"/>
-              <circle cx="24" cy="24" r="6"/>
-              <circle class="vision-dot" cx="24" cy="24" r="2" fill="currentColor" stroke="none"/>
-              <path d="M10 16 v-3 a3 3 0 0 1 3 -3 h3"/>
-              <path d="M38 16 v-3 a3 3 0 0 0 -3 -3 h-3"/>
-              <path d="M10 32 v3 a3 3 0 0 0 3 3 h3"/>
-              <path d="M38 32 v3 a3 3 0 0 1 -3 3 h-3"/>
-              <line class="vision-scan" x1="12" y1="24" x2="36" y2="24"/>
-            </svg>
-          </div>
-          <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
-        </div>
-        <h3>Live Vision Agent</h3>
-        <p>Ask your webcam what it sees — answered live, grounded in real YOLOv8 detections instead of a guess.</p>
-        <div class="proj-stack">
-          <span>YOLOv8</span><span>Gemini API</span><span>Real-Time CV</span><span>Gradio</span>
-        </div>
-        <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
+<div class="container">
 
-      <a class="proj-card reveal" style="--card-c:#FF7A59" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-frontdesk" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 8 h10 a3 3 0 0 1 3 3 v26 a3 3 0 0 1 -3 3 h-10 a3 3 0 0 1 -3 -3 v-26 a3 3 0 0 1 3 -3z"/>
-              <line x1="19" y1="34" x2="23" y2="34"/>
-              <path class="fd-wave" d="M8 20 q3 4 0 8"/>
-              <path class="fd-wave" d="M4 17 q6 7 0 14"/>
-              <circle class="fd-badge" cx="33" cy="14" r="8"/>
-              <path class="fd-badge" d="M29.5 14 l2.5 2.5 L37 11"/>
-            </svg>
-          </div>
-          <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
-        </div>
-        <h3>Front Desk AI</h3>
-        <p>Catches missed calls, texts the customer back, books straight into Google Calendar, follows up for a review.</p>
-        <div class="proj-stack">
-          <span>LLM Agent</span><span>Calendar Sync</span><span>Lead Automation</span><span>Next.js</span>
-        </div>
-        <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
+<div class="section-intro">
+<span class="section-tag">OUR PROCESS</span>
+<h2>Every great product starts with understanding.</h2>
+</div>
 
-      <a class="proj-card reveal" style="--card-c:#FFD166" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-extract" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="7" y="6" width="18" height="26" rx="2"/>
-              <line x1="11" y1="13" x2="21" y2="13"/>
-              <line x1="11" y1="18" x2="21" y2="18"/>
-              <line x1="11" y1="23" x2="17" y2="23"/>
-              <path class="extract-arrow" d="M28 19 h9 m-4 -4 l4 4 -4 4"/>
-              <rect x="34" y="14" width="7" height="7" rx="1.5"/>
-              <rect x="34" y="25" width="7" height="7" rx="1.5"/>
-            </svg>
-          </div>
-          <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
-        </div>
-        <h3>Digital Extractor</h3>
-        <p>Upload a scanned invoice or contract — key fields like dates, amounts, and vendor land in a clean table.</p>
-        <div class="proj-stack">
-          <span>OCR</span><span>NLP</span><span>Document AI</span><span>Gradio</span>
-        </div>
-        <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
+<div class="timeline">
 
-      <a class="proj-card reveal" style="--card-c:#FF6FB5" href="https://h1239-bellavistarestaurant.hf.space" target="_blank" rel="noopener">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-booking" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 10 h30 a3 3 0 0 1 3 3 v14 a3 3 0 0 1 -3 3 h-20 l-7 6 v-6 h-3 a3 3 0 0 1 -3 -3 v-14 a3 3 0 0 1 3 -3z"/>
-              <rect x="14" y="16" width="14" height="12" rx="1.5"/>
-              <line x1="14" y1="20" x2="28" y2="20"/>
-              <path class="booking-check" d="M17 24 l2.5 2.5 L25 21"/>
-            </svg>
-          </div>
-          <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
-        </div>
-        <h3>Table Booking Bot</h3>
-        <p>Takes restaurant reservations through natural conversation, then extracts a clean structured booking card.</p>
-        <div class="proj-stack">
-          <span>Gemini API</span><span>Conversational AI</span><span>Structured Extraction</span><span>Gradio</span>
-        </div>
-        <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
+<div class="timeline-item"><h3>01 Discovery</h3></div>
+<div class="timeline-item"><h3>02 Strategy</h3></div>
+<div class="timeline-item"><h3>03 Design</h3></div>
+<div class="timeline-item"><h3>04 Development</h3></div>
+<div class="timeline-item"><h3>05 Launch</h3></div>
 
-      <div class="proj-card reveal" style="--card-c:#4DD8FF">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-shelf" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="8" width="8" height="8" rx="1.5"/>
-              <rect x="17" y="8" width="8" height="8" rx="1.5"/>
-              <rect class="shelf-missing" x="28" y="8" width="8" height="8" rx="1.5" stroke-dasharray="3 3"/>
-              <rect x="6" y="20" width="8" height="8" rx="1.5"/>
-              <rect x="17" y="20" width="8" height="8" rx="1.5"/>
-              <rect x="28" y="20" width="8" height="8" rx="1.5"/>
-              <rect x="6" y="32" width="8" height="8" rx="1.5"/>
-              <rect x="17" y="32" width="8" height="8" rx="1.5"/>
-              <rect x="28" y="32" width="8" height="8" rx="1.5"/>
-            </svg>
-          </div>
-          <span class="proj-badge">94.6% mAP</span>
-        </div>
-        <h3>Vision Shelf Monitor</h3>
-        <p>Scans retail shelf footage in real time to flag out-of-stock and misplaced items as they happen.</p>
-        <div class="proj-stack">
-          <span>YOLOv8</span><span>OpenCV</span><span>FastAPI</span><span>Docker</span>
-        </div>
-        <div class="proj-cta proj-cta-muted"><span>Internal deployment · no public demo</span></div>
-      </div>
+</div>
 
-      <a class="proj-card reveal" style="--card-c:#B98CFF" href="https://huggingface.co/spaces/H1239/RAG-ASSISTANT" target="_blank" rel="noopener">
-        <span class="proj-sweep" aria-hidden="true"></span>
-        <div class="proj-card-top">
-          <div class="proj-icon icon-rag" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="7" width="22" height="28" rx="2"/>
-              <line x1="14" y1="14" x2="26" y2="14"/>
-              <line x1="14" y1="19" x2="26" y2="19"/>
-              <line x1="14" y1="24" x2="21" y2="24"/>
-              <circle class="rag-lens" cx="31" cy="30" r="7"/>
-              <line class="rag-lens" x1="36" y1="35" x2="41" y2="40"/>
-            </svg>
-          </div>
-          <span class="proj-badge"><span class="dot-live"></span>Live Demo</span>
-        </div>
-        <h3>RAG Assistant</h3>
-        <p>Upload PDFs or text files and ask questions in plain language — answered with sources cited.</p>
-        <div class="proj-stack">
-          <span>RAG</span><span>Vector Search</span><span>LLM API</span><span>Gradio</span>
-        </div>
-        <div class="proj-cta"><span>Try it live</span><span class="proj-cta-arrow">↗</span></div>
-      </a>
-    </div>
-  </div>
+</div>
+
 </section>
 
-<!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-idx">04 / Pricing</span>
-        <h2 class="section-title">Two plans, no retainer</h2>
-      </div>
-      <p class="section-note">Fixed price, fixed scope. You know the cost before we start, and there's no contract locking you in after.</p>
-    </div>
+<section class="testimonial">
 
-    <div class="pricing-grid">
+<div class="container">
 
-      <!-- PLAN 1: Website -->
-      <div class="price-card reveal price-card--web">
-        <div class="price-card-top">
-          <span class="price-kicker">Web Development</span>
-          <h3 class="price-name">Rapid Web Build</h3>
-          <p class="price-sub">Delivered in 7–10 days</p>
-        </div>
-        <div class="price-amount">
-          <span class="price-currency">$</span><span class="price-figure">599</span><span class="price-period">/one-time</span>
-        </div>
-        <ul class="price-features">
-          <li>Custom-coded site, no page builder</li>
-          <li>UI/UX design tailored to your brand</li>
-          <li>Fully responsive on every screen size</li>
-          <li>Up to 6 pages</li>
-          <li>Contact form wired to your inbox</li>
-          <li>SEO basics + fast load times</li>
-          <li>2 rounds of revisions</li>
-        </ul>
-        <a class="btn-primary price-cta" href="#contact">Start this project →</a>
-      </div>
+<p>
+"We build digital experiences that make businesses impossible to ignore."
+</p>
 
-      <!-- PLAN 2: AI Automation — featured -->
-      <div class="price-card price-card--ai reveal">
-        <span class="price-featured-tag">Most Requested</span>
-        <div class="price-card-top">
-          <span class="price-kicker">AI Automation</span>
-          <h3 class="price-name">Automation Build</h3>
-          <p class="price-sub">Delivered in 10–14 days</p>
-        </div>
-        <div class="price-amount">
-          <span class="price-currency">$</span><span class="price-figure">1,199</span><span class="price-period">/one-time</span>
-        </div>
-        <ul class="price-features">
-          <li>One core automation — calls, booking, docs, or leads</li>
-          <li>Custom AI agent, trained on your business</li>
-          <li>Connected to your calendar, CRM, or inbox</li>
-          <li>Structured data extraction &amp; handoff</li>
-          <li>Handoff docs + 30 days of support</li>
-          <li>Progress updates via Slack or WhatsApp</li>
-          <li>1 revision round after testing</li>
-        </ul>
-        <a class="btn-primary price-cta price-cta--ai" href="#contact">Start this project →</a>
-      </div>
+</div>
 
-    </div>
-    <p class="pricing-footnote reveal">Need both? Bundle web development and AI automation together and I'll adjust the price — just ask on the call.</p>
-  </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="section testimonial-section" id="testimonials">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-idx">05 / Testimonials</span>
-        <h2 class="section-title">Results, not promises</h2>
-      </div>
-      <p class="section-note">A few notes from people who booked a build.</p>
-    </div>
-  </div>
+<section id="contact" class="contact">
 
-  <div class="t-marquee-wrap reveal">
-    <div class="t-marquee-track">
-      <div class="t-marquee-group">
-        <div class="t-card"><p>"Had a working booking bot in under two weeks — no back and forth, no scope drift. Just what we agreed on, on time."</p><span>— Restaurant client, Table Booking Bot</span></div>
-        <div class="t-card"><p>"Direct line to the person actually writing the code. Faster answers than any agency I've used."</p><span>— Local services client</span></div>
-        <div class="t-card"><p>"The extraction tool alone saved us hours of manual data entry every week."</p><span>— Ops lead, document workflow</span></div>
-        <div class="t-card"><p>"Fixed price meant zero surprises on the invoice. Would book again."</p><span>— Small business owner</span></div>
-      </div>
-      <div class="t-marquee-group" aria-hidden="true">
-        <div class="t-card"><p>"Had a working booking bot in under two weeks — no back and forth, no scope drift. Just what we agreed on, on time."</p><span>— Restaurant client, Table Booking Bot</span></div>
-        <div class="t-card"><p>"Direct line to the person actually writing the code. Faster answers than any agency I've used."</p><span>— Local services client</span></div>
-        <div class="t-card"><p>"The extraction tool alone saved us hours of manual data entry every week."</p><span>— Ops lead, document workflow</span></div>
-        <div class="t-card"><p>"Fixed price meant zero surprises on the invoice. Would book again."</p><span>— Small business owner</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="container">
 
-<!-- CONTACT -->
-<section class="section" id="contact">
-  <div class="wrap">
-    <div class="contact-panel reveal">
-      <span class="section-idx">06 / Contact</span>
-      <h2>Have a site to build, or a system to automate?</h2>
-      <p>Tell me what you're working on — I read every message and reply within a day or two.</p>
+<h2>Tell us what you're building.</h2>
 
-      <form class="contact-form" onsubmit="return false;">
-        <div class="field">
-          <label>Name</label>
-          <input type="text" placeholder="Your name">
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" placeholder="you@email.com">
-        </div>
-        <div class="field full">
-          <label>Project</label>
-          <textarea placeholder="What are you building?"></textarea>
-        </div>
-        <div class="contact-submit full">
-          <button type="submit" class="btn-primary">Send Message →</button>
-          <span class="font-mono" style="font-size:12px;color:var(--text-dim)">or email hello@buildifo.dev directly</span>
-        </div>
-      </form>
+<form>
 
-      <div class="social-row">
-        <a href="#">GitHub ↗</a>
-        <a href="#">LinkedIn ↗</a>
-        <a href="#">Twitter / X ↗</a>
-        <a href="#">Kaggle ↗</a>
-      </div>
-    </div>
-  </div>
+<input type="text" placeholder="Your Name">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Company">
+
+<textarea placeholder="Tell us about your project"></textarea>
+
+<button>Share Your Vision</button>
+
+</form>
+
+</div>
+
 </section>
 
 <footer>
-  <div class="wrap footer-inner">
-    <p>© 2026 BUILDIFO.DEV</p>
-    <p>Built with care, coffee, and a few thousand epochs.</p>
-  </div>
+
+<div class="container">
+
+<h2>BUILDIFO</h2>
+
+<p>
+Building intelligent products for tomorrow.
+</p>
+
+</div>
+
 </footer>
 
 <script src="script.js"></script>
