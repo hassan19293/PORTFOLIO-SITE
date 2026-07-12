@@ -1,112 +1,484 @@
-// ---- Theme: locked to dark by default; manual toggle still available ----
-const root = document.documentElement;
-root.setAttribute('data-theme', 'dark');
-document.getElementById('themeToggle')?.addEventListener('click', () => {
-  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  root.setAttribute('data-theme', next);
+/* =====================================================
+   BUILDIFO
+   SCRIPT.JS
+   PART 2
+   Cursor + Counter + Parallax + Magnetic Buttons
+====================================================== */
+
+/* ===========================
+   Custom Cursor
+=========================== */
+
+const cursor = document.createElement("div");
+
+cursor.className = "custom-cursor";
+
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", (e) => {
+
+cursor.style.left = e.clientX + "px";
+
+cursor.style.top = e.clientY + "px";
+
 });
 
-const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll("a,button,.service-card,.product-card,.work-card").forEach(el=>{
 
-// =====================================================================
-// ---- HERO SIGNATURE: build console typewriter ------------------------
-// Types out a short "build log" once on load, then loops on a longer
-// delay. Pure text/DOM, no external assets or libraries.
-// =====================================================================
-(function initBuildConsole(){
-  const codeEl = document.getElementById('consoleCode');
-  if (!codeEl) return;
+el.addEventListener("mouseenter",()=>{
 
-  const lines = [
-    { text: '$ buildifo deploy --client acme-co', cls: 'ln-cmd' },
-    { text: '> scoping requirements ......... done', cls: '' },
-    { text: '> designing UI/UX .............. done', cls: '' },
-    { text: '> writing custom code .......... done', cls: '' },
-    { text: '> wiring AI automation ......... done', cls: '' },
-    { text: '> shipping to production ....... done', cls: '' },
-    { text: '✓ site is live', cls: 'ln-ok' },
-    { text: '', cls: '' },
-    { text: '$ status', cls: 'ln-cmd' },
-    { text: '> 1 engineer · fixed price · no retainer', cls: 'ln-accent' },
-  ];
+cursor.classList.add("active");
 
-  if (reduceMotionQuery.matches){
-    codeEl.innerHTML = lines.map(l => `<span class="${l.cls}">${l.text}</span>`).join('\n');
-    return;
-  }
+});
 
-  let cancelled = false;
-  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+el.addEventListener("mouseleave",()=>{
 
-  async function typeLine(line){
-    const span = document.createElement('span');
-    if (line.cls) span.className = line.cls;
-    codeEl.appendChild(span);
-    for (let i = 0; i < line.text.length; i++){
-      if (cancelled) return;
-      span.textContent += line.text[i];
-      await sleep(line.cls === 'ln-cmd' ? 26 : 10);
-    }
-    codeEl.appendChild(document.createTextNode('\n'));
-  }
+cursor.classList.remove("active");
 
-  async function runOnce(){
-    codeEl.innerHTML = '';
-    for (const line of lines){
-      if (cancelled) return;
-      await typeLine(line);
-      await sleep(line.text === '' ? 120 : 90);
-    }
-  }
+});
 
-  async function loop(){
-    while (!cancelled){
-      await runOnce();
-      await sleep(4200);
-    }
-  }
+});
 
-  loop();
-})();
+/* ===========================
+   Counter Animation
+=========================== */
 
-// =====================================================================
-// ---- REVEAL SYSTEM: IntersectionObserver, fail-safe -------------------
-// Every .reveal element is visible by default (see CSS). This only
-// ADDS the hidden state right before observing, so if this script
-// never runs — blocked, error, disabled JS — nothing stays invisible.
-// No external library, no CDN dependency.
-// =====================================================================
-(function initReveal(){
-  const items = document.querySelectorAll('.reveal');
-  if (!items.length) return;
+const counters=document.querySelectorAll(".stats h2");
 
-  if (reduceMotionQuery.matches || !('IntersectionObserver' in window)){
-    return; // leave everything at its default visible state
-  }
+const counterObserver=new IntersectionObserver(entries=>{
 
-  items.forEach(el => el.classList.add('reveal-armed'));
+entries.forEach(entry=>{
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
+if(!entry.isIntersecting) return;
+
+const counter=entry.target;
+
+const target=parseInt(counter.innerText);
+
+let count=0;
+
+const speed=Math.max(20,target/60);
+
+const update=()=>{
+
+count+=speed;
+
+if(count<target){
+
+counter.innerText=Math.floor(count)+"+";
+
+requestAnimationFrame(update);
+
+}else{
+
+counter.innerText=target+"+";
+
+}
+
+};
+
+update();
+
+counterObserver.unobserve(counter);
+
+});
+
+},{threshold:.5});
+
+counters.forEach(counter=>{
+
+counterObserver.observe(counter);
+
+});
+
+/* ===========================
+   Parallax
+=========================== */
+
+window.addEventListener("scroll",()=>{
+
+const value=window.scrollY;
+
+document.querySelectorAll(".circle").forEach(circle=>{
+
+circle.style.transform=`translateY(${value*0.15}px)`;
+
+});
+
+});
+
+/* ===========================
+   Magnetic Buttons
+=========================== */
+
+document.querySelectorAll(".primary,.secondary,.nav-btn").forEach(button=>{
+
+button.addEventListener("mousemove",(e)=>{
+
+const rect=button.getBoundingClientRect();
+
+const x=e.clientX-rect.left-rect.width/2;
+
+const y=e.clientY-rect.top-rect.height/2;
+
+button.style.transform=`translate(${x*0.15}px,${y*0.15}px)`;
+
+});
+
+button.addEventListener("mouseleave",()=>{
+
+button.style.transform="translate(0,0)";
+
+});
+
+});
+
+/* ===========================
+   Active Navigation
+=========================== */
+
+const navLinks=document.querySelectorAll("nav a");
+
+const sectionObserver=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+navLinks.forEach(link=>{
+
+link.classList.remove("active");
+
+if(link.getAttribute("href")==="#"+entry.target.id){
+
+link.classList.add("active");
+
+}
+
+});
+
+}
+
+});
+
+},{threshold:.6});
+
+document.querySelectorAll("section[id]").forEach(section=>{
+
+sectionObserver.observe(section);
+
+});
+/* =====================================================
+   BUILDIFO
+   SCRIPT.JS
+   PART 3
+   Loading Screen + Text Reveal + Tilt + Scroll Progress
+======================================================*/
+
+/* ===========================
+   Page Loader
+=========================== */
+
+window.addEventListener("load",()=>{
+
+const loader=document.createElement("div");
+
+loader.className="loader";
+
+loader.innerHTML=`
+<div class="loader-logo">
+BUILDIFO
+</div>
+`;
+
+document.body.appendChild(loader);
+
+setTimeout(()=>{
+
+loader.style.opacity="0";
+
+setTimeout(()=>{
+
+loader.remove();
+
+},800);
+
+},1200);
+
+});
+
+/* ===========================
+   Scroll Progress
+=========================== */
+
+const progress=document.createElement("div");
+
+progress.className="scroll-progress";
+
+document.body.appendChild(progress);
+
+window.addEventListener("scroll",()=>{
+
+const scrollTop=window.scrollY;
+
+const height=document.documentElement.scrollHeight-window.innerHeight;
+
+const percent=(scrollTop/height)*100;
+
+progress.style.width=percent+"%";
+
+});
+
+/* ===========================
+   Tilt Cards
+=========================== */
+
+document.querySelectorAll(".glass-card,.service-card,.product-card").forEach(card=>{
+
+card.addEventListener("mousemove",(e)=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+const rotateX=((y/rect.height)-0.5)*-12;
+
+const rotateY=((x/rect.width)-0.5)*12;
+
+card.style.transform=`
+perspective(1000px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+translateY(-8px)
+`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="";
+
+});
+
+});
+
+/* ===========================
+   Hero Text Animation
+=========================== */
+
+const heroTitle=document.querySelector(".hero h1");
+
+if(heroTitle){
+
+const text=heroTitle.innerHTML;
+
+heroTitle.innerHTML="";
+
+text.split("").forEach((letter,index)=>{
+
+const span=document.createElement("span");
+
+span.innerHTML=letter===" "?"&nbsp;":letter;
+
+span.style.opacity="0";
+
+span.style.display="inline-block";
+
+span.style.transform="translateY(50px)";
+
+span.style.transition=".6s";
+
+heroTitle.appendChild(span);
+
+setTimeout(()=>{
+
+span.style.opacity="1";
+
+span.style.transform="translateY(0)";
+
+},index*30);
+
+});
+
+}
+
+/* ===========================
+   Floating Elements
+=========================== */
+
+document.querySelectorAll(".glass-card").forEach((card,index)=>{
+
+setInterval(()=>{
+
+card.style.transform=`translateY(${Math.sin(Date.now()/700+index)*6}px)`;
+
+},20);
+
+});
+
+/* ===========================
+   Random Glow Pulse
+=========================== */
+
+setInterval(()=>{
+
+document.querySelectorAll(".glass-card").forEach(card=>{
+
+card.style.boxShadow=`
+0 20px 60px
+rgba(78,168,255,${Math.random()*0.25})
+`;
+
+});
+
+},2500);
+
+/* =====================================================
+   BUILDIFO
+   SCRIPT.JS
+   PART 4 (FINAL)
+   Mobile Menu + Contact Form + Utilities
+======================================================*/
+
+/* ===========================
+   Mobile Navigation
+=========================== */
+
+const nav = document.querySelector("nav");
+
+const menu = document.createElement("div");
+
+menu.className = "menu-toggle";
+
+menu.innerHTML = "☰";
+
+document.querySelector(".header .container").appendChild(menu);
+
+menu.addEventListener("click", () => {
+
+    nav.classList.toggle("open");
+
+    menu.classList.toggle("active");
+
+});
+
+/* ===========================
+   Close Menu on Link Click
+=========================== */
+
+document.querySelectorAll("nav a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        nav.classList.remove("open");
+
+        menu.classList.remove("active");
+
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-  items.forEach(el => observer.observe(el));
-})();
+});
 
-// =====================================================================
-// ---- NAV background on scroll -----------------------------------------
-// =====================================================================
-(function initNavShadow(){
-  const nav = document.querySelector('.nav-inner');
-  if (!nav) return;
-  const update = () => {
-    nav.style.boxShadow = window.scrollY > 60 ? 'var(--shadow)' : 'none';
-  };
-  update();
-  window.addEventListener('scroll', update, { passive: true });
-})();
+/* ===========================
+   Contact Form
+=========================== */
+
+const form = document.querySelector("form");
+
+if(form){
+
+form.addEventListener("submit",(e)=>{
+
+e.preventDefault();
+
+const name=form.querySelector('input[type="text"]').value.trim();
+
+const email=form.querySelector('input[type="email"]').value.trim();
+
+if(name===""||email===""){
+
+alert("Please fill in all required fields.");
+
+return;
+
+}
+
+const button=form.querySelector("button");
+
+button.innerHTML="Sending...";
+
+button.disabled=true;
+
+setTimeout(()=>{
+
+button.innerHTML="Message Sent ✓";
+
+button.style.background="#22c55e";
+
+setTimeout(()=>{
+
+button.innerHTML="Share Your Vision";
+
+button.disabled=false;
+
+button.style.background="";
+
+form.reset();
+
+},2500);
+
+},1500);
+
+});
+
+}
+
+/* ===========================
+   Current Year
+=========================== */
+
+const year=document.querySelector(".year");
+
+if(year){
+
+year.textContent=new Date().getFullYear();
+
+}
+
+/* ===========================
+   Disable Right Click
+=========================== */
+
+document.addEventListener("contextmenu",(e)=>{
+
+e.preventDefault();
+
+});
+
+/* ===========================
+   Keyboard Shortcuts
+=========================== */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+nav.classList.remove("open");
+
+}
+
+});
+
+/* ===========================
+   Performance
+=========================== */
+
+window.addEventListener("resize",()=>{
+
+document.body.classList.remove("menu-open");
+
+});
+
+console.log("%cBUILDIFO","font-size:32px;font-weight:800;color:#4ea8ff;");
+console.log("AI Product Studio Ready.");
