@@ -89,8 +89,10 @@
   @media(max-width:920px){.nav-links{display:none;}}
 
   /* ---------- HERO ---------- */
-  .hero{padding:150px 0 0;border-bottom:1px solid var(--line);position:relative;}
-  .hero-inner{max-width:920px;}
+  .hero{padding:150px 0 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero-spotlight{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle, rgba(199,149,83,.14) 0%, rgba(199,149,83,0) 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;}
+  .hero-spotlight.active{opacity:1;}
+  .hero-inner{max-width:920px;position:relative;z-index:1;}
   .hero h1{font-size:clamp(42px,6.6vw,86px);line-height:1.0;margin-bottom:30px;}
   .hero h1 .accent{color:var(--brass);}
   .hero p.lede{font-size:18px;line-height:1.6;color:#C7C2B4;max-width:520px;margin-bottom:40px;}
@@ -195,6 +197,8 @@
   .process-row .step-text p{font-size:14.5px;color:var(--stone);line-height:1.65;max-width:420px;}
   .step-visual{height:120px;border-radius:2px;border:1px solid var(--line);background:var(--panel);position:relative;overflow:hidden;}
   .step-visual svg{width:100%;height:100%;}
+  .step-visual svg .draw{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);transition:stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1);}
+  .step-visual.in svg .draw{stroke-dashoffset:0;}
   .deliverable{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.02em;}
 
   /* ---------- WHY / DIFFERENTIATORS ---------- */
@@ -205,6 +209,10 @@
   .diff-num{font-family:var(--mono);font-size:11px;color:var(--brass);display:block;margin-bottom:28px;}
   .diff-card h3{font-size:16px;margin-bottom:10px;}
   .diff-card p{font-size:13px;color:var(--stone);line-height:1.6;}
+
+  /* stagger reveal (used on diff-grid + prod-grid cards) */
+  .stagger-item{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+  .stagger-item.in{opacity:1;transform:none;}
 
   /* ---------- PRODUCTS ---------- */
   .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px;}
@@ -313,6 +321,7 @@
 </header>
 
 <section class="hero dark">
+  <div class="hero-spotlight" id="heroSpotlight"></div>
   <div class="wrap hero-inner">
     <div class="eyebrow reveal">Systems &amp; product studio</div>
     <h1>
@@ -432,12 +441,12 @@
     <div class="process-row reveal">
       <div class="step-num">01</div>
       <div class="step-text"><h3>Understand</h3><p>We spend real time in your business before touching a single line of code — goals, constraints, the people who'll actually use this.</p></div>
-      <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="20" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><rect x="100" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><line x1="80" y1="60" x2="100" y2="60" stroke="#C79553" stroke-width="1.5"/><circle cx="140" cy="60" r="4" fill="#C79553"/></svg></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="20" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><rect x="100" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><line class="draw" style="--len:20" x1="80" y1="60" x2="100" y2="60" stroke="#C79553" stroke-width="1.5"/><circle cx="140" cy="60" r="4" fill="#C79553"/></svg></div>
     </div>
     <div class="process-row reveal">
       <div class="step-num">02</div>
       <div class="step-text"><h3>Strategize</h3><p>A roadmap tailored to what you actually need — not a template, not a trend, a plan built for your constraints.</p><span class="deliverable">You get: scoped roadmap + technical spec</span></div>
-      <div class="step-visual"><svg viewBox="0 0 220 120"><path d="M20 90 L70 60 L110 75 L150 35 L200 50" stroke="#C79553" stroke-width="1.5" fill="none"/><circle cx="150" cy="35" r="3" fill="#C79553"/></svg></div>
+      <div class="step-visual"><svg viewBox="0 0 220 120"><path class="draw" style="--len:210" d="M20 90 L70 60 L110 75 L150 35 L200 50" stroke="#C79553" stroke-width="1.5" fill="none"/><circle cx="150" cy="35" r="3" fill="#C79553"/></svg></div>
     </div>
     <div class="process-row reveal">
       <div class="step-num">03</div>
@@ -457,13 +466,13 @@
     <div class="eyebrow reveal">Why Buildifo</div>
     <h2 class="reveal">What actually makes us different.</h2>
     <p class="body-text reveal" style="margin-bottom:56px;">Not a tagline — the specific ways working with us looks different from working with a typical agency.</p>
-    <div class="diff-grid reveal">
-      <div class="diff-card">
+    <div class="diff-grid" id="diffGrid">
+      <div class="diff-card stagger-item">
         <span class="diff-num">01</span>
         <h3>Senior engineers only</h3>
         <p>No junior devs learning on your budget. Everyone on your project has shipped production systems before.</p>
       </div>
-      <div class="diff-card">
+      <div class="diff-card stagger-item">
         <span class="diff-num">02</span>
         <h3>You see it building</h3>
         <p>Staging access and weekly demos from week one — you're never waiting on a "big reveal" at the end.</p>
@@ -486,33 +495,33 @@
   <div class="wrap">
     <div class="eyebrow reveal">Products we've built</div>
     <h2 class="reveal">Platforms that solve real problems.</h2>
-    <div class="prod-grid reveal">
-      <div class="prod-card">
+    <div class="prod-grid" id="prodGrid">
+      <div class="prod-card stagger-item">
         <span class="idx">P.01</span>
         <h3>Vision Agent</h3>
         <p>An autonomous agent that turns raw data into decisions someone can actually act on.</p>
-        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
       </div>
-      <div class="prod-card">
+      <div class="prod-card stagger-item">
         <span class="idx">P.02</span>
         <h3>Live Vision</h3>
         <p>Real-time computer vision for monitoring and analyzing whatever your business needs watched.</p>
-        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
       </div>
-      <div class="prod-card">
+      <div class="prod-card stagger-item">
         <span class="idx">P.03</span>
         <h3>Table Extractor</h3>
         <p>Pulls structured data out of any table or document, with the accuracy to trust it downstream.</p>
-        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
       </div>
-      <div class="prod-card">
+      <div class="prod-card stagger-item">
         <span class="idx">P.04</span>
         <h3>Talking Bot</h3>
         <p>Conversational assistants that actually understand context, not just keywords.</p>
-        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Tell me more about this product">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
       </div>
     </div>
-    <div style="margin-top:44px;" class="reveal"><a class="link-arrow" href="mailto:hello@buildifo.com?subject=Product catalog" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a></div>
+    <div style="margin-top:44px;" class="reveal"><a class="link-arrow" href="mailto:hello@buildifo.com?subject=Product catalog">Explore all products <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a></div>
   </div>
 </section>
 
@@ -523,7 +532,7 @@
         <div class="eyebrow">Selected work</div>
         <h2 style="margin-bottom:0;">Solutions that create<br>measurable impact.</h2>
       </div>
-      <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case studies" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+      <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case studies">View all case studies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
     </div>
     <div class="work-grid reveal">
       <div class="work-card">
@@ -533,7 +542,7 @@
           <div class="sector">Fintech</div>
           <h3>Automated KYC Platform</h3>
           <p><strong style="color:var(--bone);">Before:</strong> manual review queues took 3 days per user. <strong style="color:var(--bone);">After:</strong> automated verification in under 4 hours, 80% faster onboarding.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
       <div class="work-card">
@@ -543,7 +552,7 @@
           <div class="sector">Healthcare</div>
           <h3>Smart Operations Dashboard</h3>
           <p><strong style="color:var(--bone);">Before:</strong> department heads pulled reports from five disconnected systems. <strong style="color:var(--bone);">After:</strong> one live dashboard, decisions made same-day instead of same-week.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
       <div class="work-card">
@@ -553,7 +562,7 @@
           <div class="sector">E-commerce</div>
           <h3>Inventory Intelligence System</h3>
           <p><strong style="color:var(--bone);">Before:</strong> stockouts on best-sellers every peak season. <strong style="color:var(--bone);">After:</strong> demand predicted 3 weeks out, 35% fewer stockouts.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
       <div class="work-card">
@@ -563,7 +572,7 @@
           <div class="sector">Logistics</div>
           <h3>Route Optimization Engine</h3>
           <p><strong style="color:var(--bone);">Before:</strong> routes planned manually every morning, no visibility into delays. <strong style="color:var(--bone);">After:</strong> live rerouting, 22% faster deliveries across 400+ vehicles.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details" <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
     </div>
@@ -683,6 +692,39 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
   },{threshold:.1,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal, .line-reveal').forEach(el=>obs.observe(el));
+
+  // stagger reveal on grids
+  document.querySelectorAll('#diffGrid, #prodGrid').forEach(grid=>{
+    const items = grid.querySelectorAll('.stagger-item');
+    const gobs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          items.forEach((item,i)=>{ setTimeout(()=>item.classList.add('in'), i*90); });
+          gobs.unobserve(grid);
+        }
+      });
+    },{threshold:.15});
+    gobs.observe(grid);
+  });
+
+  // SVG line-draw on process step visuals
+  const stepObs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); stepObs.unobserve(e.target); } });
+  },{threshold:.4});
+  document.querySelectorAll('.step-visual').forEach(el=>stepObs.observe(el));
+
+  // hero cursor-follow spotlight
+  const heroEl = document.querySelector('.hero');
+  const spotlight = document.getElementById('heroSpotlight');
+  if(heroEl && spotlight && window.matchMedia('(hover: hover)').matches){
+    heroEl.addEventListener('mousemove', e=>{
+      const r = heroEl.getBoundingClientRect();
+      spotlight.style.left = (e.clientX - r.left) + 'px';
+      spotlight.style.top = (e.clientY - r.top) + 'px';
+      spotlight.classList.add('active');
+    });
+    heroEl.addEventListener('mouseleave', ()=>{ spotlight.classList.remove('active'); });
+  }
 
   // count up
   const counters = document.querySelectorAll('[data-count]');
