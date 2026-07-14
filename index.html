@@ -140,27 +140,51 @@
   .link-arrow svg{width:13px;height:13px;transition:transform .25s;}
   .link-arrow:hover svg{transform:translate(3px,-3px);}
 
-  /* ---------- STORY FACTS ---------- */
-  .facts{display:flex;gap:36px;margin-top:34px;flex-wrap:wrap;}
-  .fact{border-left:2px solid var(--brass);padding-left:14px;transition:transform .3s ease,border-color .3s ease;}
-  .fact:hover{transform:translateY(-4px);border-color:var(--brass-2);}
-  .fact .n{font-family:var(--display);font-size:15px;font-weight:700;}
-  .fact .l{font-family:var(--mono);font-size:10.5px;color:var(--stone);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+  /* ---------- STORY: ghost numeral + head ---------- */
+  #story{position:relative;overflow:hidden;}
+  .story-ghost{
+    position:absolute;top:-40px;left:-10px;z-index:0;pointer-events:none;
+    font-family:var(--display);font-weight:800;font-size:clamp(160px,20vw,280px);
+    line-height:1;letter-spacing:-.04em;color:transparent;
+    -webkit-text-stroke:1px rgba(199,149,83,.12);
+    user-select:none;
+  }
+  #story .wrap{position:relative;z-index:1;}
 
-  /* ---------- STORY PULL QUOTE ---------- */
-  .pull-quote{margin:36px 0 0;padding-left:20px;border-left:2px solid var(--line);}
-  .pull-quote p{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.45;color:var(--bone);}
-  .pull-quote span{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);letter-spacing:.04em;}
+  /* ---------- STORY FACTS (editorial stat strip) ---------- */
+  .facts{
+    display:grid;grid-template-columns:repeat(3,auto);gap:0;
+    margin-top:38px;border-top:1px solid var(--line);
+  }
+  .fact{
+    padding:20px 26px 0 0;margin-right:26px;border-right:1px solid var(--line);
+    transition:transform .3s ease;
+  }
+  .fact:last-child{border-right:none;padding-right:0;margin-right:0;}
+  .fact:hover{transform:translateY(-4px);}
+  .fact .n{font-family:var(--display);font-size:22px;font-weight:800;color:var(--brass);letter-spacing:-.01em;}
+  .fact .l{font-family:var(--mono);font-size:10px;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;margin-top:6px;}
+  @media(max-width:480px){.facts{grid-template-columns:1fr;}.fact{border-right:none;border-bottom:1px solid var(--line);padding:16px 0;margin-right:0;}.fact:last-child{border-bottom:none;}}
 
-  /* ---------- STORY BADGE ROW (new) ---------- */
-  .story-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;}
+  /* ---------- STORY PULL QUOTE (editorial, with glyph) ---------- */
+  .pull-quote{position:relative;margin:40px 0 0;padding:26px 0 4px 26px;border-left:2px solid var(--brass);}
+  .pull-quote .glyph{
+    position:absolute;top:-22px;left:8px;font-family:var(--display);font-size:64px;font-weight:800;
+    color:rgba(199,149,83,.22);line-height:1;user-select:none;
+  }
+  .pull-quote p{font-family:var(--display);font-size:20px;font-weight:600;line-height:1.45;color:var(--bone);max-width:420px;}
+  .pull-quote span{display:block;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);letter-spacing:.04em;}
+
+  /* ---------- STORY BADGE ROW ---------- */
+  .story-badges-label{font-family:var(--mono);font-size:10px;color:var(--stone-dark);text-transform:uppercase;letter-spacing:.1em;margin:36px 0 12px;}
+  .story-badges{display:flex;gap:10px;flex-wrap:wrap;}
   .story-badge{
     display:inline-flex;align-items:center;gap:7px;
     font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--stone);
     border:1px solid var(--line);padding:7px 12px;border-radius:20px;
-    transition:border-color .25s,color .25s,transform .25s;
+    transition:border-color .25s,color .25s,transform .25s,background .25s;
   }
-  .story-badge:hover{border-color:var(--brass);color:var(--brass-2);transform:translateY(-2px);}
+  .story-badge:hover{border-color:var(--brass);color:var(--brass-2);transform:translateY(-2px);background:rgba(199,149,83,.06);}
   .story-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--brass);flex-shrink:0;}
 
   /* ---------- BUILD LEDGER (signature element) ---------- */
@@ -179,7 +203,9 @@
   .ledger-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);}
   .ledger-top .dots{display:flex;gap:6px;}
   .ledger-top .dots span{width:7px;height:7px;border-radius:50%;background:var(--line-light);opacity:.25;}
-  .ledger-top .path{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);letter-spacing:.02em;}
+  .ledger-top .path{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);letter-spacing:.02em;display:flex;align-items:center;gap:8px;}
+  .ledger-top .path .live{width:6px;height:6px;border-radius:50%;background:var(--brass-2);box-shadow:0 0 0 0 rgba(227,184,119,.5);animation:pulse-live 2s ease-out infinite;}
+  @keyframes pulse-live{0%{box-shadow:0 0 0 0 rgba(227,184,119,.45);}70%{box-shadow:0 0 0 7px rgba(227,184,119,0);}100%{box-shadow:0 0 0 0 rgba(227,184,119,0);}}
   .ledger-body{padding:22px 20px 24px;}
   .ledger-row{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line);}
   .ledger-row:last-child{border-bottom:none;}
@@ -386,31 +412,37 @@
 </section>
 
 <section class="dark" id="story">
+  <div class="story-ghost" aria-hidden="true">2021—</div>
   <div class="wrap split">
     <div class="reveal">
       <div class="eyebrow">Our story</div>
       <h2>Systems that remove complexity, not add to it.</h2>
       <p class="body-text">Buildifo pairs senior engineers with AI-assisted tooling to build faster, without cutting quality. No juniors learning on your invoice, no bloated timelines.</p>
+
       <div class="facts">
         <div class="fact"><div class="n">2021</div><div class="l">Founded</div></div>
-        <div class="fact"><div class="n">Remote-first</div><div class="l">Team of 14</div></div>
-        <div class="fact"><div class="n">12+</div><div class="l">Industries</div></div>
+        <div class="fact"><div class="n">14</div><div class="l">Remote-first team</div></div>
+        <div class="fact"><div class="n">12+</div><div class="l">Industries served</div></div>
       </div>
+
+      <div class="pull-quote">
+        <span class="glyph" aria-hidden="true">"</span>
+        <p>This page was built the same way we build for clients.</p>
+        <span>— OUR BUILD LOG, RIGHT HERE →</span>
+      </div>
+
+      <div class="story-badges-label">Where we build</div>
       <div class="story-badges">
         <span class="story-badge"><span class="dot"></span>Computer Vision</span>
         <span class="story-badge"><span class="dot"></span>LLM &amp; RAG Systems</span>
         <span class="story-badge"><span class="dot"></span>Process Automation</span>
         <span class="story-badge"><span class="dot"></span>Document Intelligence</span>
       </div>
-      <div class="pull-quote">
-        <p>"This page was built the same way we build for clients."</p>
-        <span>— OUR BUILD LOG, BELOW</span>
-      </div>
     </div>
     <div class="ledger reveal">
       <div class="ledger-top">
         <div class="dots"><span></span><span></span><span></span></div>
-        <div class="path">buildifo.com — build log</div>
+        <div class="path"><span class="live"></span>buildifo.com — build log</div>
       </div>
       <div class="ledger-body">
         <div class="ledger-row">
