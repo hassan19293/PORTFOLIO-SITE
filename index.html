@@ -142,7 +142,8 @@
 
   /* ---------- STORY FACTS ---------- */
   .facts{display:flex;gap:36px;margin-top:34px;flex-wrap:wrap;}
-  .fact{border-left:2px solid var(--brass);padding-left:14px;}
+  .fact{border-left:2px solid var(--brass);padding-left:14px;transition:transform .3s ease,border-color .3s ease;}
+  .fact:hover{transform:translateY(-4px);border-color:var(--brass-2);}
   .fact .n{font-family:var(--display);font-size:15px;font-weight:700;}
   .fact .l{font-family:var(--mono);font-size:10.5px;color:var(--stone);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
 
@@ -151,11 +152,29 @@
   .pull-quote p{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.45;color:var(--bone);}
   .pull-quote span{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);letter-spacing:.04em;}
 
+  /* ---------- STORY BADGE ROW (new) ---------- */
+  .story-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;}
+  .story-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--stone);
+    border:1px solid var(--line);padding:7px 12px;border-radius:20px;
+    transition:border-color .25s,color .25s,transform .25s;
+  }
+  .story-badge:hover{border-color:var(--brass);color:var(--brass-2);transform:translateY(-2px);}
+  .story-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--brass);flex-shrink:0;}
+
   /* ---------- BUILD LEDGER (signature element) ---------- */
   .ledger{
     position:relative;border-radius:2px;overflow:hidden;
     background:linear-gradient(180deg,#17140F 0%,#100F0B 100%);
     border:1px solid var(--line);
+    transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .4s ease;
+    will-change:transform;
+  }
+  .ledger:hover{
+    transform:translateY(-10px);
+    border-color:rgba(199,149,83,.45);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.65), 0 0 0 1px rgba(199,149,83,.08);
   }
   .ledger-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);}
   .ledger-top .dots{display:flex;gap:6px;}
@@ -179,7 +198,8 @@
   .compare-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:var(--panel);}
   .compare-head div{padding:16px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-dark);}
   .compare-head div.us{color:var(--brass);}
-  .compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:1px solid var(--line);}
+  .compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:1px solid var(--line);transition:background .25s ease;}
+  .compare-row:hover{background:rgba(199,149,83,.04);}
   @media(max-width:700px){.compare-head,.compare-row{grid-template-columns:1.2fr 1fr 1fr;} }
   .compare-row div{padding:18px 22px;font-size:13.5px;color:var(--stone);display:flex;align-items:center;gap:8px;}
   .compare-row div:first-child{color:var(--bone);}
@@ -375,6 +395,12 @@
         <div class="fact"><div class="n">2021</div><div class="l">Founded</div></div>
         <div class="fact"><div class="n">Remote-first</div><div class="l">Team of 14</div></div>
         <div class="fact"><div class="n">12+</div><div class="l">Industries</div></div>
+      </div>
+      <div class="story-badges">
+        <span class="story-badge"><span class="dot"></span>Computer Vision</span>
+        <span class="story-badge"><span class="dot"></span>LLM &amp; RAG Systems</span>
+        <span class="story-badge"><span class="dot"></span>Process Automation</span>
+        <span class="story-badge"><span class="dot"></span>Document Intelligence</span>
       </div>
       <div class="pull-quote">
         <p>"This page was built the same way we build for clients."</p>
@@ -580,42 +606,42 @@
     <div class="work-grid reveal">
       <div class="work-card">
         <div class="plate"></div><div class="grain"></div>
-        <div class="year">2024</div>
+        <div class="year">2025</div>
         <div class="content">
-          <div class="sector">Fintech</div>
-          <h3>Automated KYC Platform</h3>
-          <p><strong style="color:var(--bone);">Before:</strong> manual review queues took 3 days per user. <strong style="color:var(--bone);">After:</strong> automated verification in under 4 hours, 80% faster onboarding.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="plate"></div><div class="grain"></div>
-        <div class="year">2023</div>
-        <div class="content">
-          <div class="sector">Healthcare</div>
-          <h3>Smart Operations Dashboard</h3>
-          <p><strong style="color:var(--bone);">Before:</strong> department heads pulled reports from five disconnected systems. <strong style="color:var(--bone);">After:</strong> one live dashboard, decisions made same-day instead of same-week.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <div class="sector">Computer Vision</div>
+          <h3>LiveSight — Real-Time Vision Agent</h3>
+          <p>A live computer-vision agent that watches a video feed and reasons about what it sees in real time, turning raw frames into instant, actionable understanding.</p>
+          <a class="link-arrow" href="https://huggingface.co/spaces/hassanbro56/livevisionagent/tree/main" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
       <div class="work-card">
         <div class="plate"></div><div class="grain"></div>
         <div class="year">2025</div>
         <div class="content">
-          <div class="sector">E-commerce</div>
-          <h3>Inventory Intelligence System</h3>
-          <p><strong style="color:var(--bone);">Before:</strong> stockouts on best-sellers every peak season. <strong style="color:var(--bone);">After:</strong> demand predicted 3 weeks out, 35% fewer stockouts.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <div class="sector">Automation · Featured</div>
+          <h3>Flowline — AI Automation Suite</h3>
+          <p>An end-to-end automation platform that connects tools and data so repetitive workflows run themselves — our proudest build to date.</p>
+          <a class="link-arrow" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
       <div class="work-card">
         <div class="plate"></div><div class="grain"></div>
-        <div class="year">2024</div>
+        <div class="year">2025</div>
         <div class="content">
-          <div class="sector">Logistics</div>
-          <h3>Route Optimization Engine</h3>
-          <p><strong style="color:var(--bone);">Before:</strong> routes planned manually every morning, no visibility into delays. <strong style="color:var(--bone);">After:</strong> live rerouting, 22% faster deliveries across 400+ vehicles.</p>
-          <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case study details">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+          <div class="sector">Document Intelligence</div>
+          <h3>Digital Extractor — Invoice AI</h3>
+          <p>Reads scanned and digital invoices and pulls out clean, structured line items automatically — no manual data entry required.</p>
+          <a class="link-arrow" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="plate"></div><div class="grain"></div>
+        <div class="year">2025</div>
+        <div class="content">
+          <div class="sector">LLM · RAG</div>
+          <h3>Ask-My-Docs — RAG Assistant</h3>
+          <p>A retrieval-augmented assistant that answers questions grounded in your own documents, instead of guessing from general knowledge.</p>
+          <a class="link-arrow" href="#" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
         </div>
       </div>
     </div>
