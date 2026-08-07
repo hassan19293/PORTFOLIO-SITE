@@ -290,19 +290,116 @@
   @media(prefers-reduced-motion: reduce){
     .story-glow span,.story-scan,.story-ghost{animation:none!important;}
   }
-  .story-statement{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 40px;text-align:center;}
-  @media(max-width:640px){.story-statement{padding:0 24px;}}
-  .story-statement .eyebrow{justify-content:center;}
-  .story-statement h2{
-    font-size:clamp(30px,4.6vw,58px);line-height:1.22;font-weight:600;color:var(--bone);
-    letter-spacing:-.01em;
+
+  /* ---------- WORK — expanding accordion gallery (Awwwards-style) ---------- */
+  #work{position:relative;}
+
+  .work-accordion{
+    display:flex;height:560px;margin-top:56px;
+    border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--ink);
   }
-  .story-statement h2 b{
-    font-weight:700;
-    background:linear-gradient(100deg,var(--brass-2),var(--brass) 60%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
+  @media(max-width:1080px){.work-accordion{height:500px;}}
+
+  .work-panel{
+    position:relative;overflow:hidden;isolation:isolate;
+    flex:1 1 0%;min-width:0;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:28px;
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    cursor:pointer;
+    transition:flex-grow .7s cubic-bezier(.22,1,.36,1), opacity .45s ease;
   }
-  .story-rule{width:44px;height:1px;background:var(--brass);margin:38px auto 0;}
+  .work-panel:last-child{border-right:none;}
+  .work-panel:hover,
+  .work-panel:focus-visible{flex-grow:5;}
+  .work-accordion:has(.work-panel:hover) .work-panel:not(:hover){opacity:.46;}
+
+  .work-panel-bg{
+    position:absolute;inset:0;z-index:0;
+    transform:scale(1.08);
+    transition:transform 1.3s cubic-bezier(.16,1,.3,1);
+  }
+  .work-panel:hover .work-panel-bg{transform:scale(1);}
+  .work-panel-bg.p1{background:radial-gradient(140% 110% at 18% 0%, #2E2114 0%, #100E0A 62%);}
+  .work-panel-bg.p2{background:radial-gradient(140% 110% at 82% 0%, #241A24 0%, #100E0A 62%);}
+  .work-panel-bg.p3{background:radial-gradient(140% 110% at 18% 100%, #142420 0%, #100E0A 62%);}
+  .work-panel-bg.p4{background:radial-gradient(140% 110% at 82% 100%, #241610 0%, #100E0A 62%);}
+  .work-panel-grain{
+    position:absolute;inset:0;z-index:1;opacity:.35;
+    background-image:repeating-linear-gradient(100deg, rgba(199,149,83,.06) 0 2px, transparent 2px 6px);
+  }
+  .work-panel::after{
+    content:'';position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(14,13,11,0) 0%, rgba(14,13,11,.42) 55%, rgba(14,13,11,.94) 100%);
+  }
+
+  .work-panel-idx{
+    position:absolute;top:26px;left:26px;z-index:3;
+    font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--stone);
+    transition:color .3s ease;
+  }
+  .work-panel:hover .work-panel-idx{color:var(--brass);}
+
+  .work-panel-open{
+    position:absolute;top:22px;right:22px;z-index:3;
+    width:30px;height:30px;border-radius:50%;border:1px solid var(--line-light);
+    display:flex;align-items:center;justify-content:center;opacity:.4;
+    transition:opacity .3s ease,border-color .3s ease,transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .work-panel-open svg{width:12px;height:12px;transition:transform .4s cubic-bezier(.22,1,.36,1);}
+  .work-panel:hover .work-panel-open{opacity:1;border-color:var(--brass);transform:scale(1.08);}
+  .work-panel:hover .work-panel-open svg{transform:rotate(45deg);}
+
+  .work-panel-vert{
+    position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;
+    writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;
+    font-family:var(--display);font-weight:700;font-size:clamp(19px,2vw,28px);letter-spacing:-.01em;color:var(--bone);
+    opacity:1;transition:opacity .3s ease;
+  }
+  .work-panel:hover .work-panel-vert,
+  .work-panel:focus-visible .work-panel-vert{opacity:0;}
+
+  .work-panel-expand{
+    position:relative;z-index:3;max-width:440px;
+    opacity:0;transform:translateY(14px);
+    transition:opacity .45s ease .08s, transform .5s cubic-bezier(.22,1,.36,1) .08s;
+  }
+  .work-panel:hover .work-panel-expand,
+  .work-panel:focus-visible .work-panel-expand{opacity:1;transform:translateY(0);}
+  .work-panel-meta{
+    display:flex;align-items:center;gap:9px;margin-bottom:14px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brass-2);
+  }
+  .work-panel-meta span:nth-child(2){opacity:.5;}
+  .work-panel-title{
+    font-family:var(--display);font-weight:700;letter-spacing:-.015em;line-height:1.05;
+    font-size:clamp(23px,2.5vw,36px);color:var(--bone);margin-bottom:12px;
+  }
+  .work-panel-desc{font-size:13.5px;line-height:1.65;color:#C7C2B4;margin-bottom:18px;}
+  .work-panel-cta{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;color:var(--brass);}
+  .work-panel-cta svg{width:12px;height:12px;}
+
+  /* first-visit hint: briefly opens one panel so people know they're interactive */
+  .work-panel.is-hint{flex-grow:5;}
+  .work-panel.is-hint .work-panel-vert{opacity:0;}
+  .work-panel.is-hint .work-panel-expand{opacity:1;transform:translateY(0);}
+  .work-panel.is-hint .work-panel-open{opacity:1;border-color:var(--brass);}
+
+  @media(max-width:860px){
+    .work-accordion{flex-direction:column;height:auto;border:none;background:none;gap:14px;}
+    .work-panel{
+      flex:none !important;height:300px;opacity:1 !important;
+      border:1px solid var(--line);border-radius:2px;padding:24px;
+    }
+    .work-panel-vert{display:none;}
+    .work-panel-expand{opacity:1;transform:none;max-width:100%;}
+    .work-panel-open{display:none;}
+    .work-panel-bg{transform:scale(1);}
+  }
+  @media(prefers-reduced-motion: reduce){
+    .work-panel,.work-panel-bg,.work-panel-vert,.work-panel-expand,.work-panel-open,.work-panel-open svg{transition:none !important;}
+  }
 
   /* ---------- PROCESS (scrollytelling pinned) ---------- */
   .process-pin-outer{position:relative;}
@@ -360,21 +457,6 @@
   .prod-card .idx{font-family:var(--mono);font-size:11px;color:var(--stone-dark);margin-bottom:34px;display:block;}
   .prod-card h3{font-size:16px;margin-bottom:9px;}
   .prod-card p{font-size:13px;color:var(--stone);line-height:1.6;margin-bottom:16px;}
-
-  /* ---------- WORK ---------- */
-  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:56px;}
-  @media(max-width:760px){.work-grid{grid-template-columns:1fr;}}
-  .work-card{position:relative;aspect-ratio:5/4;overflow:hidden;background:var(--panel);border:1px solid var(--line);}
-  .work-card .plate{position:absolute;inset:0;background:
-      radial-gradient(140% 100% at 100% 0%, #241F16 0%, #0E0D0B 65%);
-  }
-  .work-card .grain{position:absolute;inset:0;opacity:.35;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 3px);}
-  .work-card .content{position:absolute;left:0;right:0;bottom:0;padding:30px;transform:translateY(14px);transition:transform .3s;}
-  .work-card:hover .content{transform:translateY(0);}
-  .work-card .sector{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
-  .work-card h3{font-size:21px;margin-bottom:10px;}
-  .work-card p{font-size:13.5px;color:#B9B3A1;line-height:1.55;margin-bottom:16px;max-width:340px;}
-  .work-card .year{position:absolute;top:26px;right:28px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);}
 
   /* ---------- STATS ---------- */
   .stats-bar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -450,10 +532,10 @@
     </a>
     <div class="nav-links">
       <a href="#story">Story</a>
+      <a href="#work">Work</a>
       <a href="#process">Process</a>
       <a href="#why">Why Us</a>
       <a href="#products">Products</a>
-      <a href="#work">Work</a>
       <a href="#story">About</a>
     </div>
     <a class="cta-btn nav-cta" href="#cta" data-magnetic><span class="cta-full">Build With Us →</span><span class="cta-short">Contact →</span></a>
@@ -510,6 +592,76 @@
     <div class="eyebrow">Buildifo</div>
     <h2>At <b>Buildifo</b>, we pair senior engineering with sharp design thinking to build software that holds up. From custom applications to large-scale systems, every build is driven by <b>precision</b>, <b>reliability</b>, and a mindset built for long-term growth.</h2>
     <div class="story-rule"></div>
+  </div>
+</section>
+
+<section class="dark" id="work">
+  <div class="wrap">
+    <div class="eyebrow reveal">Selected work</div>
+    <h2 class="reveal">Projects, not case studies.</h2>
+    <p class="body-text reveal" style="margin-bottom:0;">Four builds, side by side. Hover one open — click through to the live project.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="work-accordion reveal" id="workAccordion">
+
+      <a class="work-panel" data-p="1" href="https://huggingface.co/spaces/hassanbro56/livevisionagent/tree/main" target="_blank" rel="noopener" aria-label="LiveSight — Computer Vision, 2025">
+        <div class="work-panel-bg p1"></div>
+        <div class="work-panel-grain"></div>
+        <span class="work-panel-idx">W.01</span>
+        <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        <span class="work-panel-vert" aria-hidden="true">LiveSight</span>
+        <div class="work-panel-expand">
+          <div class="work-panel-meta"><span>Computer Vision</span><span>·</span><span>2025</span></div>
+          <h3 class="work-panel-title">LiveSight</h3>
+          <p class="work-panel-desc">An always-on vision agent that watches a live feed and calls out what matters the moment it happens — no scrubbing footage after the fact.</p>
+          <span class="work-panel-cta">View live project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        </div>
+      </a>
+
+      <a class="work-panel" data-p="2" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener" aria-label="Flowline — Automation, 2025">
+        <div class="work-panel-bg p2"></div>
+        <div class="work-panel-grain"></div>
+        <span class="work-panel-idx">W.02</span>
+        <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        <span class="work-panel-vert" aria-hidden="true">Flowline</span>
+        <div class="work-panel-expand">
+          <div class="work-panel-meta"><span>Automation</span><span>·</span><span>Featured, 2025</span></div>
+          <h3 class="work-panel-title">Flowline</h3>
+          <p class="work-panel-desc">The engine that took a stack of manual handoffs and turned it into one automated flow, running quietly in the background of the business.</p>
+          <span class="work-panel-cta">View live project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        </div>
+      </a>
+
+      <a class="work-panel" data-p="3" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener" aria-label="Digital Extractor — Document Intelligence, 2025">
+        <div class="work-panel-bg p3"></div>
+        <div class="work-panel-grain"></div>
+        <span class="work-panel-idx">W.03</span>
+        <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        <span class="work-panel-vert" aria-hidden="true">Digital Extractor</span>
+        <div class="work-panel-expand">
+          <div class="work-panel-meta"><span>Document Intelligence</span><span>·</span><span>2025</span></div>
+          <h3 class="work-panel-title">Digital Extractor</h3>
+          <p class="work-panel-desc">Feed it any document and it hands back structured data you can actually trust downstream — no more copy-pasting out of PDFs.</p>
+          <span class="work-panel-cta">View live project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        </div>
+      </a>
+
+      <a class="work-panel" data-p="4" href="#cta" aria-label="Ask-My-Docs — LLM RAG, 2025">
+        <div class="work-panel-bg p4"></div>
+        <div class="work-panel-grain"></div>
+        <span class="work-panel-idx">W.04</span>
+        <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        <span class="work-panel-vert" aria-hidden="true">Ask-My-Docs</span>
+        <div class="work-panel-expand">
+          <div class="work-panel-meta"><span>LLM</span><span>·</span><span>RAG, 2025</span></div>
+          <h3 class="work-panel-title">Ask-My-Docs</h3>
+          <p class="work-panel-desc">A retrieval system that lets a team ask their own documents questions in plain language, and actually get the right answer back.</p>
+          <span class="work-panel-cta">Discuss this build <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
+        </div>
+      </a>
+
+    </div>
   </div>
 </section>
 
@@ -625,60 +777,6 @@
   </div>
 </section>
 
-<section class="dark" id="work">
-  <div class="wrap">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;" class="reveal">
-      <div>
-        <div class="eyebrow">Selected work</div>
-        <h2 style="margin-bottom:0;">Solutions engineered for<br>measurable results.</h2>
-      </div>
-      <a class="link-arrow" href="mailto:hello@buildifo.com?subject=Case studies">View all case studies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-    </div>
-    <div class="work-grid reveal">
-      <div class="work-card">
-        <div class="plate"></div><div class="grain"></div>
-        <div class="year">2025</div>
-        <div class="content">
-          <div class="sector">Computer Vision</div>
-          <h3>LiveSight — Real-Time Vision Agent</h3>
-          <p>A live computer-vision agent that watches a video feed and reasons about what it sees in real time, turning raw frames into instant, actionable understanding.</p>
-          <a class="link-arrow" href="https://huggingface.co/spaces/hassanbro56/livevisionagent/tree/main" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="plate"></div><div class="grain"></div>
-        <div class="year">2025</div>
-        <div class="content">
-          <div class="sector">Automation · Featured</div>
-          <h3>Flowline — AI Automation Suite</h3>
-          <p>An end-to-end automation platform that connects tools and data so repetitive workflows run themselves — our proudest build to date.</p>
-          <a class="link-arrow" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="plate"></div><div class="grain"></div>
-        <div class="year">2025</div>
-        <div class="content">
-          <div class="sector">Document Intelligence</div>
-          <h3>Digital Extractor — Invoice AI</h3>
-          <p>Reads scanned and digital invoices and pulls out clean, structured line items automatically — no manual data entry required.</p>
-          <a class="link-arrow" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="plate"></div><div class="grain"></div>
-        <div class="year">2025</div>
-        <div class="content">
-          <div class="sector">LLM · RAG</div>
-          <h3>Ask-My-Docs — RAG Assistant</h3>
-          <p>A retrieval-augmented assistant that answers questions grounded in your own documents, instead of guessing from general knowledge.</p>
-          <a class="link-arrow" href="#" target="_blank" rel="noopener">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <div class="stats-bar dark">
   <div class="wrap stats-grid">
     <div class="stat reveal"><div class="n" data-count="50">0</div><div class="l">Projects delivered</div></div>
@@ -735,8 +833,8 @@
         <div class="footer-col">
           <h4>Studio</h4>
           <a href="#story">Story</a>
-          <a href="#process">Process</a>
           <a href="#work">Work</a>
+          <a href="#process">Process</a>
           <a href="#story">About</a>
         </div>
         <div class="footer-col">
@@ -853,6 +951,37 @@
     });
   },{threshold:.5});
   counters.forEach(c=>cobs.observe(c));
+
+  // ---------- WORK ACCORDION: one-time hint so people discover it opens ----------
+  (function(){
+    const acc = document.getElementById('workAccordion');
+    if(!acc) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasHover = window.matchMedia('(hover: hover)').matches;
+    if(reduceMotion || !hasHover) return;
+
+    const hintPanel = acc.querySelector('.work-panel[data-p="2"]');
+    if(!hintPanel) return;
+
+    let hinted = false;
+    function runHint(){
+      if(hinted) return;
+      hinted = true;
+      hintPanel.classList.add('is-hint');
+      setTimeout(()=> hintPanel.classList.remove('is-hint'), 1300);
+    }
+
+    // trigger once the accordion actually scrolls into view
+    const hobs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ setTimeout(runHint, 500); hobs.disconnect(); }
+      });
+    },{threshold:.5});
+    hobs.observe(acc);
+
+    // cancel the hint early if the person starts interacting themselves
+    acc.addEventListener('mouseenter', ()=>{ hinted = true; hintPanel.classList.remove('is-hint'); }, {once:true});
+  })();
 
   // ---------- PROCESS SCROLLYTELLING (pinned section) ----------
   (function(){
