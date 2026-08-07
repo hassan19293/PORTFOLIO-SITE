@@ -841,6 +841,11 @@
 </footer>
 
 <script>
+  // release entrance animation once finished, so :hover transforms aren't blocked by it
+  document.querySelectorAll('.logo, .nav-links a, .nav-cta').forEach(el=>{
+    el.addEventListener('animationend', ()=>{ el.style.animation = 'none'; });
+  });
+
   // cursor
   const cursor = document.querySelector('.cursor');
   const ring = document.querySelector('.cursor-ring');
