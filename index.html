@@ -229,99 +229,80 @@
   .link-arrow svg{width:13px;height:13px;transition:transform .25s;}
   .link-arrow:hover svg{transform:translate(3px,-3px);}
 
-  /* ---------- STORY: ghost numeral + head ---------- */
-  #story{position:relative;overflow:hidden;}
+  /* ---------- STORY: full aesthetic black statement section ---------- */
+  #story{
+    position:relative;overflow:hidden;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:#050504;
+    padding:0;
+  }
+  /* ambient glow field — two soft brass auroras drifting slowly across the black */
+  .story-glow{position:absolute;inset:-10%;z-index:0;pointer-events:none;}
+  .story-glow span{
+    position:absolute;border-radius:50%;filter:blur(90px);
+    background:radial-gradient(circle, rgba(199,149,83,.16) 0%, rgba(199,149,83,0) 70%);
+  }
+  .story-glow span.g1{width:60vw;height:60vw;top:-15%;left:-10%;animation:driftA 26s ease-in-out infinite;}
+  .story-glow span.g2{width:46vw;height:46vw;bottom:-18%;right:-8%;background:radial-gradient(circle, rgba(227,184,119,.12) 0%, rgba(227,184,119,0) 70%);animation:driftB 32s ease-in-out infinite;}
+  .story-glow span.g3{width:30vw;height:30vw;top:40%;left:60%;background:radial-gradient(circle, rgba(199,149,83,.08) 0%, rgba(199,149,83,0) 70%);animation:driftC 22s ease-in-out infinite;}
+  @keyframes driftA{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(6vw,8vh) scale(1.12);}
+  }
+  @keyframes driftB{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-7vw,-6vh) scale(1.08);}
+  }
+  @keyframes driftC{
+    0%,100%{transform:translate(0,0) scale(1);opacity:.7;}
+    50%{transform:translate(-4vw,5vh) scale(1.2);opacity:1;}
+  }
+  /* faint traveling scan line for a quiet high-tech pulse */
+  .story-scan{
+    position:absolute;left:0;right:0;height:1px;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(199,149,83,.5) 50%,transparent);
+    animation:scanMove 9s ease-in-out infinite;
+  }
+  @keyframes scanMove{
+    0%{top:8%;opacity:0;}
+    10%{opacity:.8;}
+    50%{top:92%;opacity:.4;}
+    90%{opacity:.8;}
+    100%{top:8%;opacity:0;}
+  }
+  #story::before{
+    /* subtle grain / vignette so the black doesn't feel flat */
+    content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+    background:radial-gradient(120% 90% at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%);
+  }
   .story-ghost{
-    position:absolute;top:-40px;left:-10px;z-index:0;pointer-events:none;
-    font-family:var(--display);font-weight:800;font-size:clamp(160px,20vw,280px);
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none;
+    font-family:var(--display);font-weight:800;font-size:clamp(220px,32vw,520px);
     line-height:1;letter-spacing:-.04em;color:transparent;
-    -webkit-text-stroke:1px rgba(199,149,83,.12);
-    user-select:none;
+    -webkit-text-stroke:1px rgba(199,149,83,.06);
+    user-select:none;white-space:nowrap;
+    animation:ghostBreathe 8s ease-in-out infinite;
   }
-  #story .wrap{position:relative;z-index:1;}
-
-  /* ---------- STORY FACTS (editorial stat strip) ---------- */
-  .facts{
-    display:grid;grid-template-columns:repeat(3,auto);gap:0;
-    margin-top:38px;border-top:1px solid var(--line);
+  @keyframes ghostBreathe{
+    0%,100%{-webkit-text-stroke-color:rgba(199,149,83,.05);transform:translate(-50%,-50%) scale(1);}
+    50%{-webkit-text-stroke-color:rgba(199,149,83,.11);transform:translate(-50%,-50%) scale(1.015);}
   }
-  .fact{
-    padding:20px 26px 0 0;margin-right:26px;border-right:1px solid var(--line);
-    transition:transform .3s ease;
+  @media(prefers-reduced-motion: reduce){
+    .story-glow span,.story-scan,.story-ghost{animation:none!important;}
   }
-  .fact:last-child{border-right:none;padding-right:0;margin-right:0;}
-  .fact:hover{transform:translateY(-4px);}
-  .fact .n{font-family:var(--display);font-size:22px;font-weight:800;color:var(--brass);letter-spacing:-.01em;}
-  .fact .l{font-family:var(--mono);font-size:10px;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;margin-top:6px;}
-  @media(max-width:480px){.facts{grid-template-columns:1fr;}.fact{border-right:none;border-bottom:1px solid var(--line);padding:16px 0;margin-right:0;}.fact:last-child{border-bottom:none;}}
-
-  /* ---------- STORY PULL QUOTE (editorial, with glyph) ---------- */
-  .pull-quote{position:relative;margin:40px 0 0;padding:26px 0 4px 26px;border-left:2px solid var(--brass);}
-  .pull-quote .glyph{
-    position:absolute;top:-22px;left:8px;font-family:var(--display);font-size:64px;font-weight:800;
-    color:rgba(199,149,83,.22);line-height:1;user-select:none;
+  .story-statement{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 40px;text-align:center;}
+  @media(max-width:640px){.story-statement{padding:0 24px;}}
+  .story-statement .eyebrow{justify-content:center;}
+  .story-statement h2{
+    font-size:clamp(30px,4.6vw,58px);line-height:1.22;font-weight:600;color:var(--bone);
+    letter-spacing:-.01em;
   }
-  .pull-quote p{font-family:var(--display);font-size:20px;font-weight:600;line-height:1.45;color:var(--bone);max-width:420px;}
-  .pull-quote span{display:block;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--stone-dark);letter-spacing:.04em;}
-
-  /* ---------- STORY BADGE ROW ---------- */
-  .story-badges-label{font-family:var(--mono);font-size:10px;color:var(--stone-dark);text-transform:uppercase;letter-spacing:.1em;margin:36px 0 12px;}
-  .story-badges{display:flex;gap:10px;flex-wrap:wrap;}
-  .story-badge{
-    display:inline-flex;align-items:center;gap:7px;
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--stone);
-    border:1px solid var(--line);padding:7px 12px;border-radius:20px;
-    transition:border-color .25s,color .25s,transform .25s,background .25s;
+  .story-statement h2 b{
+    font-weight:700;
+    background:linear-gradient(100deg,var(--brass-2),var(--brass) 60%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .story-badge:hover{border-color:var(--brass);color:var(--brass-2);transform:translateY(-2px);background:rgba(199,149,83,.06);}
-  .story-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--brass);flex-shrink:0;}
-
-  /* ---------- BUILD LEDGER (signature element) ---------- */
-  .ledger{
-    position:relative;border-radius:2px;overflow:hidden;
-    background:linear-gradient(180deg,#17140F 0%,#100F0B 100%);
-    border:1px solid var(--line);
-    transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .4s ease;
-    will-change:transform;
-  }
-  .ledger:hover{
-    transform:translateY(-10px);
-    border-color:rgba(199,149,83,.45);
-    box-shadow:0 30px 60px -20px rgba(0,0,0,.65), 0 0 0 1px rgba(199,149,83,.08);
-  }
-  .ledger-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);}
-  .ledger-top .dots{display:flex;gap:6px;}
-  .ledger-top .dots span{width:7px;height:7px;border-radius:50%;background:var(--line-light);opacity:.25;}
-  .ledger-top .path{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);letter-spacing:.02em;display:flex;align-items:center;gap:8px;}
-  .ledger-top .path .live{width:6px;height:6px;border-radius:50%;background:var(--brass-2);box-shadow:0 0 0 0 rgba(227,184,119,.5);animation:pulse-live 2s ease-out infinite;}
-  @keyframes pulse-live{0%{box-shadow:0 0 0 0 rgba(227,184,119,.45);}70%{box-shadow:0 0 0 7px rgba(227,184,119,0);}100%{box-shadow:0 0 0 0 rgba(227,184,119,0);}}
-  .ledger-body{padding:22px 20px 24px;}
-  .ledger-row{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line);}
-  .ledger-row:last-child{border-bottom:none;}
-  .ledger-row .t{font-family:var(--mono);font-size:10.5px;color:var(--stone-dark);}
-  .ledger-row .msg{font-size:13.5px;color:#D6D1C2;}
-  .ledger-row .msg b{color:var(--bone);font-weight:600;}
-  .ledger-row .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:20px;white-space:nowrap;}
-  .ledger-row .tag.ai{color:var(--brass-2);border:1px solid rgba(199,149,83,.4);}
-  .ledger-row .tag.human{color:var(--stone);border:1px solid var(--line-light);}
-  .ledger-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-top:1px solid var(--line);background:rgba(199,149,83,.04);}
-  .ledger-foot .n{font-family:var(--display);font-size:22px;font-weight:800;color:var(--brass);}
-  .ledger-foot .l{font-family:var(--mono);font-size:10px;color:var(--stone);text-transform:uppercase;letter-spacing:.05em;}
-
-  /* ---------- COMPARE STRIP ---------- */
-  .compare-strip{margin-top:80px;border:1px solid var(--line);border-radius:2px;overflow:hidden;}
-  .compare-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:var(--panel);}
-  .compare-head div{padding:16px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-dark);}
-  .compare-head div.us{color:var(--brass);}
-  .compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:1px solid var(--line);transition:background .25s ease;}
-  .compare-row:hover{background:rgba(199,149,83,.04);}
-  @media(max-width:700px){.compare-head,.compare-row{grid-template-columns:1.2fr 1fr 1fr;} }
-  .compare-row div{padding:18px 22px;font-size:13.5px;color:var(--stone);display:flex;align-items:center;gap:8px;}
-  .compare-row div:first-child{color:var(--bone);}
-  .compare-row div.yes{color:var(--brass-2);}
-  .compare-row div.yes::before{content:'✓';font-family:var(--mono);}
-  .compare-row div.no::before{content:'—';color:var(--stone-dark);font-family:var(--mono);}
-  @media(max-width:520px){.compare-head{display:none;}}
+  .story-rule{width:44px;height:1px;background:var(--brass);margin:38px auto 0;}
 
   /* ---------- PROCESS (scrollytelling pinned) ---------- */
   .process-pin-outer{position:relative;}
@@ -464,7 +445,7 @@
 
 <header class="nav-loading" id="siteHeader">
   <nav class="wrap">
-    <a href="/" class="logo" id="navLogo" aria-label="Buildifo home"><g fill="#C79553"><path class="mark-c" d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path class="mark-l" d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path class="mark-r" d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
+    <a href="/" class="logo" id="navLogo" aria-label="Buildifo home"><svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"><g fill="#C79553"><path class="mark-c" d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path class="mark-l" d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path class="mark-r" d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
       BUILDIFO
     </a>
     <div class="nav-links">
@@ -521,106 +502,14 @@
   </div>
 </section>
 
-<section class="dark" id="story">
-  <div class="story-ghost" aria-hidden="true">2021—</div>
-  <div class="wrap split">
-    <div class="reveal">
-      <div class="eyebrow">Our story</div>
-      <h2>Architecting systems that scale, not slow you down.</h2>
-      <p class="body-text">Buildifo pairs senior engineers with AI-driven tooling to deliver high-performance systems faster, without cutting quality. No juniors learning on your invoice — every line engineered for precision and built to scale.</p>
-
-      <div class="facts">
-        <div class="fact"><div class="n">2021</div><div class="l">Founded</div></div>
-        <div class="fact"><div class="n">14</div><div class="l">Remote-first team</div></div>
-        <div class="fact"><div class="n">12+</div><div class="l">Industries served</div></div>
-      </div>
-
-      <div class="pull-quote">
-        <span class="glyph" aria-hidden="true">"</span>
-        <p>This page was architected the same way we engineer for clients.</p>
-        <span>— OUR BUILD LOG, RIGHT HERE →</span>
-      </div>
-
-      <div class="story-badges-label">Where we build</div>
-      <div class="story-badges">
-        <span class="story-badge"><span class="dot"></span>Computer Vision</span>
-        <span class="story-badge"><span class="dot"></span>LLM &amp; RAG Systems</span>
-        <span class="story-badge"><span class="dot"></span>Process Automation</span>
-        <span class="story-badge"><span class="dot"></span>Document Intelligence</span>
-      </div>
-    </div>
-    <div class="ledger reveal">
-      <div class="ledger-top">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <div class="path"><span class="live"></span>buildifo.com — build log</div>
-      </div>
-      <div class="ledger-body">
-        <div class="ledger-row">
-          <div class="t">DAY 01</div>
-          <div class="msg">Scoped structure from client brief</div>
-          <div class="tag human">Human</div>
-        </div>
-        <div class="ledger-row">
-          <div class="t">DAY 01</div>
-          <div class="msg">Architected <b>first layout pass</b></div>
-          <div class="tag ai">AI-assisted</div>
-        </div>
-        <div class="ledger-row">
-          <div class="t">DAY 02</div>
-          <div class="msg">Engineered typography + hierarchy</div>
-          <div class="tag human">Human</div>
-        </div>
-        <div class="ledger-row">
-          <div class="t">DAY 02</div>
-          <div class="msg">Generated <b>hover + scroll states</b></div>
-          <div class="tag ai">AI-assisted</div>
-        </div>
-        <div class="ledger-row">
-          <div class="t">DAY 03</div>
-          <div class="msg">QA: accessibility + responsive</div>
-          <div class="tag human">Human</div>
-        </div>
-        <div class="ledger-row">
-          <div class="t">DAY 03</div>
-          <div class="msg">Deployed to production</div>
-          <div class="tag human">Human</div>
-        </div>
-      </div>
-      <div class="ledger-foot">
-        <div><div class="n">3 days</div><div class="l">brief to launch</div></div>
-        <div style="text-align:right;"><div class="n">100%</div><div class="l">human-reviewed</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="compare-strip reveal">
-      <div class="compare-head">
-        <div>AI-assisted building</div>
-        <div>Typical agency</div>
-        <div class="us">Buildifo</div>
-      </div>
-      <div class="compare-row">
-        <div>Brief to first draft</div>
-        <div>2–3 weeks</div>
-        <div class="yes">2–3 days</div>
-      </div>
-      <div class="compare-row">
-        <div>Senior review on every line</div>
-        <div class="no"></div>
-        <div class="yes">Always</div>
-      </div>
-      <div class="compare-row">
-        <div>Juniors on your invoice</div>
-        <div>Often</div>
-        <div class="no"></div>
-      </div>
-      <div class="compare-row">
-        <div>Fixed price, agreed upfront</div>
-        <div class="no"></div>
-        <div class="yes">Always</div>
-      </div>
-    </div>
+<section id="story">
+  <div class="story-glow" aria-hidden="true"><span class="g1"></span><span class="g2"></span><span class="g3"></span></div>
+  <div class="story-scan" aria-hidden="true"></div>
+  <div class="story-ghost" aria-hidden="true">BUILDIFO</div>
+  <div class="story-statement reveal">
+    <div class="eyebrow">Buildifo</div>
+    <h2>At <b>Buildifo</b>, we pair senior engineering with sharp design thinking to build software that holds up. From custom applications to large-scale systems, every build is driven by <b>precision</b>, <b>reliability</b>, and a mindset built for long-term growth.</h2>
+    <div class="story-rule"></div>
   </div>
 </section>
 
