@@ -21,6 +21,8 @@
     --stone-dark:#514D42;
     --line:#2B2820;
     --line-light:#DED5BC;
+    --umber:#241A10;
+    --wine:#2A1512;
     --display:'Archivo',sans-serif;
     --body:'Inter',sans-serif;
     --mono:'IBM Plex Mono',monospace;
@@ -65,15 +67,32 @@
   .line-reveal.in span{transform:translateY(0);}
 
   /* ---------- NAV ---------- */
-  header{position:sticky;top:0;z-index:100;background:rgba(14,13,11,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  header{
+    position:sticky;top:0;z-index:100;background:rgba(14,13,11,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid transparent;
+    background-image:linear-gradient(rgba(14,13,11,.82),rgba(14,13,11,.82)),linear-gradient(90deg,transparent 0%,rgba(199,149,83,.55) 50%,transparent 100%);
+    background-origin:border-box;background-clip:padding-box,border-box;
+  }
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;max-width:1240px;margin:0 auto;}
   .logo{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;}
-  .logo svg{width:24px;height:22px;flex-shrink:0;}
+  .logo svg{width:24px;height:22px;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(199,149,83,.35));}
   .nav-links{display:flex;gap:38px;font-size:13.5px;color:var(--stone);font-weight:500;}
   .nav-links a{position:relative;padding-bottom:3px;}
   .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .25s;}
   .nav-links a:hover{color:var(--bone);}
   .nav-links a:hover::after{width:100%;}
+
+  /* nav entrance choreography */
+  .logo,.nav-links a,.nav-cta{opacity:0;transform:translateY(-14px);animation:navIn .7s cubic-bezier(.22,1,.36,1) forwards;}
+  .logo{animation-delay:.08s;}
+  .nav-links a:nth-child(1){animation-delay:.18s;}
+  .nav-links a:nth-child(2){animation-delay:.24s;}
+  .nav-links a:nth-child(3){animation-delay:.30s;}
+  .nav-links a:nth-child(4){animation-delay:.36s;}
+  .nav-links a:nth-child(5){animation-delay:.42s;}
+  .nav-links a:nth-child(6){animation-delay:.48s;}
+  .nav-cta{animation-delay:.56s;}
+  @keyframes navIn{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:translateY(0);}}
   .cta-btn{
     font-family:var(--body);font-weight:600;font-size:13px;
     background:var(--brass);color:var(--ink);
@@ -90,18 +109,27 @@
   @media(max-width:920px){.nav-links{display:none;}}
 
   /* ---------- HERO ---------- */
-  .hero{padding:150px 0 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .hero{
+    padding:150px 0 0;position:relative;overflow:hidden;
+    background:
+      radial-gradient(60% 50% at 78% 8%, rgba(199,149,83,.10) 0%, rgba(199,149,83,0) 60%),
+      radial-gradient(70% 60% at 8% 100%, var(--umber) 0%, rgba(36,26,16,0) 55%),
+      radial-gradient(90% 70% at 100% 100%, var(--wine) 0%, rgba(42,21,18,0) 50%),
+      var(--ink);
+  }
   .hero-spotlight{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle, rgba(199,149,83,.14) 0%, rgba(199,149,83,0) 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;}
   .hero-spotlight.active{opacity:1;}
   .hero-inner{max-width:920px;position:relative;z-index:1;}
   .hero h1{font-size:clamp(42px,6.6vw,86px);line-height:1.0;margin-bottom:30px;}
-  .hero h1 .accent{color:var(--brass);}
+  .hero h1 .accent{background:linear-gradient(100deg,var(--brass-2),var(--brass) 60%);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .hero p.lede{font-size:18px;line-height:1.6;color:#C7C2B4;max-width:520px;margin-bottom:40px;}
   .hero-ctas{display:flex;gap:16px;margin-bottom:0;flex-wrap:wrap;align-items:center;}
   .hero-ctas .note{font-family:var(--mono);font-size:11.5px;color:var(--stone-dark);}
+  .hero-ctas .cta-btn{transition-property:opacity,transform,background,color;transition-duration:.8s,.8s,.2s,.2s;}
 
-  /* marquee */
-  .marquee-wrap{margin-top:90px;border-top:1px solid var(--line);padding:26px 0;overflow:hidden;position:relative;}
+  /* marquee — single soft divider replaces the old double-line seam */
+  .marquee-wrap{margin-top:90px;padding:26px 0;overflow:hidden;position:relative;}
+  .marquee-wrap::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent);}
   .marquee-wrap::before{content:'TRUSTED BY';font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--stone-dark);position:absolute;left:40px;top:50%;transform:translateY(-50%);background:var(--ink);padding-right:16px;z-index:2;}
   .marquee{display:flex;gap:90px;white-space:nowrap;animation:scroll-x 28s linear infinite;padding-left:180px;}
   .marquee span{font-family:var(--display);font-weight:700;font-size:20px;color:var(--stone-dark);letter-spacing:.02em;}
@@ -360,6 +388,7 @@
   .reveal.in{opacity:1;transform:none;}
   @media(prefers-reduced-motion: reduce){
     .reveal,.line-reveal span{opacity:1!important;transform:none!important;transition:none!important;}
+    .logo,.nav-links a,.nav-cta{opacity:1!important;transform:none!important;animation:none!important;}
     html{scroll-behavior:auto;}
     .marquee,.testi-scroll{animation:none;}
     .process-step{position:static !important;opacity:1!important;padding:44px 0;border-top:1px solid var(--line);}
@@ -386,22 +415,20 @@
       <a href="#work">Work</a>
       <a href="#story">About</a>
     </div>
-    <a class="cta-btn" href="#cta" data-magnetic>Build With Us →</a>
+    <a class="cta-btn nav-cta" href="#cta" data-magnetic>Build With Us →</a>
   </nav>
 </header>
 
 <section class="hero dark">
   <div class="hero-spotlight" id="heroSpotlight"></div>
   <div class="wrap hero-inner">
-    <div class="eyebrow reveal">Systems &amp; product studio</div>
-    <h1>
+    <h1 style="margin-top:20px;">
       <span class="line-reveal"><span>Better systems.</span></span>
       <span class="line-reveal"><span>Stronger <span class="accent">businesses.</span></span></span>
     </h1>
-    <p class="lede reveal">We architect high-performance systems and AI-driven products for businesses with ambitious goals.</p>
-    <div class="hero-ctas reveal">
-      <a class="cta-btn" href="#cta" data-magnetic>Start a Project →</a>
-      <a class="cta-btn ghost" href="#work" data-magnetic>Our Work</a>
+    <div class="hero-ctas" style="margin-top:40px;">
+      <a class="cta-btn reveal" style="transition-delay:.05s" href="#cta" data-magnetic>Start a Project →</a>
+      <a class="cta-btn ghost reveal" style="transition-delay:.2s" href="#work" data-magnetic>Our Work</a>
     </div>
   </div>
   <div class="marquee-wrap">
