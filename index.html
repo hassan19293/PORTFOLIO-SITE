@@ -74,8 +74,16 @@
     background-origin:border-box;background-clip:padding-box,border-box;
   }
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;max-width:1240px;margin:0 auto;}
-  .logo{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;}
-  .logo svg{width:24px;height:22px;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(199,149,83,.35));}
+  .logo{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;transform-origin:left center;transition:transform .45s cubic-bezier(.22,1,.36,1);}
+  .logo:hover{transform:scale(1.18);}
+  .logo svg{width:24px;height:22px;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(199,149,83,.35));overflow:visible;}
+  .logo .mark-c,.logo .mark-l,.logo .mark-r{
+    transform-box:fill-box;transform-origin:50% 92%;
+    transition:transform .45s cubic-bezier(.22,1,.36,1);
+  }
+  .logo:hover .mark-c{transform:translateY(-3px) scaleY(1.06);}
+  .logo:hover .mark-l{transform:translate(-4px,-1px) rotate(-6deg);}
+  .logo:hover .mark-r{transform:translate(4px,-1px) rotate(6deg);}
   .nav-links{display:flex;gap:38px;font-size:13.5px;color:var(--stone);font-weight:500;}
   .nav-links a{position:relative;padding-bottom:3px;}
   .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .25s;}
@@ -107,6 +115,15 @@
   .cta-btn.ghost:hover{border-color:var(--brass);color:var(--brass);}
   .cta-btn.on-paper{border-color:#00000022;}
   @media(max-width:920px){.nav-links{display:none;}}
+  @media(max-width:640px){
+    nav{padding:16px 20px;}
+    .logo{font-size:14px;gap:7px;flex-shrink:0;}
+    .logo svg{width:19px;height:17px;}
+    .cta-btn.nav-cta{padding:9px 14px;font-size:11.5px;gap:6px;white-space:nowrap;flex-shrink:0;}
+    .cta-full{display:none;}
+    .cta-short{display:inline;}
+  }
+  .cta-short{display:none;}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -120,12 +137,39 @@
   .hero-spotlight{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle, rgba(199,149,83,.14) 0%, rgba(199,149,83,0) 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;}
   .hero-spotlight.active{opacity:1;}
   .hero-inner{max-width:920px;position:relative;z-index:1;}
-  .hero h1{font-size:clamp(42px,6.6vw,86px);line-height:1.0;margin-bottom:30px;}
+  .hero-mark{
+    position:absolute;top:50%;right:-40px;transform:translateY(-54%);
+    width:clamp(280px,30vw,460px);opacity:.05;pointer-events:none;z-index:0;
+    display:none;
+  }
+  @media(min-width:1300px){.hero-mark{display:block;}}
+  @media(min-width:901px){
+    .hero{min-height:calc(100vh - 68px);display:flex;flex-direction:column;justify-content:space-between;}
+    .hero-inner{padding-top:36px;}
+    .marquee-wrap{margin-top:0;}
+  }
+  .hero h1{font-size:clamp(42px,6.6vw,86px);line-height:1.0;margin-bottom:30px;position:relative;}
+  .hero h1::before{
+    content:'';position:absolute;left:-60px;top:50%;width:640px;height:340px;
+    transform:translateY(-50%);z-index:-1;pointer-events:none;
+    background:radial-gradient(ellipse at center, rgba(199,149,83,.16) 0%, rgba(199,149,83,.06) 45%, rgba(199,149,83,0) 72%);
+  }
   .hero h1 .accent{background:linear-gradient(100deg,var(--brass-2),var(--brass) 60%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero h1 .tick{display:inline-block;width:34px;height:2px;background:var(--brass);margin-right:16px;margin-bottom:10px;vertical-align:middle;transform-origin:left center;transform:scaleX(0);transition:transform .6s cubic-bezier(.22,1,.36,1) .3s;}
+  .line-reveal.in .tick{transform:scaleX(1);}
+  @media(max-width:640px){.hero h1::before{width:420px;height:240px;left:-40px;} .hero h1 .tick{width:22px;margin-right:10px;}}
   .hero p.lede{font-size:18px;line-height:1.6;color:#C7C2B4;max-width:520px;margin-bottom:40px;}
   .hero-ctas{display:flex;gap:16px;margin-bottom:0;flex-wrap:wrap;align-items:center;}
   .hero-ctas .note{font-family:var(--mono);font-size:11.5px;color:var(--stone-dark);}
   .hero-ctas .cta-btn{transition-property:opacity,transform,background,color;transition-duration:.8s,.8s,.2s,.2s;}
+
+  .hero-caps{display:flex;align-items:center;gap:0;flex-wrap:wrap;max-width:520px;}
+  .hero-caps span{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--stone);padding:0 18px 0 0;position:relative;
+  }
+  .hero-caps span::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--brass);margin-right:9px;vertical-align:middle;}
+  .hero-caps span:not(:last-child)::after{content:'';position:absolute;right:9px;top:50%;transform:translateY(-50%);width:1px;height:11px;background:var(--line-light);opacity:.3;}
 
   /* marquee — single soft divider replaces the old double-line seam */
   .marquee-wrap{margin-top:90px;padding:26px 0;overflow:hidden;position:relative;}
@@ -404,7 +448,7 @@
 <header>
   <nav class="wrap">
     <a href="/" class="logo" aria-label="Buildifo home">
-      <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"><g fill="#C79553"><path d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
+      <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" class="mark"><g fill="#C79553"><path class="mark-c" d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path class="mark-l" d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path class="mark-r" d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
       BUILDIFO
     </a>
     <div class="nav-links">
@@ -415,18 +459,22 @@
       <a href="#work">Work</a>
       <a href="#story">About</a>
     </div>
-    <a class="cta-btn nav-cta" href="#cta" data-magnetic>Build With Us →</a>
+    <a class="cta-btn nav-cta" href="#cta" data-magnetic><span class="cta-full">Build With Us →</span><span class="cta-short">Contact →</span></a>
   </nav>
 </header>
 
 <section class="hero dark">
   <div class="hero-spotlight" id="heroSpotlight"></div>
+  <svg class="hero-mark" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="#C79553"><path d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
   <div class="wrap hero-inner">
     <h1 style="margin-top:20px;">
-      <span class="line-reveal"><span>Better systems.</span></span>
-      <span class="line-reveal"><span>Stronger <span class="accent">businesses.</span></span></span>
+      <span class="line-reveal"><span><span class="tick" aria-hidden="true"></span>Better systems.</span></span>
+      <span class="line-reveal"><span><span class="tick" aria-hidden="true"></span>Stronger <span class="accent">businesses.</span></span></span>
     </h1>
-    <div class="hero-ctas" style="margin-top:40px;">
+    <div class="hero-caps reveal" style="transition-delay:.15s">
+      <span>Systems</span><span>Products</span><span>Automation</span><span>Intelligence</span>
+    </div>
+    <div class="hero-ctas" style="margin-top:36px;">
       <a class="cta-btn reveal" style="transition-delay:.05s" href="#cta" data-magnetic>Start a Project →</a>
       <a class="cta-btn ghost reveal" style="transition-delay:.2s" href="#work" data-magnetic>Our Work</a>
     </div>
@@ -757,7 +805,7 @@
   <div class="wrap">
     <div class="footer-top">
       <a href="/" class="logo" aria-label="Buildifo home">
-        <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg"><g fill="#C79553"><path d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
+        <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" class="mark"><g fill="#C79553"><path class="mark-c" d="M 160 20 C 150 90, 140 128, 136 165 C 133 197, 143 229, 152 257 L 160 274 L 168 257 C 177 229, 187 197, 184 165 C 180 128, 170 90, 160 20 Z"/><path class="mark-l" d="M 52 30 C 76 96, 98 144, 112 179 C 121 204, 138 235, 151 260 L 160 274 L 156 246 C 145 216, 121 176, 103 139 C 85 105, 66 63, 52 30 Z"/><path class="mark-r" d="M 268 30 C 244 96, 222 144, 208 179 C 199 204, 182 235, 169 260 L 160 274 L 164 246 C 175 216, 199 176, 217 139 C 235 105, 254 63, 268 30 Z"/></g></svg>
         BUILDIFO
       </a>
       <div class="footer-cols">
