@@ -455,6 +455,24 @@
   .step-visual svg{width:100%;height:100%;}
   .step-visual svg .draw{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);transition:stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1);}
   .process-step.active .step-visual svg .draw{stroke-dashoffset:0;}
+
+  /* editorial photography treatment — unified duotone campaign look across the 4 process visuals */
+  .step-visual img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    filter:grayscale(55%) sepia(14%) contrast(1.18) brightness(.68) saturate(1.05);
+    transform:scale(1.06);
+    transition:transform 1.4s cubic-bezier(.16,1,.3,1), filter .6s ease;
+  }
+  .process-step.active .step-visual img{transform:scale(1);filter:grayscale(45%) sepia(16%) contrast(1.15) brightness(.78) saturate(1.08);}
+  .step-visual::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(155deg, rgba(199,149,83,.16) 0%, rgba(14,13,11,0) 45%),
+      linear-gradient(0deg, rgba(9,8,6,.55) 0%, rgba(9,8,6,.08) 45%, rgba(9,8,6,.2) 100%);
+  }
+  @media(prefers-reduced-motion: reduce){
+    .step-visual img{transition:none;}
+  }
   .deliverable{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.02em;}
   .process-dots{display:flex;gap:10px;margin-top:40px;}
   @media(max-width:768px){.process-dots{display:none;}}
@@ -711,25 +729,25 @@
           <div class="process-step active" data-step="0">
             <div class="step-num">01</div>
             <div class="step-text"><h3>Audit &amp; Discovery</h3><p>We decode your business before touching a single line of code — goals, constraints, and the people who'll actually drive your growth.</p></div>
-            <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="20" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><rect x="100" y="30" width="60" height="60" fill="none" stroke="#3A342A"/><line class="draw" style="--len:20" x1="80" y1="60" x2="100" y2="60" stroke="#C79553" stroke-width="1.5"/><circle cx="140" cy="60" r="4" fill="#C79553"/></svg></div>
+            <div class="step-visual"><img src="https://images.unsplash.com/photo-1630236189300-f882d24be40d?fm=jpg&q=70&w=600&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A lone figure walking through a vast, minimalist concrete architectural space" loading="lazy"></div>
           </div>
 
           <div class="process-step" data-step="1">
             <div class="step-num">02</div>
             <div class="step-text"><h3>Strategic Blueprint</h3><p>A roadmap architected for your growth trajectory — not a template, not a trend, a plan engineered for your constraints and your ROI.</p><span class="deliverable">You get: scoped roadmap + technical spec</span></div>
-            <div class="step-visual"><svg viewBox="0 0 220 120"><path class="draw" style="--len:210" d="M20 90 L70 60 L110 75 L150 35 L200 50" stroke="#C79553" stroke-width="1.5" fill="none"/><circle cx="150" cy="35" r="3" fill="#C79553"/></svg></div>
+            <div class="step-visual"><img src="https://images.unsplash.com/photo-1653164579768-ea97833b3b03?fm=jpg&q=70&w=600&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A precise architectural model resting on a tactile, sculptural surface" loading="lazy"></div>
           </div>
 
           <div class="process-step" data-step="2">
             <div class="step-num">03</div>
             <div class="step-text"><h3>Engineering Excellence</h3><p>Reliable, scalable, precision-built — engineered by people who'll still be answering your calls a year after launch.</p><span class="deliverable">You get: weekly demos, staging access from day one</span></div>
-            <div class="step-visual"><svg viewBox="0 0 220 120"><rect x="30" y="25" width="160" height="70" fill="none" stroke="#3A342A"/><line x1="30" y1="45" x2="190" y2="45" stroke="#3A342A"/><line x1="30" y1="65" x2="190" y2="65" stroke="#3A342A"/><rect x="30" y="45" width="90" height="20" fill="#C79553" opacity=".22"/></svg></div>
+            <div class="step-visual"><img src="https://images.unsplash.com/photo-1738162837438-92ff852619a1?fm=jpg&q=70&w=600&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Close-up of precision machining, sparks flying off cut metal in a dark workshop" loading="lazy"></div>
           </div>
 
           <div class="process-step" data-step="3">
             <div class="step-num">04</div>
             <div class="step-text"><h3>Scale &amp; Optimize</h3><p>Launch is day one. We stay on to optimize, evolve, and make sure your system keeps compounding returns.</p><span class="deliverable">You get: 30-day post-launch window + a direct line to the team</span></div>
-            <div class="step-visual"><svg viewBox="0 0 220 120"><circle cx="110" cy="60" r="34" fill="none" stroke="#3A342A"/><circle cx="110" cy="60" r="34" fill="none" stroke="#C79553" stroke-width="2" stroke-dasharray="70 300" stroke-linecap="round"/></svg></div>
+            <div class="step-visual"><img src="https://images.unsplash.com/photo-1516472151647-6900f65d8975?fm=jpg&q=70&w=600&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A tiny human figure dwarfed by a monumental, cavernous space with dramatic light" loading="lazy"></div>
           </div>
 
         </div>
