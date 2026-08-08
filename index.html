@@ -451,23 +451,66 @@
   .process-step.active .step-num{color:var(--brass);}
   .process-step .step-text h3{font-size:22px;margin-bottom:10px;}
   .process-step .step-text p{font-size:14.5px;color:var(--stone);line-height:1.65;max-width:420px;}
-  .step-visual{height:380px;border-radius:2px;border:1px solid var(--line);background:var(--panel);position:relative;overflow:hidden;}
+  .step-visual{
+    height:380px;border-radius:2px;border:1px solid var(--line);position:relative;overflow:hidden;
+    transition:border-color .5s ease, box-shadow .5s ease;
+    background:
+      radial-gradient(120% 90% at 22% 15%, rgba(199,149,83,.16) 0%, rgba(199,149,83,0) 55%),
+      radial-gradient(100% 80% at 85% 95%, rgba(227,184,119,.08) 0%, rgba(227,184,119,0) 60%),
+      repeating-linear-gradient(100deg, rgba(199,149,83,.05) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(10deg, rgba(199,149,83,.035) 0 1px, transparent 1px 26px),
+      linear-gradient(160deg, #201C15 0%, #100E0B 70%);
+  }
   @media(max-width:1080px){.step-visual{height:320px;}}
   @media(max-width:768px){.step-visual{height:260px;}}
+  .process-step.active .step-visual{
+    border-color:rgba(199,149,83,.45);
+    box-shadow:0 0 0 1px rgba(199,149,83,.1), 0 30px 70px -30px rgba(0,0,0,.75);
+  }
+
+  /* fine grain, matching the work-panel grain language, sits above the photo for cohesion */
+  .step-visual-grain{
+    position:absolute;inset:0;z-index:2;opacity:.28;pointer-events:none;mix-blend-mode:overlay;
+    background-image:repeating-linear-gradient(100deg, rgba(245,242,234,.06) 0 1px, transparent 1px 5px);
+  }
+
+  /* Awwwards-style corner brackets — frame the photo like an editorial plate */
+  .sv-corner{position:absolute;width:16px;height:16px;z-index:3;pointer-events:none;opacity:.5;transition:opacity .5s ease,width .5s ease,height .5s ease;}
+  .sv-corner.tl{top:12px;left:12px;border-top:1px solid var(--brass-2);border-left:1px solid var(--brass-2);}
+  .sv-corner.tr{top:12px;right:12px;border-top:1px solid var(--brass-2);border-right:1px solid var(--brass-2);}
+  .sv-corner.bl{bottom:12px;left:12px;border-bottom:1px solid var(--brass-2);border-left:1px solid var(--brass-2);}
+  .sv-corner.br{bottom:12px;right:12px;border-bottom:1px solid var(--brass-2);border-right:1px solid var(--brass-2);}
+  .process-step.active .sv-corner{opacity:.95;width:20px;height:20px;}
+
+  /* mono index tag, bottom-left — echoes the site's frame-label / work-panel-idx convention */
+  .sv-tag{
+    position:absolute;bottom:16px;left:16px;z-index:3;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bone);opacity:.7;
+    display:flex;align-items:center;gap:8px;
+  }
+  .sv-tag::before{content:'';width:14px;height:1px;background:var(--brass);opacity:.8;}
+  .sv-tag b{color:var(--brass-2);font-weight:500;}
+
+  /* fig. counter, top-right — small editorial plate numbering */
+  .sv-fig{
+    position:absolute;top:16px;right:16px;z-index:3;
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:rgba(245,242,234,.5);
+  }
   .step-visual svg{width:100%;height:100%;}
   .step-visual svg .draw{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);transition:stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1);}
   .process-step.active .step-visual svg .draw{stroke-dashoffset:0;}
 
   /* editorial photography treatment — unified duotone campaign look across the 4 process visuals */
   .step-visual img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    position:absolute;inset:0;width:100%;height:100%;min-width:100%;min-height:100%;object-fit:cover;object-position:center 30%;display:block;
     filter:grayscale(55%) sepia(14%) contrast(1.18) brightness(.68) saturate(1.05);
     transform:scale(1.06);
     transition:transform 1.4s cubic-bezier(.16,1,.3,1), filter .6s ease;
   }
   .process-step.active .step-visual img{transform:scale(1);filter:grayscale(45%) sepia(16%) contrast(1.15) brightness(.78) saturate(1.08);}
   .step-visual::after{
-    content:'';position:absolute;inset:0;pointer-events:none;
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
     background:
       linear-gradient(155deg, rgba(199,149,83,.16) 0%, rgba(14,13,11,0) 45%),
       linear-gradient(0deg, rgba(9,8,6,.55) 0%, rgba(9,8,6,.08) 45%, rgba(9,8,6,.2) 100%);
@@ -731,25 +774,49 @@
           <div class="process-step active" data-step="0">
             <div class="step-num">01</div>
             <div class="step-text"><h3>Audit &amp; Discovery</h3><p>We decode your business before touching a single line of code — goals, constraints, and the people who'll actually drive your growth.</p></div>
-            <div class="step-visual"><img src="https://images.unsplash.com/photo-1630236189300-f882d24be40d?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A lone figure walking through a vast, minimalist concrete architectural space" loading="lazy"></div>
+            <div class="step-visual">
+              <img src="https://images.unsplash.com/photo-1630236189300-f882d24be40d?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A lone figure walking through a vast, minimalist concrete architectural space" loading="lazy">
+              <div class="step-visual-grain" aria-hidden="true"></div>
+              <span class="sv-corner tl" aria-hidden="true"></span><span class="sv-corner tr" aria-hidden="true"></span><span class="sv-corner bl" aria-hidden="true"></span><span class="sv-corner br" aria-hidden="true"></span>
+              <span class="sv-fig" aria-hidden="true">FIG. 01</span>
+              <span class="sv-tag" aria-hidden="true"><b>01</b> / Discovery</span>
+            </div>
           </div>
 
           <div class="process-step" data-step="1">
             <div class="step-num">02</div>
             <div class="step-text"><h3>Strategic Blueprint</h3><p>A roadmap architected for your growth trajectory — not a template, not a trend, a plan engineered for your constraints and your ROI.</p><span class="deliverable">You get: scoped roadmap + technical spec</span></div>
-            <div class="step-visual"><img src="https://images.unsplash.com/photo-1653164579768-ea97833b3b03?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A precise architectural model resting on a tactile, sculptural surface" loading="lazy"></div>
+            <div class="step-visual">
+              <img src="https://images.unsplash.com/photo-1653164579768-ea97833b3b03?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A precise architectural model resting on a tactile, sculptural surface" loading="lazy">
+              <div class="step-visual-grain" aria-hidden="true"></div>
+              <span class="sv-corner tl" aria-hidden="true"></span><span class="sv-corner tr" aria-hidden="true"></span><span class="sv-corner bl" aria-hidden="true"></span><span class="sv-corner br" aria-hidden="true"></span>
+              <span class="sv-fig" aria-hidden="true">FIG. 02</span>
+              <span class="sv-tag" aria-hidden="true"><b>02</b> / Blueprint</span>
+            </div>
           </div>
 
           <div class="process-step" data-step="2">
             <div class="step-num">03</div>
             <div class="step-text"><h3>Engineering Excellence</h3><p>Reliable, scalable, precision-built — engineered by people who'll still be answering your calls a year after launch.</p><span class="deliverable">You get: weekly demos, staging access from day one</span></div>
-            <div class="step-visual"><img src="https://images.unsplash.com/photo-1738162837438-92ff852619a1?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Close-up of precision machining, sparks flying off cut metal in a dark workshop" loading="lazy"></div>
+            <div class="step-visual">
+              <img src="https://images.unsplash.com/photo-1738162837438-92ff852619a1?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Close-up of precision machining, sparks flying off cut metal in a dark workshop" loading="lazy">
+              <div class="step-visual-grain" aria-hidden="true"></div>
+              <span class="sv-corner tl" aria-hidden="true"></span><span class="sv-corner tr" aria-hidden="true"></span><span class="sv-corner bl" aria-hidden="true"></span><span class="sv-corner br" aria-hidden="true"></span>
+              <span class="sv-fig" aria-hidden="true">FIG. 03</span>
+              <span class="sv-tag" aria-hidden="true"><b>03</b> / Engineering</span>
+            </div>
           </div>
 
           <div class="process-step" data-step="3">
             <div class="step-num">04</div>
             <div class="step-text"><h3>Scale &amp; Optimize</h3><p>Launch is day one. We stay on to optimize, evolve, and make sure your system keeps compounding returns.</p><span class="deliverable">You get: 30-day post-launch window + a direct line to the team</span></div>
-            <div class="step-visual"><img src="https://images.unsplash.com/photo-1516472151647-6900f65d8975?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A tiny human figure dwarfed by a monumental, cavernous space with dramatic light" loading="lazy"></div>
+            <div class="step-visual">
+              <img src="https://images.unsplash.com/photo-1516472151647-6900f65d8975?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A tiny human figure dwarfed by a monumental, cavernous space with dramatic light" loading="lazy">
+              <div class="step-visual-grain" aria-hidden="true"></div>
+              <span class="sv-corner tl" aria-hidden="true"></span><span class="sv-corner tr" aria-hidden="true"></span><span class="sv-corner bl" aria-hidden="true"></span><span class="sv-corner br" aria-hidden="true"></span>
+              <span class="sv-fig" aria-hidden="true">FIG. 04</span>
+              <span class="sv-tag" aria-hidden="true"><b>04</b> / Scale</span>
+            </div>
           </div>
 
         </div>
