@@ -341,7 +341,7 @@
   .work-accordion:has(.work-panel:hover) .work-panel:not(:hover){opacity:.46;}
 
   .work-panel-bg{
-    position:absolute;inset:0;z-index:0;
+    position:absolute;inset:0;z-index:0;overflow:hidden;
     transform:scale(1.08);
     transition:transform 1.3s cubic-bezier(.16,1,.3,1);
   }
@@ -350,6 +350,12 @@
   .work-panel-bg.p2{background:radial-gradient(140% 110% at 82% 0%, #241A24 0%, #100E0A 62%);}
   .work-panel-bg.p3{background:radial-gradient(140% 110% at 18% 100%, #142420 0%, #100E0A 62%);}
   .work-panel-bg.p4{background:radial-gradient(140% 110% at 82% 100%, #241610 0%, #100E0A 62%);}
+  .work-panel-bg img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+    filter:grayscale(70%) contrast(1.2) brightness(.55) saturate(.9);
+    transition:filter .6s ease;
+  }
+  .work-panel:hover .work-panel-bg img{filter:grayscale(40%) contrast(1.15) brightness(.7) saturate(1.05);}
   .work-panel-grain{
     position:absolute;inset:0;z-index:1;opacity:.35;
     background-image:repeating-linear-gradient(100deg, rgba(199,149,83,.06) 0 2px, transparent 2px 6px);
@@ -559,6 +565,36 @@
   .diff-card h3{font-size:16px;margin-bottom:10px;}
   .diff-card p{font-size:13px;color:var(--stone);line-height:1.6;}
 
+  /* diff-card.senior: option 4 — abstract blueprint texture + brass seal mark
+     (no stock photo; reuses the .photo-panel duotone language + a laurel seal
+     motif to signal "credentialed / vetted", editorial and on-brand) */
+  .diff-card.senior{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(130% 100% at 100% 0%, rgba(199,149,83,.10) 0%, rgba(199,149,83,0) 55%),
+      repeating-linear-gradient(100deg, rgba(199,149,83,.045) 0 2px, transparent 2px 7px),
+      repeating-linear-gradient(10deg, rgba(199,149,83,.02) 0 1px, transparent 1px 22px),
+      var(--ink);
+    transition:background .5s ease;
+  }
+  .diff-card.senior:hover{
+    background:
+      radial-gradient(130% 100% at 100% 0%, rgba(199,149,83,.16) 0%, rgba(199,149,83,0) 60%),
+      repeating-linear-gradient(100deg, rgba(199,149,83,.06) 0 2px, transparent 2px 7px),
+      repeating-linear-gradient(10deg, rgba(199,149,83,.03) 0 1px, transparent 1px 22px),
+      var(--ink);
+  }
+  .diff-seal{
+    position:absolute;top:16px;right:16px;width:74px;height:74px;pointer-events:none;
+    opacity:.16;transition:opacity .5s ease,filter .5s ease,transform .6s cubic-bezier(.22,1,.36,1);
+    filter:drop-shadow(0 0 0 rgba(227,184,119,0));
+  }
+  .diff-card.senior:hover .diff-seal{
+    opacity:.45;transform:rotate(8deg) scale(1.05);
+    filter:drop-shadow(0 0 16px rgba(227,184,119,.4));
+  }
+  @media(max-width:520px){.diff-seal{width:58px;height:58px;top:14px;right:14px;}}
+
   /* stagger reveal (used on diff-grid + prod-grid cards) */
   .stagger-item{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
   .stagger-item.in{opacity:1;transform:none;}
@@ -726,7 +762,7 @@
     <div class="work-accordion reveal" id="workAccordion">
 
       <a class="work-panel" data-p="1" href="https://huggingface.co/spaces/hassanbro56/livevisionagent/tree/main" target="_blank" rel="noopener" aria-label="LiveSight — Computer Vision, 2025">
-        <div class="work-panel-bg p1"></div>
+        <div class="work-panel-bg p1"><img src="https://images.unsplash.com/photo-1571818684035-c1afe7eab7f5?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Close-up of a camera lens, representing computer vision" loading="lazy"></div>
         <div class="work-panel-grain"></div>
         <span class="work-panel-idx">W.01</span>
         <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
@@ -740,7 +776,7 @@
       </a>
 
       <a class="work-panel" data-p="2" href="https://ai-automation-beige.vercel.app/" target="_blank" rel="noopener" aria-label="Flowline — Automation, 2025">
-        <div class="work-panel-bg p2"></div>
+        <div class="work-panel-bg p2"><img src="https://images.unsplash.com/photo-1744640326166-433469d102f2?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Glowing AI chip on a circuit board, representing automation" loading="lazy"></div>
         <div class="work-panel-grain"></div>
         <span class="work-panel-idx">W.02</span>
         <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
@@ -754,7 +790,7 @@
       </a>
 
       <a class="work-panel" data-p="3" href="https://huggingface.co/spaces/H1239/DIGITAL-EXTRACTOR" target="_blank" rel="noopener" aria-label="Digital Extractor — Document Intelligence, 2025">
-        <div class="work-panel-bg p3"></div>
+        <div class="work-panel-bg p3"><img src="https://images.unsplash.com/photo-1630239261183-0429e79cf064?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="A single document page on a dark surface, representing document intelligence" loading="lazy"></div>
         <div class="work-panel-grain"></div>
         <span class="work-panel-idx">W.03</span>
         <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
@@ -768,7 +804,7 @@
       </a>
 
       <a class="work-panel" data-p="4" href="#cta" aria-label="Ask-My-Docs — LLM RAG, 2025">
-        <div class="work-panel-bg p4"></div>
+        <div class="work-panel-bg p4"><img src="https://images.unsplash.com/photo-1756908992154-c8a89f5e517f?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Glowing AI network of circuits and light, representing an LLM retrieval system" loading="lazy"></div>
         <div class="work-panel-grain"></div>
         <span class="work-panel-idx">W.04</span>
         <span class="work-panel-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
@@ -863,7 +899,25 @@
     <h2 class="reveal">What actually makes us different.</h2>
     <p class="body-text reveal" style="margin-bottom:72px;">Not a tagline — the specific ways working with us looks different from working with a typical agency.</p>
     <div class="diff-grid" id="diffGrid">
-      <div class="diff-card stagger-item">
+      <div class="diff-card stagger-item senior">
+        <div class="diff-seal" aria-hidden="true">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="34" fill="none" stroke="#E3B877" stroke-width="1"/>
+            <circle cx="60" cy="60" r="27" fill="none" stroke="#E3B877" stroke-width="0.6"/>
+            <g id="leafSetSenior" fill="#E3B877" stroke="none">
+              <ellipse cx="36" cy="32" rx="5.5" ry="2.1" transform="rotate(-58 36 32)"/>
+              <ellipse cx="29" cy="42" rx="5.5" ry="2.1" transform="rotate(-42 29 42)"/>
+              <ellipse cx="25" cy="54" rx="5.5" ry="2.1" transform="rotate(-22 25 54)"/>
+              <ellipse cx="24" cy="66" rx="5.5" ry="2.1" transform="rotate(-2 24 66)"/>
+              <ellipse cx="26" cy="78" rx="5.5" ry="2.1" transform="rotate(18 26 78)"/>
+              <ellipse cx="32" cy="89" rx="5.5" ry="2.1" transform="rotate(38 32 89)"/>
+              <ellipse cx="41" cy="97" rx="5.5" ry="2.1" transform="rotate(58 41 97)"/>
+            </g>
+            <use href="#leafSetSenior" transform="scale(-1,1) translate(-120,0)"/>
+            <text x="60" y="57" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#E3B877" text-anchor="middle" letter-spacing="1">SR</text>
+            <text x="60" y="70" font-family="IBM Plex Mono, monospace" font-size="7" fill="#E3B877" text-anchor="middle" letter-spacing="2">01</text>
+          </svg>
+        </div>
         <span class="diff-num">01</span>
         <h3>Senior engineers only</h3>
         <p>No junior devs learning on your budget. Everyone on your project has shipped production systems before.</p>
