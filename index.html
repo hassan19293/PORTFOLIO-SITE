@@ -154,6 +154,14 @@
   .hero-spotlight.active{opacity:1;}
   .hero-inner{max-width:920px;position:relative;z-index:1;}
 
+  /* Digital Gravity — WebGL particle field occupying the whole hero, behind copy */
+  #gravityCanvas{
+    position:absolute;inset:0;z-index:0;width:100%;height:100%;
+    display:block;opacity:0;transition:opacity 1.6s ease .2s;
+  }
+  #gravityCanvas.ready{opacity:1;}
+  @media(prefers-reduced-motion: reduce){#gravityCanvas{display:none;}}
+
   /* right-side ghost logo mark: faint outline always on, brass fill rises + glows on nav-logo hover */
   .hero-mark-wrap{
     position:absolute;top:50%;right:-40px;transform:translateY(-54%);
@@ -331,6 +339,61 @@
   @media(prefers-reduced-motion: reduce){
     .story-statement h2 .ch{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
   }
+
+  /* ---------- SERVICES — interactive system map ---------- */
+  #services{position:relative;overflow:hidden;}
+  .map-shell{
+    display:grid;grid-template-columns:1fr 1.35fr;gap:0;margin-top:72px;
+    border:1px solid var(--line);border-radius:2px;background:var(--panel);
+    min-height:520px;
+  }
+  @media(max-width:960px){.map-shell{grid-template-columns:1fr;min-height:0;}}
+
+  .map-graph{
+    position:relative;padding:48px;display:flex;align-items:center;justify-content:center;
+    border-right:1px solid var(--line);
+    background:
+      repeating-linear-gradient(90deg, rgba(199,149,83,.035) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(0deg, rgba(199,149,83,.035) 0 1px, transparent 1px 34px);
+  }
+  @media(max-width:960px){.map-graph{border-right:none;border-bottom:1px solid var(--line);min-height:380px;}}
+  .map-graph svg{width:100%;max-width:420px;height:auto;overflow:visible;}
+
+  .map-link{stroke:var(--line-light);stroke-opacity:.28;stroke-width:1;transition:stroke .4s ease,stroke-opacity .4s ease,stroke-width .4s ease;}
+  .map-link.active{stroke:var(--brass);stroke-opacity:.9;stroke-width:1.4;}
+
+  .map-core{cursor:default;}
+  .map-core circle{fill:var(--ink);stroke:var(--brass);stroke-width:1;}
+  .map-core text{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;fill:var(--brass-2);}
+
+  .map-node{cursor:pointer;}
+  .map-node circle.dot{fill:var(--panel-2);stroke:var(--line-light);stroke-width:1;transition:fill .3s ease,stroke .3s ease,r .3s ease;}
+  .map-node text{font-family:var(--mono);font-size:10px;letter-spacing:.06em;fill:var(--stone);text-transform:uppercase;transition:fill .3s ease;}
+  .map-node.active circle.dot{fill:var(--brass);stroke:var(--brass);}
+  .map-node.active text{fill:var(--bone);}
+  .map-node:hover circle.dot{stroke:var(--brass-2);}
+  .map-node:focus{outline:none;}
+  .map-node:focus circle.dot{stroke:var(--brass-2);stroke-width:1.6;}
+
+  .map-pulse{fill:none;stroke:var(--brass);stroke-width:1;opacity:0;}
+  .map-node.active .map-pulse{animation:mapPulse 1.8s ease-out infinite;}
+  @keyframes mapPulse{
+    0%{opacity:.7;stroke-width:1;r:14;}
+    100%{opacity:0;stroke-width:.5;r:30;}
+  }
+
+  .map-detail{padding:48px;display:flex;flex-direction:column;justify-content:center;}
+  @media(max-width:640px){.map-detail{padding:32px 26px;}}
+  .map-detail-idx{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;margin-bottom:16px;display:block;}
+  .map-detail h3{font-size:clamp(22px,2.6vw,30px);margin-bottom:14px;}
+  .map-detail p.body-text{margin-bottom:26px;}
+  .map-detail-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .map-detail-list li{
+    font-size:13.5px;color:#C7C2B4;display:flex;align-items:baseline;gap:10px;
+    opacity:0;transform:translateY(6px);transition:opacity .4s ease,transform .4s ease;
+  }
+  .map-detail-list.in li{opacity:1;transform:none;}
+  .map-detail-list li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--brass);flex-shrink:0;transform:translateY(-2px);}
 
   /* ---------- WORK — expanding accordion gallery (Awwwards-style) ---------- */
   #work{position:relative;}
@@ -704,16 +767,17 @@
     </a>
     <div class="nav-links">
       <a href="#story">Story</a>
+      <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#process">Process</a>
       <a href="#why">Why Us</a>
-      <a href="#story">About</a>
     </div>
     <a class="cta-btn nav-cta" href="#cta" data-magnetic style="border-radius:999px;"><span class="cta-full">Build With Us →</span><span class="cta-short">Contact →</span></a>
   </nav>
 </header>
 
 <section class="hero dark">
+  <canvas id="gravityCanvas" aria-hidden="true"></canvas>
   <div class="hero-spotlight" id="heroSpotlight"></div>
 
   <!-- Right-side ghost logo: faint outline always visible; brass fill rises + glows on nav-logo hover -->
@@ -763,6 +827,66 @@
     <div class="eyebrow">Buildifo</div>
     <h2>At <b>Buildifo</b>, we pair senior engineering with sharp design thinking to build software that holds up. From custom applications to large-scale systems, every build is driven by <b>precision</b>, <b>reliability</b>, and a mindset built for long-term growth.</h2>
     <div class="story-rule"></div>
+  </div>
+</section>
+
+<section class="dark" id="services">
+  <div class="wrap">
+    <div class="eyebrow reveal">What we build</div>
+    <h2 class="reveal">One studio, four disciplines,<br>working as a single system.</h2>
+    <p class="body-text reveal" style="margin-bottom:0;">Every engagement pulls from the same core team. Select a node to see what it covers.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="map-shell reveal" id="mapShell">
+      <div class="map-graph">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Buildifo capability map: Systems, Products, Automation and Intelligence connected around a central core">
+          <line class="map-link" data-for="systems" x1="200" y1="200" x2="200" y2="80"/>
+          <line class="map-link" data-for="products" x1="200" y1="200" x2="320" y2="200"/>
+          <line class="map-link" data-for="automation" x1="200" y1="200" x2="200" y2="320"/>
+          <line class="map-link" data-for="intelligence" x1="200" y1="200" x2="80" y2="200"/>
+
+          <g class="map-core">
+            <circle cx="200" cy="200" r="30"/>
+            <text x="200" y="197" text-anchor="middle">BUILDIFO</text>
+            <text x="200" y="209" text-anchor="middle" opacity=".6">CORE</text>
+          </g>
+
+          <g class="map-node" data-service="systems" tabindex="0" role="button" aria-label="Systems">
+            <circle class="map-pulse" cx="200" cy="80" r="14"/>
+            <circle class="dot" cx="200" cy="80" r="15"/>
+            <text x="200" y="52" text-anchor="middle">Systems</text>
+          </g>
+          <g class="map-node" data-service="products" tabindex="0" role="button" aria-label="Products">
+            <circle class="map-pulse" cx="320" cy="200" r="14"/>
+            <circle class="dot" cx="320" cy="200" r="15"/>
+            <text x="352" y="204" text-anchor="start">Products</text>
+          </g>
+          <g class="map-node" data-service="automation" tabindex="0" role="button" aria-label="Automation">
+            <circle class="map-pulse" cx="200" cy="320" r="14"/>
+            <circle class="dot" cx="200" cy="320" r="15"/>
+            <text x="200" y="352" text-anchor="middle">Automation</text>
+          </g>
+          <g class="map-node" data-service="intelligence" tabindex="0" role="button" aria-label="Intelligence">
+            <circle class="map-pulse" cx="80" cy="200" r="14"/>
+            <circle class="dot" cx="80" cy="200" r="15"/>
+            <text x="48" y="204" text-anchor="end">Intelligence</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="map-detail" id="mapDetail">
+        <span class="map-detail-idx" id="mapDetailIdx">01 / SYSTEMS</span>
+        <h3 id="mapDetailTitle">Systems</h3>
+        <p class="body-text" id="mapDetailBody">The backend, infrastructure and architecture everything else runs on — built to hold up under real usage, not just a demo.</p>
+        <ul class="map-detail-list in" id="mapDetailList">
+          <li>APIs and backend services</li>
+          <li>Cloud infrastructure and deployment</li>
+          <li>Database and data architecture</li>
+          <li>Integrations between existing tools</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1039,6 +1163,7 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   // once the nav entrance sequence finishes, drop the loading state entirely
   // so hover rules (logo grow, mark bloom) aren't fighting leftover animation styles
@@ -1260,6 +1385,279 @@
     }
     window.addEventListener('scroll', onScroll, {passive:true});
     onScroll();
+  })();
+
+  // ---------- SERVICES: interactive system map ----------
+  (function(){
+    const shell = document.getElementById('mapShell');
+    if(!shell) return;
+    const nodes = Array.from(shell.querySelectorAll('.map-node'));
+    const links = Array.from(shell.querySelectorAll('.map-link'));
+    const idxEl = document.getElementById('mapDetailIdx');
+    const titleEl = document.getElementById('mapDetailTitle');
+    const bodyEl = document.getElementById('mapDetailBody');
+    const listEl = document.getElementById('mapDetailList');
+
+    const DATA = {
+      systems: {
+        idx: '01 / SYSTEMS',
+        title: 'Systems',
+        body: 'The backend, infrastructure and architecture everything else runs on — built to hold up under real usage, not just a demo.',
+        items: ['APIs and backend services','Cloud infrastructure and deployment','Database and data architecture','Integrations between existing tools']
+      },
+      products: {
+        idx: '02 / PRODUCTS',
+        title: 'Products',
+        body: 'The interfaces and applications people actually touch — web apps, dashboards and platforms designed to be used daily, not just launched once.',
+        items: ['Web and internal applications','Product design and UX','Customer-facing platforms','Design systems and component libraries']
+      },
+      automation: {
+        idx: '03 / AUTOMATION',
+        title: 'Automation',
+        body: 'The workflow layer that removes manual handoffs — connecting your tools so information moves on its own.',
+        items: ['Workflow and process automation','Tool-to-tool integrations','Internal operations tooling','Scheduled and event-driven jobs']
+      },
+      intelligence: {
+        idx: '04 / INTELLIGENCE',
+        title: 'Intelligence',
+        body: 'AI, computer vision and retrieval systems that turn raw data — footage, documents, unstructured text — into answers your team can use.',
+        items: ['Computer vision and live analysis','Document and data extraction','Retrieval systems (RAG) over your own data','Applied AI features inside existing products']
+      }
+    };
+
+    function setService(key, focusEl){
+      nodes.forEach(n=> n.classList.toggle('active', n.dataset.service === key));
+      links.forEach(l=> l.classList.toggle('active', l.dataset.for === key));
+      const d = DATA[key];
+      if(!d) return;
+      listEl.classList.remove('in');
+      idxEl.textContent = d.idx;
+      titleEl.textContent = d.title;
+      bodyEl.textContent = d.body;
+      listEl.innerHTML = d.items.map(i=>`<li>${i}</li>`).join('');
+      requestAnimationFrame(()=> requestAnimationFrame(()=> listEl.classList.add('in')));
+      if(focusEl) focusEl.focus({preventScroll:true});
+    }
+
+    nodes.forEach(n=>{
+      n.addEventListener('click', ()=> setService(n.dataset.service));
+      n.addEventListener('keydown', e=>{
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); setService(n.dataset.service, n); }
+      });
+      n.addEventListener('mouseenter', ()=> setService(n.dataset.service));
+    });
+
+    setService('systems');
+  })();
+
+  // ---------- HERO: Digital Gravity — WebGL particle field with cursor gravity ----------
+  (function(){
+    const canvas = document.getElementById('gravityCanvas');
+    const heroEl = document.querySelector('.hero');
+    if(!canvas || !heroEl || typeof THREE === 'undefined') return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(DPR);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, 1, 1, 2000);
+    camera.position.z = 480;
+
+    let W = 1, H = 1;
+    function worldSize(){
+      // size of the visible plane at z=0 for the current camera
+      const vFOV = THREE.MathUtils.degToRad(camera.fov);
+      const h = 2 * Math.tan(vFOV/2) * camera.position.z;
+      const w = h * camera.aspect;
+      return { w, h };
+    }
+
+    // ---- fine dust: plain points, the bulk of the field ----
+    const DUST_COUNT = isCoarse ? 160 : 420;
+    const dustGeo = new THREE.BufferGeometry();
+    const basePos = new Float32Array(DUST_COUNT * 3);
+    const curPos = new Float32Array(DUST_COUNT * 3);
+    const seed = new Float32Array(DUST_COUNT);
+    for(let i=0;i<DUST_COUNT;i++){
+      const x = (Math.random()*2-1);
+      const y = (Math.random()*2-1);
+      const z = (Math.random()*2-1) * 140;
+      basePos[i*3]=x; basePos[i*3+1]=y; basePos[i*3+2]=z;
+      curPos[i*3]=x; curPos[i*3+1]=y; curPos[i*3+2]=z;
+      seed[i] = Math.random()*1000;
+    }
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(curPos, 3));
+    const dustMat = new THREE.PointsMaterial({
+      color: 0xE3B877, size: 2.1, sizeAttenuation: true,
+      transparent: true, opacity: 0.34, depthWrite: false
+    });
+    const dust = new THREE.Points(dustGeo, dustMat);
+    scene.add(dust);
+
+    // ---- labeled fragments: tiny monospace text sprites ----
+    const WORDS = ['AI','API','DATA','CODE','NODE','SYSTEM','CORE','01','10'];
+    const fragCount = isCoarse ? 6 : 14;
+    const fragments = [];
+    function makeLabelTexture(text){
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 64;
+      const ctx = c.getContext('2d');
+      ctx.font = '600 34px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#E3B877';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'left';
+      ctx.fillText(text, 4, 34);
+      return new THREE.CanvasTexture(c);
+    }
+    for(let i=0;i<fragCount;i++){
+      const word = WORDS[i % WORDS.length];
+      const tex = makeLabelTexture(word);
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.16, depthWrite:false });
+      const sprite = new THREE.Sprite(mat);
+      const scale = 26 + Math.random()*14;
+      sprite.scale.set(scale, scale * 0.25, 1);
+      const bx = (Math.random()*2-1);
+      const by = (Math.random()*2-1);
+      const bz = (Math.random()*2-1) * 100;
+      sprite.userData.base = new THREE.Vector3(bx, by, bz);
+      sprite.userData.seed = Math.random()*1000;
+      sprite.position.set(0,0,bz);
+      scene.add(sprite);
+      fragments.push(sprite);
+    }
+
+    // ---- gravity link lines: drawn only near the cursor ----
+    const MAX_LINKS = 14;
+    const linkGeo = new THREE.BufferGeometry();
+    const linkPos = new Float32Array(MAX_LINKS * 2 * 3);
+    linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3));
+    linkGeo.setDrawRange(0, 0);
+    const linkMat = new THREE.LineBasicMaterial({ color: 0xC79553, transparent:true, opacity:0.35 });
+    const linkLines = new THREE.LineSegments(linkGeo, linkMat);
+    scene.add(linkLines);
+
+    // ---- pointer state ----
+    let mouseX = 0, mouseY = 0, mouseActive = false;
+    let mouseWorld = new THREE.Vector3(9999,9999,0);
+    function onPointerMove(e){
+      const r = heroEl.getBoundingClientRect();
+      mouseX = ((e.clientX - r.left) / r.width) * 2 - 1;
+      mouseY = -(((e.clientY - r.top) / r.height) * 2 - 1);
+      mouseActive = true;
+    }
+    if(!isCoarse){
+      heroEl.addEventListener('mousemove', onPointerMove);
+      heroEl.addEventListener('mouseleave', ()=>{ mouseActive = false; mouseWorld.set(9999,9999,0); });
+    }
+
+    function resize(){
+      const r = heroEl.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      camera.aspect = W / H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H, false);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const RADIUS = 130;      // gravity influence radius, in world units
+    const clock = new THREE.Clock();
+    let raf = null;
+
+    function frame(){
+      raf = requestAnimationFrame(frame);
+      const t = clock.getElapsedTime();
+      const { w, h } = worldSize();
+
+      if(mouseActive){
+        mouseWorld.set((mouseX * w)/2, (mouseY * h)/2, 0);
+      }
+
+      // dust: gentle drift + push away from cursor, spring back to base
+      const posAttr = dustGeo.getAttribute('position');
+      let linkCount = 0;
+      for(let i=0;i<DUST_COUNT;i++){
+        const s = seed[i];
+        const bx = basePos[i*3] * (w/2) * 0.96;
+        const by = basePos[i*3+1] * (h/2) * 0.96;
+        const bz = basePos[i*3+2];
+        const driftX = Math.sin(t*0.15 + s) * 6;
+        const driftY = Math.cos(t*0.12 + s*1.3) * 6;
+
+        let px = bx + driftX;
+        let py = by + driftY;
+
+        const dx = px - mouseWorld.x;
+        const dy = py - mouseWorld.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < RADIUS){
+          const force = (1 - dist/RADIUS);
+          const nx = dx / (dist || 1);
+          const ny = dy / (dist || 1);
+          px += nx * force * 46;
+          py += ny * force * 46;
+          if(linkCount < MAX_LINKS && force > 0.35){
+            const b = linkCount*6;
+            linkPos[b] = px; linkPos[b+1] = py; linkPos[b+2] = bz;
+            linkPos[b+3] = mouseWorld.x; linkPos[b+4] = mouseWorld.y; linkPos[b+5] = 0;
+            linkCount++;
+          }
+        }
+
+        curPos[i*3] = px;
+        curPos[i*3+1] = py;
+        curPos[i*3+2] = bz;
+      }
+      posAttr.needsUpdate = true;
+      linkGeo.setDrawRange(0, linkCount*2);
+      linkGeo.getAttribute('position').needsUpdate = true;
+      linkMat.opacity = 0.28 + Math.sin(t*3) * 0.05;
+
+      // fragments: slower drift + soft push, brighten near cursor
+      fragments.forEach(sp=>{
+        const base = sp.userData.base;
+        const s = sp.userData.seed;
+        const bx = base.x * (w/2) * 0.9;
+        const by = base.y * (h/2) * 0.9;
+        const driftX = Math.sin(t*0.08 + s) * 10;
+        const driftY = Math.cos(t*0.07 + s*1.4) * 10;
+        let px = bx + driftX;
+        let py = by + driftY;
+        const dx = px - mouseWorld.x;
+        const dy = py - mouseWorld.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        let targetOpacity = 0.14;
+        if(dist < RADIUS*1.3){
+          const force = (1 - dist/(RADIUS*1.3));
+          const nx = dx / (dist || 1);
+          const ny = dy / (dist || 1);
+          px += nx * force * 30;
+          py += ny * force * 30;
+          targetOpacity = 0.14 + force * 0.4;
+        }
+        sp.position.set(px, py, base.z);
+        sp.material.opacity += (targetOpacity - sp.material.opacity) * 0.08;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    // start once visible, pause when off-screen to save cycles
+    const vis = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          if(!raf) frame();
+          canvas.classList.add('ready');
+        } else if(raf){
+          cancelAnimationFrame(raf); raf = null;
+        }
+      });
+    }, {threshold: 0.05});
+    vis.observe(heroEl);
   })();
 </script>
 
