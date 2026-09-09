@@ -1607,7 +1607,9 @@
     const form = document.getElementById('leadForm');
     const status = document.getElementById('leadFormStatus');
     const submit = form ? form.querySelector('button[type="submit"]') : null;
-    const apiBaseUrl = new URLSearchParams(window.location.search).get('apiBaseUrl');
+    const apiBaseUrl =
+      new URLSearchParams(window.location.search).get('apiBaseUrl') ||
+      'https://buildifo-backend.fastapicloud.dev';
     if(!form || !status || !submit) return;
     let submitting = false;
     form.addEventListener('submit', async e=>{
