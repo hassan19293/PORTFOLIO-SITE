@@ -1607,6 +1607,7 @@
     const form = document.getElementById('leadForm');
     const status = document.getElementById('leadFormStatus');
     const submit = form ? form.querySelector('button[type="submit"]') : null;
+    const apiBaseUrl = new URLSearchParams(window.location.search).get('apiBaseUrl');
     if(!form || !status || !submit) return;
     let submitting = false;
     form.addEventListener('submit', async e=>{
@@ -1627,11 +1628,24 @@
         company: form.elements.namedItem('company').value.trim() || null
       };
       try{
-        const response = await fetch('https://buildifo-backend.fastapicloud.dev/api/customers',{
+        if(!apiBaseUrl){
+          throw new Error('VITE_API_URL is not available to the contact form.');
+        }
+        const requestUrl = `${apiBaseUrl.replace(/\/+$/, '')}/api/customers`;
+        const response = await fetch(requestUrl,{
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify(payload)
         });
+        const responseBody = await response.text();
+        if(!response.ok){
+          console.error('Contact form request failed', {
+            url: requestUrl,
+            method: 'POST',
+            status: response.status,
+            responseBody
+          });
+        }
         if(response.status === 201){
           form.reset();
           status.className = 'lead-form-status success';
@@ -1646,7 +1660,12 @@
           status.className = 'lead-form-status error';
           status.textContent = 'We could not send your message right now. Please try again.';
         }
-      }catch(_error){
+      }catch(error){
+        console.error('Contact form network or configuration error', {
+          url: apiBaseUrl ? `${apiBaseUrl.replace(/\/+$/, '')}/api/customers` : null,
+          method: 'POST',
+          error
+        });
         status.className = 'lead-form-status error';
         status.textContent = 'We could not send your message right now. Please try again.';
       }finally{
